@@ -1,0 +1,28 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	repeat_call_id	string	true			.	Unique repeat-call identifier.
+5	evidence_id	string	true			.	Parent read-evidence identifier.
+6	read_id	string	true			.	Read identifier.
+7	locus_id	string	false			.	Parent locus.
+8	segment_index	integer	true			.	0-based segment order.
+9	motif	string	true			.	Observed motif model.
+10	canonical_motif	string	true			.	Canonical motif.
+11	read_start	integer	true		0-based, end-exclusive	.	Repeat start on read.
+12	read_end	integer	true		0-based, end-exclusive	.	Repeat end on read.
+13	repeat_bp	integer	true			.	Observed repeat bases.
+14	repeat_units_float	float	true			.	Observed repeat units.
+15	purity	float	true			.	Repeat purity, 0–1.
+16	match_bp	integer	false			.	Motif-matching bases.
+17	mismatch_bp	integer	false			.	Mismatching bases.
+18	insertion_bp	integer	false			.	Insertions relative to periodic model.
+19	deletion_bp	integer	false			.	Deletions relative to periodic model.
+20	interruption_count	integer	true			.	Interruption count.
+21	interruption_pattern	string	false			.	Compact interruption representation.
+22	left_boundary_confidence	float	false			.	0–1 boundary confidence.
+23	right_boundary_confidence	float	false			.	0–1 boundary confidence.
+24	call_method	string	true			.	Algorithm/method identifier.
+25	call_score	float	false			.	Method-specific score.
+26	call_status	enum	true	call_status		.	Repeat-call status.
+27	call_flags	string_list	false			.	Semicolon-separated flags.

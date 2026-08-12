@@ -1,0 +1,11 @@
+gate_id	gate	level	blocking_for_v1	status	evidence_or_next_action
+G01	General caller deterministic across hash seeds	algorithm	true	PASS	Stage 14F2 and 14G
+G02	Synthetic truth and semantic invariants	algorithm	true	PASS	Stage 14G
+G03	Python/native 100k exact parity	implementation	true	PASS	Stage 14G all 388571 rows
+G04	Native caller-only projected 5.31M runtime <=30 min	performance	false	PASS	Stage 14G projected 18.90 min
+G05	100k integrated final-evidence end-to-end	production	true	OPEN	Map v0.4.1 native calls into final evidence schema
+G06	5M-read BAM-input runtime <=60 min	performance	true	OPEN	Run after G05; target <=30 min
+G07	5M-read restartability/memory/artifact audit	production	true	OPEN	Full-scale validation after G05
+G08	Real truth-bearing biological validation	biology	true	OPEN	Disease/synthetic-RNA/orthogonal truth data
+G09	Large-cohort RNA technical/background distribution	population	false	OPEN	Defer until production caller stable and fast
+G10	FASTQ-to-final mapping-inclusive performance	convenience	false	OPEN	Report minimap2 separately

@@ -1,0 +1,10 @@
+{
+  "approval_scope": "OWNER_APPROVED_CURRENT_SCOPE_AND_BOUNDARIES",
+  "owner_approval_receipt_sha256": "f56169f98dc5de8a3d2ad4bf4aebdb6ba01cb48941511180e56ec7d69cf8ff51",
+  "owner_decision": "APPROVED_AS_WRITTEN",
+  "owner_packet_sha256": "af5c437f3e419f58c4daeaa865777751410bd006cc65ca02e40c78ed4d87aa68",
+  "owner_response": "OK",
+  "owner_review_bundle_sha256": "63c9ed37d751295104b273ef415804ad81d307a7673e3a7cb2f69154786eb804",
+  "owner_review_guide_sha256": "5211e65628f9957f61c22b4c18f8bd276cc7d8232a03ff277ea67265615484db",
+  "registration_packet_scope_parity": "PASS"
+}

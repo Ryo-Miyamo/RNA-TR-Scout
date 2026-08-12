@@ -1,0 +1,7 @@
+gate_id	requirement	category	blocking_for_internal_beta	status	next_action
+G25	Automatic version-pinned reference bootstrap with resumable download and checksum verification; large references excluded from GitHub	release_readiness	true	OPEN_PLANNED	Implement a reference manifest, downloader, cache, and setup command after Core Technical Completion performance gates
+G26	CPU, available RAM, output space, and temporary space detection before execution	release_readiness	true	OPEN_PLANNED	Expose a resource-detection report in the release CLI and retain explicit override provenance
+G27	Memory-aware automatic selection of shard count and caller/materializer/validator concurrency with --threads --memory-gb --tmp-dir overrides	release_readiness	true	OPEN_PLANNED	Use empirical per-stage resource models; never change scientific parameters silently
+G28	Scientific logical output reproducibility across supported hardware and concurrency profiles for identical input/version/reference/parameters	release_readiness	true	OPEN_PLANNED	Run cross-profile and cross-machine exact logical comparisons before release candidate
+G29	Clean-machine clone-to-setup-to-test reproducibility without developer-local paths or hidden references	release_readiness	true	OPEN_PLANNED	Validate in a clean VM/container or independent workstation before v0.5.0-rc1
+G30	Empirical minimum recommended and tested hardware profiles documented in README	release_readiness	true	OPEN_PLANNED	Derive CPU RAM and free-storage specifications from release-scale measurements

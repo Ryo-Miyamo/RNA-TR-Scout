@@ -1,0 +1,98 @@
+{
+  "assignment_schema_dir": "config/evidence_schema/v0.3",
+  "catalog_root": "catalogs",
+  "catalogs": {
+    "analysis_regions": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/TRExplorer_v2.rnatr_pilot_analysis_regions.final.tsv.gz",
+      "sha256": "562802c3757785d0ef7d4b7b10ac5582b53bdce1d380d76dccb15711a2ebf9d3"
+    },
+    "disease_regions": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/STRchive_disease_regions.final.tsv.gz",
+      "sha256": "056ae07de7b8f6299fadcabfefb7b596bc2c5a35591c06870dbed4d7fb519796"
+    },
+    "mapping_target_bed": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz",
+      "sha256": "6ec444b0ffcb9da4452b24d1654ed6c4b945c3cd3e8379e4e4cbe6e72931cfe2"
+    },
+    "mapping_target_bed_index": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz.tbi",
+      "sha256": "9803a3b268e9a7ca30edbf4c312a0d60b90a9bb9c34fdcd243348caa9bc4e77d"
+    },
+    "mapping_target_tsv": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.tsv.gz",
+      "sha256": "3edffe6f5d31922ca0c58759186639e77f51c48745ac5e22ad3aad0a010fec75"
+    }
+  },
+  "components": {
+    "11b_target_assignment": {
+      "relative_path": "scripts/11b_extract_alignment_segments_and_target_candidates.sh",
+      "sha256": "e00bdaad48080d7cfed01e1b961e0617af0f2239e014cd6fe8924460aa9afd56"
+    },
+    "11d3_raw_projection": {
+      "relative_path": "scripts/11d3_project_targets_to_raw_reads_secondary_seq_fixed.sh",
+      "sha256": "9df2998915e49da27ecf80f24a733d55a498c2ba32b278df881fdefa901a83e2"
+    },
+    "assignment_schema_v03": {
+      "relative_path": "config/evidence_schema/v0.3/schema/rnatr_v03_table_schema.json",
+      "sha256": "c9f38755ecd07d0a2614f01b181c62db37c437a9004ed2fc06726b0239161f0e"
+    },
+    "assignment_validator_v031": {
+      "relative_path": "config/evidence_schema/v0.3/patches/validator_v0.3.1/rnatr_v03_validate_tsv_validator_v0.3.1.py",
+      "sha256": "10c9d4bbb5c9dac314d400768eb27206173933759c877225bd0ca2c692d8aba9"
+    },
+    "caller_native_v041": {
+      "relative_path": "src/rnatr_scout/general_caller/native_v0.4.1/rnatr_general_repeat_caller_ref_v0.4.1.py",
+      "sha256": "d5a2e0545afa5d97026c3a6ac0be6bc355e87f4c130bc512b0b3bf9a5bf32351"
+    },
+    "caller_runid_adapter": {
+      "relative_path": "scripts/rnatr_stage15a_native_v041_runid_adapter_v0.2.1.py",
+      "sha256": "18d40dba5733efbfa633fff1d52372db49c63bcf315acb7f86acbdc64c89e386"
+    },
+    "candidate_fastq_extractor": {
+      "relative_path": "scripts/rnatr_stage15a_extract_candidate_fastq_v0.1.0.py",
+      "sha256": "b4ecf4e5ecf1a1c0e57e96cb30f560a21230e1463777bdbb0e36601918a9abbf"
+    },
+    "fast_motif_builder": {
+      "relative_path": "scripts/rnatr_stage15a_fast_motif_jobs_scaling_v0.2.2.2.py",
+      "sha256": "3e36454a515cd8c0411957000099867b582ae7d2bef78b7fe2ebd61bf09f4dc4"
+    },
+    "materializer_runid_adapter": {
+      "relative_path": "scripts/rnatr_materialize_native_v041_to_evidence_v042_runid_adapter_v0.2.1.py",
+      "sha256": "7ba7f5082c9671be55b6b223c20f5bc8b933ad8b4658b1789187e043943949d4"
+    },
+    "materializer_v012": {
+      "relative_path": "src/rnatr_scout/materialization/rnatr_materialize_native_v041_to_evidence_v042_v0.1.2.py",
+      "sha256": "18a67ef312e74257549570ae81a6cca364055240f519d29dc7664e2ea1c429ea"
+    },
+    "schema_v042": {
+      "relative_path": "config/evidence_schema/v0.4.2/schema/rnatr_v04_table_schema.json",
+      "sha256": "c0509a0669344dba0b07cd1bb9e71f2aeb01e0196df47ec9178f1d2464b515f1"
+    },
+    "validator_v042_package": {
+      "relative_path": "config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py",
+      "sha256": "45c3995550f57a65b3fec4aab7471d57b7000e19471d4c5cf7f3ae055426984e"
+    },
+    "validator_v042_tsv": {
+      "relative_path": "config/evidence_schema/v0.4.2/rnatr_v042_validate_tsv.py",
+      "sha256": "10c9d4bbb5c9dac314d400768eb27206173933759c877225bd0ca2c692d8aba9"
+    }
+  },
+  "mapping_timing_boundary": "FASTQ_TO_BAM_MAPPING_EXCLUDED",
+  "production_code": {
+    "orchestrator": {
+      "relative_path": "scripts/rnatr_core_generic_sharded_v0.1.2.py",
+      "sha256": "76ccd6a41f95bd0d2bbf1bf0fba1b26e4232e8f526fae6ec86d3b3f06197784b"
+    },
+    "prebiology_smoke": {
+      "relative_path": "scripts/rnatr_prebiology_manifest_smoke_v0.1.0.py",
+      "sha256": "eeb6442cdf9bebfec631ef718ad6298e27ec0d753a9f9ea999a24d4998d181dc"
+    },
+    "unit_runner": {
+      "relative_path": "scripts/rnatr_core_generic_unit_v0.1.1.py",
+      "sha256": "cff4bfc874cb07db6a98dfb679866a4f75a0eaa10c7c16c3bf3698fd5abf79f5"
+    }
+  },
+  "resource_manifest_version": "rnatr_core_resource_manifest_v0.1.0",
+  "schema_dir": "config/evidence_schema/v0.4.2",
+  "scientific_input_contract": "MAPPED_BAM_PLUS_READ_COHERENT_SOURCE_FASTQ"
+}

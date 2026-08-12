@@ -1,0 +1,9 @@
+metric	value
+fixture_version	v0.3.2
+regression_cases	20
+unique_case_ids	20
+decision_rules	16
+unique_fastq_reads	19
+missing_case_reads	0
+p3_regression_cases	2
+fixture_status	PASS

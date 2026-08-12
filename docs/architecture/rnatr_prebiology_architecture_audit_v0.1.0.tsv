@@ -1,0 +1,16 @@
+finding_id	domain	status	finding	evidence
+A01	ACTIVE_STATE	PASS	SSOT/current_pipeline/lifecycle are internally consistent after Stage15N promotion.	Stage15O post-promotion state guards and current exports
+A02	ACTIVE_RESOURCE_PROVENANCE	PASS	All active code, components, validators, schema and catalogs match the project-relative resource manifest.	25 checksum-bound active resource originals
+A03	PORTABLE_INTERFACE	PASS	Portable result manifest exposes stable identities/logical resources without developer-machine paths.	Stage15L accepted result manifest and structural checks
+A04	PRE_BIOLOGY_INTERFACE	PASS_INTERFACE_ONLY	Manifest-to-BAM and manifest-to-annotation read/locus tracing passed; full biology is not implemented.	Stage15J/L PRE_BIOLOGY smoke
+A05	CURRENT_PLATFORM_PROFILE	PASS_WITH_SCOPE	BAM plus read-coherent FASTQ is the validated ONT-cDNA profile, not a universal physical-input contract.	Active CLI, resource manifest, Stage15N contract
+A06	CROSS_PLATFORM_EXTENSION	PASS_BOUNDARY_OPEN	No public fixed binding blocks future direct-RNA/Iso-Seq/Kinnex adapters; adapters/calibration remain post-Freeze.	Stage15O platform scan and structural checks
+A07	ORIENTATION_CIGAR_OBSERVABILITY	REVIEW_PROFILE_SPECIFIC	Current assumptions must be classified as ONT-cDNA profile or future adapter/calibration responsibility, not universal Core.	Active unit/components/schema platform-assumption scan
+A08	DETERMINISM_RESTART_VALIDATION	PASS_WITH_REGISTERED_SCOPE	Generic 100k and scoped release-scale restart/publication evidence are accepted.	Stages15E/J/L/M
+A09	PERFORMANCE_SCOPE	PASS_WITH_EVIDENCE_SCOPE	60.041256352 min belongs to Stage15C empirical runner; generic v0.1.2 has no direct 5.31M empirical rerun.	Stage15C and Stage15N contracts
+A10	IMPLEMENTATION_FLEXIBILITY	PASS_WITH_FREEZE_POLICY	Stage/shard/worker/order/intermediate/streaming details must not become immutable Freeze requirements.	Implementation-flexibility addendum
+A11	G32_CORE_FREEZE_PACKET	OPEN_REQUIRED	Formal checksummed Freeze Packet is not yet installed.	Current open question and limitation
+A12	G33_GOLDEN_SUITE	OPEN_REQUIRED	Positive evidence exists, but fixed inputs, executable suite, negative fixtures and canonical placement are incomplete.	Current open question and Stage15O inventories
+A13	G34_DOCS_CANONICALIZATION	OPEN_REQUIRED	Architecture/governance/contracts remain distributed across Stage-local and project-wide locations.	61 docs files and candidate layout inventory
+A14	RELEASE_AND_CROSS_HARDWARE	CORRECTLY_OPEN	Clean install, public packaging, and cross-hardware/concurrency reproducibility are not falsely claimed.	G25-G30 and G28
+A15	DOWNLOADS_CLEANUP	DEFER_CORRECT	Cleanup must wait for canonical destinations and checksum verification.	367-row Downloads inventory

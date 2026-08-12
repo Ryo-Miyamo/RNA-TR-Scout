@@ -1,0 +1,47 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	evidence_id	string	true			.	SHA-256(run_id|read_id|target_region_id|locus_id), first 24 hex characters.
+5	read_id	string	true			.	Read identifier.
+6	read_length_bp	integer	true			.	Read length.
+7	mean_read_q	float	false			.	Mean Phred quality.
+8	target_region_id	string	true			.	Analysis/mapping target identifier.
+9	target_source	string	true			.	TRExplorer or STRchive.
+10	region_type	string	true			.	TR, VC, TR_FALLBACK, DISEASE_REGION, etc.
+11	analysis_mode	string	true			.	Catalog-defined analysis mode.
+12	locus_id	string	false			.	TRExplorer locus hypothesis.
+13	motif	string	false			.	Catalog motif.
+14	canonical_motif	string	false			.	Canonical cyclic/reverse-complement motif.
+15	primary_alignment_id	string	false			.	Best supporting alignment.
+16	assignment_status	enum	true	assignment_status		.	Locus assignment result.
+17	assignment_rank	integer	true			.	1-based rank among candidate loci.
+18	competing_locus_count	integer	true			.	Number of competing loci.
+19	target_overlap_bp	integer	true			.	Reference overlap with target.
+20	target_distance_bp	integer	true			.	0 if overlapping; otherwise nearest distance.
+21	mapq_best	integer	false			.	Best supporting MAPQ.
+22	alignment_class_best	enum	false	alignment_class		.	Best supporting alignment class.
+23	strand	enum	true	strand		.	Genomic alignment strand.
+24	left_flank_anchor_bp	integer	true			.	Anchored genomic-left flank bases.
+25	right_flank_anchor_bp	integer	true			.	Anchored genomic-right flank bases.
+26	left_flank_identity	float	false			.	Genomic-left flank identity, 0–1.
+27	right_flank_identity	float	false			.	Genomic-right flank identity, 0–1.
+28	left_flank_unique	boolean	true			.	Left flank uniquely supports locus.
+29	right_flank_unique	boolean	true			.	Right flank uniquely supports locus.
+30	evidence_class	enum	true	evidence_class		.	SPAN/censored/unanchored classification.
+31	sizing_status	enum	true	sizing_status		.	Repeat sizing interpretation.
+32	repeat_call_count	integer	true			.	Number of repeat segments/calls.
+33	best_repeat_call_id	string	false			.	Best repeat-segment call.
+34	repeat_bp_estimate	float	false			.	Best repeat length estimate.
+35	repeat_bp_lower_bound	float	false			.	Lower bound; mandatory for censored evidence.
+36	repeat_bp_upper_bound	float	false			.	Upper bound; missing for one-sided censored evidence.
+37	repeat_units_estimate	float	false			.	Repeat-unit estimate.
+38	repeat_purity	float	false			.	Best repeat purity, 0–1.
+39	interruption_count	integer	false			.	Interruption count.
+40	molecule_cluster_id	string	false			.	Inferred molecule cluster.
+41	confidence_label	enum	true	confidence_label		.	Rule-based confidence.
+42	confidence_score	float	false			.	Optional 0–1 score.
+43	qc_status	enum	true	qc_status		.	Evidence QC status.
+44	qc_flags	string_list	false			.	Semicolon-separated QC flags.
+45	failure_code	enum	true	failure_code		.	Primary failure/no-call reason.
+46	notes	string	false			.	Free-text notes.

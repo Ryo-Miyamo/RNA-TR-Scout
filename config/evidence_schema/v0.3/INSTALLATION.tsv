@@ -1,0 +1,6 @@
+field	value
+schema_version	0.3.0
+installed_at	2026-08-03T14:42:03+09:00
+source_bundle	/home/tokushimaneuro02/Downloads/rnatr_v03_evidence_schema_bundle.tar.gz
+source_bundle_sha256	275a955f8edb74798fcefa42db07a450ac5f128ff336c559e6a29aa92e9c6f60
+destination	/mnt/intelssd/rnatr_project/config/evidence_schema/v0.3

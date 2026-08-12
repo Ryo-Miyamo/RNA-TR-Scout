@@ -1,0 +1,17 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	target_region_id	string	true			.	Analysis region.
+5	target_source	string	true			.	TRExplorer or STRchive.
+6	region_type	string	true			.	TR/VC/DISEASE_REGION.
+7	analysis_mode	string	true			.	Catalog-defined mode.
+8	candidate_reads	integer	true			.	Candidate reads.
+9	unique_assigned_reads	integer	true			.	Unique assignments.
+10	molecule_clusters	integer	true			.	Molecule clusters.
+11	candidate_locus_count	integer	true			.	Candidate loci in region.
+12	region_structure_status	enum	true	region_structure_status		.	Resolved/unresolved structure.
+13	best_evidence_id	string	false			.	Best evidence row.
+14	manual_review_required	boolean	true			.	Manual review flag.
+15	qc_flags	string_list	false			.	Semicolon-separated flags.
+16	notes	string	false			.	Notes.

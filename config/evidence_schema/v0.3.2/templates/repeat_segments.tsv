@@ -1,0 +1,1 @@
+schema_version	run_id	sample_id	repeat_call_id	evidence_id	read_id	locus_id	segment_index	motif	canonical_motif	read_start	read_end	repeat_bp	repeat_units_float	purity	match_bp	mismatch_bp	insertion_bp	deletion_bp	interruption_count	interruption_pattern	left_boundary_confidence	right_boundary_confidence	call_method	call_score	call_status	call_flags

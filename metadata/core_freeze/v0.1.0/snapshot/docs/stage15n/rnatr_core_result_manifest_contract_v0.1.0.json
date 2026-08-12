@@ -1,0 +1,48 @@
+{
+  "absolute_paths_forbidden_in_portable_manifest": true,
+  "contract_version": "rnatr_core_result_manifest_contract_v0.1.0",
+  "coordinate_contract": {
+    "genomic": "0_based_end_exclusive",
+    "hardclip": "cigar_offset_aware",
+    "raw_read": "0_based_end_exclusive_original_FASTQ_orientation"
+  },
+  "internal_intermediate_layout_is_public_api": false,
+  "local_bindings": "resource_bindings.local.json",
+  "manifest_version": "rnatr_core_result_manifest_v0.1.0",
+  "mapping_timing_boundary": "FASTQ_TO_BAM_MAPPING_OUTSIDE_BAM_TO_FINAL_TIMER",
+  "portable_manifest": "core_result_manifest.json",
+  "post_freeze_extensibility": {
+    "golden_regression_required": true,
+    "hardware_aware_concurrency": true,
+    "intermediate_io_reduction": true,
+    "stage_fusion": true,
+    "streaming": true
+  },
+  "required_join_keys": [
+    "read_id",
+    "target_source",
+    "target_region_id",
+    "locus_id",
+    "evidence_id",
+    "repeat_event_id",
+    "repeat_call_id",
+    "interruption_id",
+    "caller_record_id"
+  ],
+  "required_plain_tables": [
+    "read_evidence.tsv",
+    "general_repeat_calls.tsv",
+    "repeat_events.tsv",
+    "repeat_segments.tsv",
+    "repeat_interruptions.tsv"
+  ],
+  "required_qc_and_provenance": [
+    "package_manifest.tsv",
+    "validation_summary.tsv",
+    "performance.tsv",
+    "input_read_coherence.tsv",
+    "shard_manifest.tsv"
+  ],
+  "scientific_input_contract": "MAPPED_BAM_PLUS_READ_COHERENT_SOURCE_FASTQ",
+  "validation_before_atomic_publication": true
+}

@@ -1,0 +1,6 @@
+artifact	data_rows	bytes	sha256	path
+regression_cases.tsv	20	11776	8bb5ec44b305351220a89a8ef0b9b701e27f456fc1aa58d12e4d9d1177077fd4	/mnt/intelssd/rnatr_project/tests/regression/v0.3.2/regression_cases.tsv
+decision_rules.tsv	16	3166	30fc8bb7696fc1b7cb49422cea2ed77b77a5df94308be7e9f1c98171fe1650c2	/mnt/intelssd/rnatr_project/tests/regression/v0.3.2/decision_rules.tsv
+regression_fixture.qc.tsv	8	178	01011d17424a1714c17f599f32717bd3f73447d80dae68889b477fb4aa7f47af	/mnt/intelssd/rnatr_project/qc/11_regression_fixture/ENCSR307SHM_pilot100k_mm2splice_v1/v0.3.2/regression_fixture.qc.tsv
+regression_reads.fastq.gz	19	59959	aa95c64a6aac22dd0418b5eb005126b63026ffb9ceab72870521650394bdbc8a	/mnt/intelssd/rnatr_project/tests/regression/v0.3.2/data/regression_reads.fastq.gz
+README.md	.	581	c27a07426d930aabf152714d0393665af31b8daa8dd06ce0a94cfbc55592e733	/mnt/intelssd/rnatr_project/tests/regression/v0.3.2/README.md

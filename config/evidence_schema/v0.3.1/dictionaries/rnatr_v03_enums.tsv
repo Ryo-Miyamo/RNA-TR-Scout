@@ -1,0 +1,100 @@
+enum_name	allowed_value	meaning
+alignment_class	primary	
+alignment_class	secondary	
+alignment_class	supplementary	
+alignment_class	unmapped	
+strand	+	
+strand	-	
+strand	.	
+qc_status	PASS	
+qc_status	WARN	
+qc_status	FAIL	
+qc_status	NOT_EVALUATED	
+assignment_status	assigned_unique	
+assignment_status	assigned_ambiguous	
+assignment_status	near_target_only	
+assignment_status	conflicting_segments	
+assignment_status	unassigned	
+evidence_class	SPAN	
+evidence_class	LEFT_ANCHORED_CENSORED_RIGHT	Genomic-left flank anchored; repeat extends to read end without genomic-right flank.
+evidence_class	RIGHT_ANCHORED_CENSORED_LEFT	Genomic-right flank anchored; repeat extends to read start without genomic-left flank.
+evidence_class	REPEAT_ONLY_UNANCHORED	Repeat-like sequence lacks sufficient unique flanks for confident locus assignment.
+evidence_class	FLANKS_WITHOUT_REPEAT	
+evidence_class	NEARBY_ONLY	
+evidence_class	AMBIGUOUS_LOCUS	
+evidence_class	UNRESOLVED	
+sizing_status	exact_span	
+sizing_status	lower_bound	
+sizing_status	compound_sequence_model	
+sizing_status	no_call	
+sizing_status	not_attempted	
+call_status	PASS	
+call_status	LOW_CONFIDENCE	
+call_status	FAIL	
+call_status	NOT_EVALUATED	
+confidence_label	HIGH	
+confidence_label	MEDIUM	
+confidence_label	LOW	
+confidence_label	UNRESOLVED	
+membership_role	representative	
+membership_role	member	
+duplicate_likelihood	low	
+duplicate_likelihood	medium	
+duplicate_likelihood	high	
+duplicate_likelihood	unknown	
+cluster_confidence	HIGH	
+cluster_confidence	MEDIUM	
+cluster_confidence	LOW	
+cluster_confidence	UNRESOLVED	
+rna_evidence_status	EVIDENCE_PRESENT	
+rna_evidence_status	COVERED_NO_OUTLIER_SIGNAL	No expansion signal in the observed RNA reads; not a DNA-negative result.
+rna_evidence_status	INSUFFICIENT_COVERAGE	
+rna_evidence_status	NO_RNA_COVERAGE	No informative RNA coverage; not assessable.
+rna_evidence_status	AMBIGUOUS	
+rna_evidence_status	NOT_EVALUATED	
+evaluability_status	EVALUABLE	
+evaluability_status	PARTIALLY_EVALUABLE	
+evaluability_status	NOT_EVALUABLE	
+evaluability_status	NOT_EVALUATED	
+expansion_signal_status	STRONG_CANDIDATE	
+expansion_signal_status	MODERATE_CANDIDATE	
+expansion_signal_status	WEAK_CANDIDATE	
+expansion_signal_status	NO_SIGNAL_IN_OBSERVED_RNA	Observed RNA evidence lacks an outlier signal; must not be reported as DNA-repeat negative.
+expansion_signal_status	NOT_ASSESSABLE	
+region_structure_status	SIMPLE_TR_RESOLVED	
+region_structure_status	COMPOUND_STRUCTURE_RESOLVED	
+region_structure_status	PARTIALLY_RESOLVED	
+region_structure_status	UNRESOLVED	
+region_structure_status	NOT_EVALUATED	
+scope_type	run	
+scope_type	sample	
+scope_type	table	
+scope_type	read	
+scope_type	locus	
+scope_type	region	
+metric_status	PASS	
+metric_status	WARN	
+metric_status	FAIL	
+metric_status	INFO	
+failure_code	NONE	
+failure_code	READ_SEQUENCE_MISSING	
+failure_code	BAM_FASTQ_ID_MISMATCH	
+failure_code	NO_ALIGNMENT	
+failure_code	LOW_MAPQ	
+failure_code	MULTI_LOCUS	
+failure_code	CONFLICTING_SUPPLEMENTARY_SEGMENTS	
+failure_code	CHIMERIC_READ	
+failure_code	INSUFFICIENT_LEFT_FLANK	
+failure_code	INSUFFICIENT_RIGHT_FLANK	
+failure_code	REPEAT_NOT_FOUND	
+failure_code	REPEAT_BOUNDARY_UNCERTAIN	
+failure_code	COMPOUND_STRUCTURE	
+failure_code	AMBIGUOUS_MOTIF	
+failure_code	LOW_BASE_QUALITY	
+failure_code	INTERNAL_SOFTCLIP_ONLY	
+failure_code	DUPLICATE_LIKE	
+failure_code	TARGET_NOT_EVALUABLE	
+failure_code	SOFTWARE_ERROR	
+evidence_class	LEFT_ONLY_INTERNAL	Genomic-left flank anchored and target-overlapping repeat tract observed internally, but the tract does not reach the expected raw-read end; no exact size or lower bound.
+evidence_class	RIGHT_ONLY_INTERNAL	Genomic-right flank anchored and target-overlapping repeat tract observed internally, but the tract does not reach the expected raw-read end; no exact size or lower bound.
+sizing_status	partial_internal	Partial internal repeat tract observed; neither exact size nor censored lower bound.

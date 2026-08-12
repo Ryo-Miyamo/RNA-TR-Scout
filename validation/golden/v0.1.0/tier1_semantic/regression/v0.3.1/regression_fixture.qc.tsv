@@ -1,0 +1,9 @@
+metric	value
+expected_cases	18
+observed_cases	18
+unique_case_ids	18
+unique_read_ids_required	17
+fastq_reads_written	17
+missing_fastq_reads	0
+decision_rules_written	13
+audit_status	PASS

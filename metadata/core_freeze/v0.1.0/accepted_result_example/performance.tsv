@@ -1,0 +1,3 @@
+stage	elapsed_seconds	status
+global_merge_and_gzip	3.245007032994181	PASS
+global_package_validator	15.529444866988342	PASS

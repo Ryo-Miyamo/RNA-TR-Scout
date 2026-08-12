@@ -1,0 +1,61 @@
+{
+  "contract_version": "rnatr_biology_sidecar_manifest_contract_v0.1.0",
+  "core_five_tables_immutable": true,
+  "core_reference_required": {
+    "core_evidence_schema_version": "string",
+    "core_result_manifest_sha256": "sha256",
+    "core_result_manifest_version": "string",
+    "run_id": "string",
+    "sample_id": "string"
+  },
+  "identity_scope": {
+    "call_identity": [
+      "core_result_manifest_sha256",
+      "repeat_call_id"
+    ],
+    "event_identity": [
+      "core_result_manifest_sha256",
+      "repeat_event_id"
+    ],
+    "evidence_identity": [
+      "core_result_manifest_sha256",
+      "evidence_id"
+    ],
+    "interruption_identity": [
+      "core_result_manifest_sha256",
+      "interruption_id"
+    ],
+    "locus_identity": [
+      "catalog_logical_id",
+      "catalog_sha256",
+      "target_source",
+      "target_region_id",
+      "locus_id"
+    ],
+    "molecule_identity": "optional_sidecar_defined_not_equivalent_to_read_id_by_default",
+    "read_identity": [
+      "core_result_manifest_sha256",
+      "read_id"
+    ]
+  },
+  "optional_resource_namespaces": [
+    "annotation:",
+    "profile:",
+    "calibration:",
+    "reference:",
+    "sidecar:"
+  ],
+  "portable_manifest_absolute_paths_forbidden": true,
+  "reverse_traceability_required": true,
+  "sidecar_required": {
+    "created_utc": "RFC3339",
+    "sidecar_name": "string",
+    "sidecar_schema_version": "string",
+    "sidecar_software_version": "string",
+    "validation_status": [
+      "PASS",
+      "FAIL"
+    ]
+  },
+  "stage_dataset_developer_path_dependency_forbidden": true
+}

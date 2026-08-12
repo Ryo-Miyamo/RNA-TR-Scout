@@ -1,0 +1,19 @@
+table	action	key	candidate_state	summary	evidence
+decisions	ADD	core_freeze_v0_1_0_acceptance_v0_1_0	ACTIVE	Accept local checksummed Core Freeze v0.1.0 with scoped biology/public-release gates	Final Packet v0.1.1 + Stage15T post-registration evidence
+decisions	ADD	stage15r_candidate_multiplicity_closure_v0_1_0	ACTIVE	Technical multiplicity/reverse trace PASS; biology weighting deferred	Stage15R R2 bundle b68e4a8d...
+decisions	ADD	stage15s_extensibility_hygiene_closure_v0_1_0	ACTIVE	Seven extension boundaries have no pre-Freeze hard coupling; final hygiene accepted with deferred cleanup/Git scope	Stage15S Pro audit + exact SSOT supplement
+interpretations	ADD	candidate_assignment_count_not_biological_event_count_v0_1_0	ACTIVE	Candidate multiplicity is technical assignment multiplicity, not independent biological-event count	Stage15R R2
+algorithm_contracts	UPDATE	architecture_consistency_audit_v0_1_0	PASS_LOCAL_CORE_FREEZE_CHECKPOINTS	POST250K/PRE-RC/PRE-BIOLOGY/final exact-original audit complete	Final architecture/hygiene audit
+algorithm_contracts	UPDATE	core_freeze_preservation_governance_v0_1_0	SATISFIED_LOCAL_CORE_FREEZE_V0_1_0	Packet/golden/canonical docs/manifest preservation satisfied to local Freeze scope	Final registration evidence
+algorithm_contracts	UPDATE	positive_golden_evidence_v0_1_0	CANONICAL_FULL_EVIDENCE_SUITE_PASS	Stage15Q canonical Tier0-Tier4 full-evidence suite PASS	Stage15Q accepted output
+algorithm_contracts	ADD	candidate_assignment_reverse_traceability_v0_1_0	PASS_WITH_SCOPE_BIOLOGY_DEFERRED	733/733 selected chains, zero unresolved reads	Stage15R R2
+algorithm_contracts	ADD	future_extensibility_boundaries_v0_1_0	PASS_NO_HARD_COUPLING	0/7 HARD_COUPLING_REQUIRES_REMEDIATION	Stage15S Pro audit
+limitations	CLOSE	CORE_FREEZE_GOVERNANCE_ARTIFACTS_NOT_YET_CREATED	CLOSED	Superseded by final registered Packet/golden/canonical Freeze evidence	Stage15T registration
+limitations	CLOSE	GENERIC_ACTIVE_PATH_GOLDEN_SUITE_NOT_YET_CANONICALLY_PACKAGED	CLOSED	Superseded by Stage15Q canonical full-evidence suite	Stage15Q acceptance
+limitations	ADD	LOCAL_CORE_FREEZE_NOT_PUBLIC_GIT_RELEASE	ACTIVE	Local checksummed Freeze is not yet a clean-install/cross-hardware/Git-tagged public release	Final Packet v0.1.1
+open_questions	CLOSE	ARCHITECTURE_CONSISTENCY_AUDIT_CLOSURE	CLOSED	Closed for local Core Freeze; future major changes retain audit cadence	Final architecture/hygiene audit
+open_questions	CLOSE	CORE_FREEZE_PACKET	CLOSED	Final Packet v0.1.1 registered and checksum-bound	Stage15T registration
+open_questions	CLOSE	GOLDEN_REGRESSION_SUITE	CLOSED	Canonical full-evidence suite installed and passed	Stage15Q + Stage15T reverify
+open_questions	CLOSE	PROJECT_WIDE_DOCS_CANONICALIZATION	CLOSED	Canonical layout installed/audited; cleanup remains separate	Stage15Q/Stage15S
+open_questions	UPDATE	BIOLOGY_READY_INTERPRETATION_OUTPUT_AUDIT	OPEN	Begin post-Freeze G20-G23 sidecar/interpretation implementation without rewriting Core tables	Final Packet v0.1.1
+open_questions	ADD	CORE_FREEZE_GIT_TAG_AND_PUBLIC_RELEASE_BINDING	OPEN_NONBLOCKING_FOR_LOCAL_FREEZE	Create repository, commit/tag, clean install and public v0.5.0 release later	G25-G30/public release lane

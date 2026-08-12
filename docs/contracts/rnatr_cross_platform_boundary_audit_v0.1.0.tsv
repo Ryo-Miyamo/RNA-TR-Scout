@@ -1,0 +1,13 @@
+surface	classification	freeze_status	exact_evidence_interpretation	required_boundary
+stable_read_molecule_identity	PLATFORM_INDEPENDENT_CORE	FREEZE	Schema and portable manifest expose stable read/evidence identities; molecule identity extension exists.	Do not bind public identity to a developer path or Stage number.
+stable_locus_target_identity	PLATFORM_INDEPENDENT_CORE	FREEZE	target_source, target_region_id and locus_id are in schema/manifest and smoke joins to pinned annotation.	Keep catalog/version provenance explicit.
+repeat_measurement_semantics	PLATFORM_INDEPENDENT_CORE	FREEZE	Caller/materializer/schema define repeat, interruption, censoring, context-limited and missingness semantics.	Profile calibration may affect confidence/observability, not silently redefine shared semantics.
+canonical_sequence_alignment_resolution	EXTENSION_BOUNDARY	FREEZE_INTERFACE_NOT_PHYSICAL_FORMAT	Current manifest/local-binding interface resolves source sequence and alignment.	Permit future adapter resources other than physical BAM+FASTQ.
+BAM_plus_source_FASTQ	CURRENT_ONT_CDNA_PROFILE	SCOPED_BASELINE	Validated current production profile and golden evidence.	Do not universalize across future platforms.
+minimap2_splice_command	CURRENT_MAPPING_PROFILE	REFERENCE_BASELINE	Current upstream mapping scientific baseline.	Post-Freeze mapping Performance lane; not Core-internal immutable contract.
+read_orientation	PLATFORM_ADAPTER_CALIBRATION	DO_NOT_UNIVERSALIZE	Current raw-read coordinates refer to original FASTQ orientation.	Future platform profile must declare/normalize orientation.
+CIGAR_hardclip_handling	PLATFORM_ADAPTER_PLUS_SHARED_ALIGNMENT_INTERFACE	SCOPED	Current projection is CIGAR/hardclip aware.	Preserve observable coordinate semantics while allowing alternate alignment encodings/adapters.
+observability_completeness_polyA	PLATFORM_CALIBRATION_AND_BIOLOGY_SIDECAR	POST_FREEZE	Current Core does not claim complete cross-platform observability calibration.	Implement profile-specific calibration/sidecars without rewriting Core source-of-truth tables.
+POD5_Dorado_direct_RNA	FUTURE_PLATFORM_PROFILE	NOT_REQUIRED_PRE_FREEZE	No implementation/validation claimed.	Add post-Freeze adapter/calibration.
+PacBio_IsoSeq	FUTURE_PLATFORM_PROFILE	NOT_REQUIRED_PRE_FREEZE	No implementation/validation claimed.	Add post-Freeze adapter/calibration.
+PacBio_Kinnex	FUTURE_PLATFORM_PROFILE	NOT_REQUIRED_PRE_FREEZE	No implementation/validation claimed.	Add post-Freeze adapter/calibration.

@@ -1,0 +1,7 @@
+gate_id	gate	blocking_for_schema_freeze	status	next_action
+G11	Mismatch/indel/interruption/purity/LPS preserved separately	true	PASS	Stage14K must populate or explicitly mark missing values without conflation.
+G12	Biological-vs-technical origin classifier truth validation	false	OPEN	Develop only after truth-bearing evidence; Stage14K uses NOT_ASSESSED.
+G13	Read-level RNA repeat-length distribution retained	true	PASS	repeat_events remains source of truth.
+G14	RNA repeat-length clustering algorithm validated	false	OPEN	Implement after production materialization and sufficient same-locus support.
+G15	Allele/haplotype labels prohibited without phase evidence	true	PASS	Validator rejects unphased allele labels.
+G16	Censored/context-limited reads not naively mixed as exact observations	true	PASS	Validator requires exact-only or explicit censor-aware handling.

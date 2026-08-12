@@ -1,0 +1,355 @@
+{
+  "artifacts": [
+    {
+      "bytes": 271747905,
+      "logical_name": "read_evidence.tsv",
+      "parity_contract": "EXACT_SHA256",
+      "path": "read_evidence.tsv",
+      "rows": 388571,
+      "sha256": "4c66159929b780ff6b637f1842b5fa994b4322e5deae17fef3a24a313d4190f9",
+      "table": "read_evidence"
+    },
+    {
+      "bytes": 60655001,
+      "logical_name": "read_evidence.tsv.gz",
+      "parity_contract": "DETERMINISTIC_GZIP_MTIME0",
+      "path": "read_evidence.tsv.gz",
+      "rows": 388571,
+      "sha256": "2408edcffa668008697c2e5aca18e26ebe9bafe03af9cee950261cbb20353ba2",
+      "table": "read_evidence"
+    },
+    {
+      "bytes": 339962317,
+      "logical_name": "general_repeat_calls.tsv",
+      "parity_contract": "EXACT_SHA256",
+      "path": "general_repeat_calls.tsv",
+      "rows": 388571,
+      "sha256": "21edb2595f24849282cf2d67e9f0a257d756c8d9c82d9619b297fd83d769bf85",
+      "table": "general_repeat_calls"
+    },
+    {
+      "bytes": 64510925,
+      "logical_name": "general_repeat_calls.tsv.gz",
+      "parity_contract": "DETERMINISTIC_GZIP_MTIME0",
+      "path": "general_repeat_calls.tsv.gz",
+      "rows": 388571,
+      "sha256": "9f6af063656d79391eb47184502e115e1a7984f3710491e66c60b9770f8ee327",
+      "table": "general_repeat_calls"
+    },
+    {
+      "bytes": 82583318,
+      "logical_name": "repeat_events.tsv",
+      "parity_contract": "EXACT_SHA256",
+      "path": "repeat_events.tsv",
+      "rows": 160297,
+      "sha256": "3996edc2491e2ca3f47be5ec5c931f8ac9b2e66213d93e864253a11a4a1bc51e",
+      "table": "repeat_events"
+    },
+    {
+      "bytes": 23232812,
+      "logical_name": "repeat_events.tsv.gz",
+      "parity_contract": "DETERMINISTIC_GZIP_MTIME0",
+      "path": "repeat_events.tsv.gz",
+      "rows": 160297,
+      "sha256": "01b34a735b663398244c9f3c4a1d5d8bc4a320e47aae4b7895d4ed9fad2d3ac1",
+      "table": "repeat_events"
+    },
+    {
+      "bytes": 63941474,
+      "logical_name": "repeat_segments.tsv",
+      "parity_contract": "EXACT_SHA256",
+      "path": "repeat_segments.tsv",
+      "rows": 161265,
+      "sha256": "ac8ac589591a9629100b5edc2613bc77b21346eb389d06b57254e7afecb8859e",
+      "table": "repeat_segments"
+    },
+    {
+      "bytes": 20724395,
+      "logical_name": "repeat_segments.tsv.gz",
+      "parity_contract": "DETERMINISTIC_GZIP_MTIME0",
+      "path": "repeat_segments.tsv.gz",
+      "rows": 161265,
+      "sha256": "5b5997862614dcfd110f6a626e858471b413e415a464dd8838d58cf85dfa5db1",
+      "table": "repeat_segments"
+    },
+    {
+      "bytes": 418851,
+      "logical_name": "repeat_interruptions.tsv",
+      "parity_contract": "EXACT_SHA256",
+      "path": "repeat_interruptions.tsv",
+      "rows": 848,
+      "sha256": "d835cc0786c5972e6fe114d1524d72948010d29dc6ba1ad18e1918b07c7f5556",
+      "table": "repeat_interruptions"
+    },
+    {
+      "bytes": 94947,
+      "logical_name": "repeat_interruptions.tsv.gz",
+      "parity_contract": "DETERMINISTIC_GZIP_MTIME0",
+      "path": "repeat_interruptions.tsv.gz",
+      "rows": 848,
+      "sha256": "e7e44c81f766cdc1b38be453751c9a3be0a174f01a66139dc9f7b830ece915e4",
+      "table": "repeat_interruptions"
+    },
+    {
+      "bytes": 1676,
+      "kind": "PACKAGE_MANIFEST",
+      "logical_name": "package_manifest.tsv",
+      "parity_contract": "PROVENANCE_OR_QC_FIELD_SCOPED",
+      "path": "package_manifest.tsv",
+      "rows": 10,
+      "sha256": "cd409480d0fb416b2e922e1849dec1b9b985646efd5794e533676c3a33f1e98c"
+    },
+    {
+      "bytes": 67,
+      "kind": "VALIDATION_SUMMARY",
+      "logical_name": "validation_summary.tsv",
+      "parity_contract": "PROVENANCE_OR_QC_FIELD_SCOPED",
+      "path": "validation_summary.tsv",
+      "rows": 1,
+      "sha256": "c43c9a27a0eee3ae059f0be78f418c41aadafc0687f36f36caa25dac082f4f2a"
+    },
+    {
+      "bytes": 123,
+      "kind": "PERFORMANCE_INSTRUMENTATION",
+      "logical_name": "performance.tsv",
+      "parity_contract": "PROVENANCE_OR_QC_FIELD_SCOPED",
+      "path": "performance.tsv",
+      "rows": 2,
+      "sha256": "079eb4103af503d6df678e6a181c701c8c690f66c166cfa2f20ff13ff6ca6da9"
+    },
+    {
+      "bytes": 118,
+      "kind": "INPUT_COHERENCE",
+      "logical_name": "input_read_coherence.tsv",
+      "parity_contract": "PROVENANCE_OR_QC_FIELD_SCOPED",
+      "path": "input_read_coherence.tsv",
+      "rows": 4,
+      "sha256": "eeac78a351be78f405f45e0a01f7931d6993566f063b0bacf8840fd6c2c598f4"
+    },
+    {
+      "bytes": 2997,
+      "kind": "SHARD_PROVENANCE",
+      "logical_name": "shard_manifest.tsv",
+      "parity_contract": "PROVENANCE_OR_QC_FIELD_SCOPED",
+      "path": "shard_manifest.tsv",
+      "rows": 12,
+      "sha256": "f89f12d5fa8c8fa0dce09da45ad171bbc11466b2377b9e9099bf950a84b00ac9"
+    }
+  ],
+  "coordinate_contract": {
+    "genomic": "0_based_end_exclusive",
+    "hardclip": "cigar_offset_aware",
+    "raw_read": "0_based_end_exclusive_original_FASTQ_orientation"
+  },
+  "core_runner_version": "rnatr_core_generic_sharded_bam_fastq_to_final_v0.1.1",
+  "join_key_contract": {
+    "caller_record_id": "unique caller-attempt identifier",
+    "evidence_id": "unique molecule-by-locus evidence identifier",
+    "interruption_id": "unique repeat-interruption identifier",
+    "locus_id": "representative stable locus identity",
+    "read_id": "stable source-read identifier; joins Core evidence to BAM/FASTQ",
+    "repeat_call_id": "unique repeat-segment/call identifier",
+    "repeat_event_id": "unique repeat-event identifier",
+    "target_region_id": "pinned mapping-target identity within target_source",
+    "target_source": "namespace for target_region_id"
+  },
+  "manifest_version": "rnatr_core_result_manifest_v0.1.0",
+  "performance_instrumentation": {
+    "logical_name": "performance.tsv",
+    "path": "performance.tsv"
+  },
+  "post_freeze_extensibility": {
+    "golden_regression_required_for_change": true,
+    "hardware_aware_concurrency_allowed_behind_contract": true,
+    "intermediate_io_reduction_allowed_behind_contract": true,
+    "stage_fusion_allowed_behind_contract": true,
+    "streaming_allowed_behind_contract": true
+  },
+  "resources": {
+    "catalog:analysis_regions": {
+      "binding": "resource_bindings.local.json#/resources/catalog:analysis_regions",
+      "bytes": 8908626,
+      "kind": "CATALOG_OR_ANNOTATION",
+      "logical_id": "catalog:analysis_regions",
+      "sha256": "562802c3757785d0ef7d4b7b10ac5582b53bdce1d380d76dccb15711a2ebf9d3"
+    },
+    "catalog:disease_regions": {
+      "binding": "resource_bindings.local.json#/resources/catalog:disease_regions",
+      "bytes": 5128,
+      "kind": "CATALOG_OR_ANNOTATION",
+      "logical_id": "catalog:disease_regions",
+      "sha256": "056ae07de7b8f6299fadcabfefb7b596bc2c5a35591c06870dbed4d7fb519796"
+    },
+    "catalog:mapping_target_bed": {
+      "binding": "resource_bindings.local.json#/resources/catalog:mapping_target_bed",
+      "bytes": 6959113,
+      "kind": "CATALOG_OR_ANNOTATION",
+      "logical_id": "catalog:mapping_target_bed",
+      "sha256": "6ec444b0ffcb9da4452b24d1654ed6c4b945c3cd3e8379e4e4cbe6e72931cfe2"
+    },
+    "catalog:mapping_target_bed_index": {
+      "binding": "resource_bindings.local.json#/resources/catalog:mapping_target_bed_index",
+      "bytes": 669520,
+      "kind": "CATALOG_OR_ANNOTATION",
+      "logical_id": "catalog:mapping_target_bed_index",
+      "sha256": "9803a3b268e9a7ca30edbf4c312a0d60b90a9bb9c34fdcd243348caa9bc4e77d"
+    },
+    "catalog:mapping_target_tsv": {
+      "binding": "resource_bindings.local.json#/resources/catalog:mapping_target_tsv",
+      "bytes": 6959367,
+      "kind": "CATALOG_OR_ANNOTATION",
+      "logical_id": "catalog:mapping_target_tsv",
+      "sha256": "3edffe6f5d31922ca0c58759186639e77f51c48745ac5e22ad3aad0a010fec75"
+    },
+    "component:11b_target_assignment": {
+      "binding": "resource_bindings.local.json#/resources/component:11b_target_assignment",
+      "bytes": 32161,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:11b_target_assignment",
+      "sha256": "e00bdaad48080d7cfed01e1b961e0617af0f2239e014cd6fe8924460aa9afd56"
+    },
+    "component:11d3_raw_projection": {
+      "binding": "resource_bindings.local.json#/resources/component:11d3_raw_projection",
+      "bytes": 45064,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:11d3_raw_projection",
+      "sha256": "9df2998915e49da27ecf80f24a733d55a498c2ba32b278df881fdefa901a83e2"
+    },
+    "component:assignment_schema_v03": {
+      "binding": "resource_bindings.local.json#/resources/component:assignment_schema_v03",
+      "bytes": 62658,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:assignment_schema_v03",
+      "sha256": "c9f38755ecd07d0a2614f01b181c62db37c437a9004ed2fc06726b0239161f0e"
+    },
+    "component:assignment_validator_v031": {
+      "binding": "resource_bindings.local.json#/resources/component:assignment_validator_v031",
+      "bytes": 4021,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:assignment_validator_v031",
+      "sha256": "10c9d4bbb5c9dac314d400768eb27206173933759c877225bd0ca2c692d8aba9"
+    },
+    "component:base_merge_publish_runner": {
+      "binding": "resource_bindings.local.json#/resources/component:base_merge_publish_runner",
+      "bytes": 88363,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:base_merge_publish_runner",
+      "sha256": "7bfb7018cea80cd92854882751cffb49bea817296f69866801a64f9529c5e1a8"
+    },
+    "component:caller_native_v041": {
+      "binding": "resource_bindings.local.json#/resources/component:caller_native_v041",
+      "bytes": 19457,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:caller_native_v041",
+      "sha256": "d5a2e0545afa5d97026c3a6ac0be6bc355e87f4c130bc512b0b3bf9a5bf32351"
+    },
+    "component:caller_runid_adapter": {
+      "binding": "resource_bindings.local.json#/resources/component:caller_runid_adapter",
+      "bytes": 11082,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:caller_runid_adapter",
+      "sha256": "18d40dba5733efbfa633fff1d52372db49c63bcf315acb7f86acbdc64c89e386"
+    },
+    "component:candidate_fastq_extractor": {
+      "binding": "resource_bindings.local.json#/resources/component:candidate_fastq_extractor",
+      "bytes": 4128,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:candidate_fastq_extractor",
+      "sha256": "b4ecf4e5ecf1a1c0e57e96cb30f560a21230e1463777bdbb0e36601918a9abbf"
+    },
+    "component:fast_motif_builder": {
+      "binding": "resource_bindings.local.json#/resources/component:fast_motif_builder",
+      "bytes": 21260,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:fast_motif_builder",
+      "sha256": "3e36454a515cd8c0411957000099867b582ae7d2bef78b7fe2ebd61bf09f4dc4"
+    },
+    "component:materializer_runid_adapter": {
+      "binding": "resource_bindings.local.json#/resources/component:materializer_runid_adapter",
+      "bytes": 56779,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:materializer_runid_adapter",
+      "sha256": "7ba7f5082c9671be55b6b223c20f5bc8b933ad8b4658b1789187e043943949d4"
+    },
+    "component:materializer_v012": {
+      "binding": "resource_bindings.local.json#/resources/component:materializer_v012",
+      "bytes": 57942,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:materializer_v012",
+      "sha256": "18a67ef312e74257549570ae81a6cca364055240f519d29dc7664e2ea1c429ea"
+    },
+    "component:memory_bounded_validator": {
+      "binding": "resource_bindings.local.json#/resources/component:memory_bounded_validator",
+      "bytes": 22882,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:memory_bounded_validator",
+      "sha256": "1136086f0214bcd11a2a2d71f2e459f433c7fc9f51d170aa3b97826e8808ee99"
+    },
+    "component:schema_v042": {
+      "binding": "resource_bindings.local.json#/resources/component:schema_v042",
+      "bytes": 157668,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:schema_v042",
+      "sha256": "c0509a0669344dba0b07cd1bb9e71f2aeb01e0196df47ec9178f1d2464b515f1"
+    },
+    "component:stage15c_fullscale_evidence_runner": {
+      "binding": "resource_bindings.local.json#/resources/component:stage15c_fullscale_evidence_runner",
+      "bytes": 140952,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:stage15c_fullscale_evidence_runner",
+      "sha256": "cca6b2d4c6e773392d3a8c24cd2fd2a1f0a41a713338b4ccdec1ba7fab5bafcc"
+    },
+    "component:validator_v042_package": {
+      "binding": "resource_bindings.local.json#/resources/component:validator_v042_package",
+      "bytes": 721,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:validator_v042_package",
+      "sha256": "45c3995550f57a65b3fec4aab7471d57b7000e19471d4c5cf7f3ae055426984e"
+    },
+    "component:validator_v042_tsv": {
+      "binding": "resource_bindings.local.json#/resources/component:validator_v042_tsv",
+      "bytes": 4021,
+      "kind": "CORE_COMPONENT",
+      "logical_id": "component:validator_v042_tsv",
+      "sha256": "10c9d4bbb5c9dac314d400768eb27206173933759c877225bd0ca2c692d8aba9"
+    },
+    "source_bam": {
+      "binding": "resource_bindings.local.json#/resources/source_bam",
+      "bytes": 177337264,
+      "kind": "BAM",
+      "logical_id": "source_bam",
+      "sha256": "0b1ec4e051ac1067fe7207c076e1eff10e45335b49190902944496a9461300e6"
+    },
+    "source_reads": {
+      "binding": "resource_bindings.local.json#/resources/source_reads",
+      "bytes": 128207543,
+      "kind": "FASTQ",
+      "logical_id": "source_reads",
+      "sha256": "559dd0f3cb7d7de3c108a68a0d36efb895aae8f63e1a78aa4acd1d91b2c27173"
+    }
+  },
+  "run": {
+    "created_utc": "2026-08-11T12:06:05Z",
+    "run_id": "ENCSR307SHM_pilot100k_mm2splice_v1",
+    "sample_id": "ENCSR307SHM"
+  },
+  "scientific_contract": {
+    "bam_only_input": false,
+    "caller": "rnatr_general_repeat_caller_ref_v0.4.1",
+    "evidence_schema": "0.4.2",
+    "internal_intermediate_layout_is_public_api": false,
+    "mapping_timing_boundary": "FASTQ_TO_BAM_MAPPING_OUTSIDE_BAM_TO_FINAL_TIMER",
+    "materializer": "rnatr_native_v041_to_evidence_v042_materializer_v0.1.2",
+    "source_read_sequence_required": true,
+    "target_catalog": "RNA-TR-Scout_v0.3_rnatr_pilot_v03"
+  },
+  "sharding": {
+    "algorithm": "sha256(read_id)[0:8]_big_endian_modulo_shard_count",
+    "shard_count": 12,
+    "unit_runner": "rnatr_core_generic_unit_bam_fastq_to_final_v0.1.1"
+  },
+  "validation": {
+    "status": "PASS",
+    "summary_artifact": "validation_summary.tsv"
+  }
+}

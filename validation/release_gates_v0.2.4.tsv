@@ -1,0 +1,25 @@
+gate_id	gate	level	blocking_for_v1	status	evidence_or_next_action
+G01	General caller deterministic across hash seeds	algorithm	true	PASS	Stage 14F2 and 14G
+G02	Synthetic truth and semantic invariants	algorithm	true	PASS	Stage 14G
+G03	Python/native 100k exact parity	implementation	true	PASS	Stage 14G all 388571 rows
+G04	Native caller-only projected 5.31M runtime <=30 min	performance	false	PASS	Stage 14G projected 18.90 min
+G05	100k prepared-job/native-caller to validated final-evidence package	production	true	PASS	Stage14K2/14L2; starts from frozen motif/projection jobs, not BAM
+G06	5M-read BAM-input runtime <=60 min	performance	true	OPEN	Stage15A deterministic 250k scaling PASS with exact package/caller reproducibility; linear 5.31M projection 59.858798 min has only 0.141202 min margin. Keep OPEN until deterministic 500k and later empirical full-scale runtime.
+G07	5M-read restartability/memory/artifact audit	production	true	OPEN	100k selective caller-checkpoint-to-final restart PASS; post-250k audit confirms role×shard logical checkpoint reproducibility. 250k selective resume, arbitrary upstream recovery, concurrent-memory accounting, and full-scale restart remain OPEN.
+G08	Real truth-bearing biological validation	biology	true	OPEN	Disease/synthetic-RNA/orthogonal truth data
+G09	Large-cohort RNA technical/background distribution	population	false	OPEN	Defer until production caller stable and fast
+G10	FASTQ-to-final mapping-inclusive performance	convenience	false	OPEN	Report minimap2 separately
+G11	Mismatch/indel/interruption/purity/LPS preserved separately	schema_contract	true	PASS	Schema v0.4.2 retains separate fields and explicit missingness
+G12	Biological-vs-technical origin classifier truth validation	schema_contract	false	OPEN	Develop only after truth-bearing evidence; current package uses NOT_ASSESSED
+G13	Read-level RNA repeat-length distribution retained	schema_contract	true	PASS	repeat_events remains source of truth
+G14	RNA repeat-length clustering algorithm validated	schema_contract	false	OPEN	Implement after production materialization and sufficient same-locus support
+G15	Allele/haplotype labels prohibited without phase evidence	schema_contract	true	PASS	Validator/contract rejects unsupported biological allele labels
+G16	Censored/context-limited reads not naively mixed as exact observations	schema_contract	true	PASS	Exact-only or explicit censor-aware handling required
+G17	100k mapping-complete BAM input to validated schema v0.4.2 package	production	true	PASS	Stage15A 100k reference/performance PASS; deterministic 250k package preserves exact nested original-100k parity.
+G18	Called non-locus-anchored attempts retained but not eventized	materialization	true	PASS	18 attempts retained losslessly and not eventized
+G19	failure_code/qc_flags/materialization_status semantics are distinct	schema_contract	true	PASS	Stage14L2 contract
+G20	Read-keyed biology joinability for transcript, haplotype, observability, and molecule independence	biology_output	true	OPEN	Freeze and validate four versioned sidecar schemas after Stage15A scaling architecture stabilizes
+G21	Molecule-level distribution retained through sample-by-locus summarization	interpretation_output	true	OPEN	Implement molecule_repeat_state and censor-aware sample_locus_summary without discarding core events
+G22	Purpose-specific ranking lanes with unconditional known-disease retention	interpretation_output	true	OPEN	Implement separate KNOWN_DISEASE, EXPANSION_DISCOVERY, RNA_PROCESSING, REPEAT_HETEROGENEITY, HAPLOTYPE_CONTROLLED, and TECHNICAL_CONFIDENCE lanes
+G23	Researcher-facing candidate dossier is fully traceable to core and sidecar evidence	interpretation_output	true	OPEN	Implement dossier schema and reverse-traceability validator before biology-ready v1/cohort triage
+G24	Major-checkpoint Architecture consistency audit and closure	architecture_contract	true	OPEN	Post-250k audit v0.1.1 completed with 0 conflicts and REVIEW status. Pre-biology and pre-release-candidate audits remain mandatory; close all blocking conflicts before the corresponding gate.

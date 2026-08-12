@@ -1,0 +1,23 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Analysis run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	locus_distribution_id	string	true			.	Deterministic sample-locus distribution identifier; prefix RLD_.
+5	locus_id	string	true			.	Locus identifier.
+6	canonical_motif	string	false			.	Primary canonical motif stratum.
+7	distribution_status	enum	true	locus_distribution_status		.	Distribution aggregation status.
+8	aggregation_method_id	string	false			.	Versioned aggregation method.
+9	event_count_total	integer	true			.	All retained read-level events.
+10	exact_event_count	integer	true			.	Exact, uncensored event count.
+11	left_censored_event_count	integer	true			.	Left-censored event count.
+12	right_censored_event_count	integer	true			.	Right-censored event count.
+13	both_censored_event_count	integer	true			.	Both-censored event count.
+14	context_limited_event_count	integer	true			.	Context-limited event count.
+15	low_confidence_event_count	integer	true			.	Low-confidence event count.
+16	exact_length_min_bp	float	false			.	Minimum exact event length.
+17	exact_length_median_bp	float	false			.	Median exact event length.
+18	exact_length_p95_bp	float	false			.	95th percentile exact event length.
+19	exact_length_max_bp	float	false			.	Maximum exact event length.
+20	read_level_distribution_preserved	boolean	true			.	Must be true; repeat_events remain queryable.
+21	cluster_analysis_status	enum	true	cluster_analysis_status		.	NOT_RUN/INSUFFICIENT_DATA/UNIMODAL/MULTIMODAL/REVIEW.
+22	notes	string	false			.	Distribution-level notes.

@@ -1,0 +1,78 @@
+caller_field	nonmissing_rows	lossless_raw_preserved	classification	normalized_or_audit_targets	materialization_rule
+projection_id	388571	true	NORMALIZED_V040	general_repeat_calls.projection_id;read_evidence.best_projection_id	all attempts raw; deterministic best attempt summarized
+read_id	388571	true	NORMALIZED_EXISTING	read_evidence.<same_name>;repeat_events.<same_name>	direct
+target_region_id	388571	true	NORMALIZED_EXISTING	read_evidence.<same_name>;repeat_events.<same_name>	direct
+target_source	388571	true	NORMALIZED_EXISTING	read_evidence.<same_name>;repeat_events.<same_name>	direct
+region_type	388571	true	NORMALIZED_EXISTING	read_evidence.<same_name>;repeat_events.<same_name>	direct
+representative_locus_id	388571	true	NORMALIZED_EXISTING	read_evidence.locus_id;repeat_events.locus_id;repeat_segments.locus_id	direct; do not create duplicate representative_locus_id column
+assignment_rank	388571	true	NORMALIZED_EXISTING	read_evidence.<same_name>;repeat_events.<same_name>	direct
+read_candidate_target_count	388571	true	DERIVED_NORMALIZED	read_evidence.competing_locus_count	max(0, read_candidate_target_count - 1)
+scan_priority	388571	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+scan_strategy	388571	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+geometry_class	388571	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+potential_evidence_class	388571	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+strand	388571	true	NORMALIZED_EXISTING	read_evidence.<same_name>;repeat_events.<same_name>	direct
+best_mapq	388571	true	NORMALIZED_EXISTING	read_evidence.mapq_best	direct
+catalog_motifs	388571	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+candidate_window_read_start	388468	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+candidate_window_read_end	388468	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+projected_target_read_start	176480	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+projected_target_read_end	176480	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+integration_status	388571	true	NORMALIZED_V040	read_evidence.best_caller_integration_status;read_evidence.caller_attempt_count;read_evidence.caller_called_count;read_evidence.sizing_status;read_evidence.failure_code	all attempts counted; deterministic best-attempt and final-status crosswalk
+caller_error	0	true	RAW_AND_FAILURE_DERIVATION	general_repeat_calls.caller_error;read_evidence.caller_error_count;read_evidence.failure_code	retain every raw error; aggregate error count and final failure only when appropriate
+local_prior_start	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+local_prior_end	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+raw_prior_start	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+raw_prior_end	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+raw_tract_start	160315	true	NORMALIZED_EXISTING	repeat_events.read_start;repeat_segments.read_start	preferred raw-read coordinate
+raw_tract_end	160315	true	NORMALIZED_EXISTING	repeat_events.read_end;repeat_segments.read_end	preferred raw-read coordinate
+caller_version	160315	true	NORMALIZED_V040	read_evidence.best_caller_version;repeat_segments.call_method	best attempt summarized; call_method=GENERAL_CALLER_NATIVE_<version>
+call_status	160315	true	NORMALIZED_EXISTING	read_evidence.best_caller_call_status;repeat_events.call_status;repeat_segments.call_status;read_evidence.qc_status	best caller-native status retained; explicit final QC mapping
+canonical_motif	160315	true	NORMALIZED_EXISTING	read_evidence.canonical_motif;repeat_events.canonical_motif;repeat_segments.canonical_motif	direct
+oriented_motif	160315	true	NORMALIZED_EXISTING	read_evidence.motif;repeat_events.oriented_motif;repeat_segments.motif	selected oriented motif
+motif_source	160315	true	NORMALIZED_V040	read_evidence.motif_source;repeat_events.motif_source;repeat_segments.motif_source	direct
+read_start	160315	true	DUPLICATE_ALIAS_RAW	general_repeat_calls.<same_name>	raw_tract_start/end are preferred normalized coordinates
+read_end	160315	true	DUPLICATE_ALIAS_RAW	general_repeat_calls.<same_name>	raw_tract_start/end are preferred normalized coordinates
+repeat_bp_observed	160315	true	NORMALIZED_EXISTING	repeat_events.repeat_bp_observed;repeat_segments.repeat_bp	direct
+motif_path_bp	160315	true	NORMALIZED_V040	repeat_segments.motif_path_bp	direct
+repeat_units_path	160315	true	NORMALIZED_V040	repeat_events.repeat_units_estimate;repeat_segments.repeat_units_path;read_evidence.repeat_units_estimate	read-level value only for single-motif calls
+score	160315	true	NORMALIZED_EXISTING	repeat_events.score;repeat_segments.call_score	direct
+score_per_read_bp	160315	true	NORMALIZED_V040	repeat_events.score_per_read_bp;repeat_segments.score_per_read_bp	direct
+matches	160315	true	NORMALIZED_EXISTING	repeat_segments.match_bp	direct
+mismatches	160315	true	NORMALIZED_EXISTING	repeat_segments.mismatch_bp	direct
+insertions	160315	true	NORMALIZED_EXISTING	repeat_segments.insertion_bp	direct
+deletions	160315	true	NORMALIZED_EXISTING	repeat_segments.deletion_bp	direct
+purity	160315	true	NORMALIZED_EXISTING	repeat_events.purity;repeat_segments.purity;read_evidence.repeat_purity	direct
+prior_start	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+prior_end	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+prior_span_bp	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+left_extension_bp	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+right_extension_bp	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+catalog_motif_used	160315	true	RAW_AUDIT_PROVENANCE	general_repeat_calls.<same_name>	retain losslessly; normalized values are derived from canonical projection/call fields
+lps_exact_sequence_bp	160315	true	NORMALIZED_V040	read_evidence.<same_name>	direct
+lps_inferred_bp	160315	true	NORMALIZED_V040	read_evidence.<same_name>	direct
+lps_status	160315	true	NORMALIZED_V040	read_evidence.<same_name>	direct
+compound_status	160315	true	NORMALIZED_V040	read_evidence.compound_status;repeat_events.compound_status	direct
+repeat_segment_count	160315	true	DERIVED_NORMALIZED	read_evidence.repeat_call_count;read_evidence.repeat_event_count;repeat_events.segment_count	materialized segment rows and overlap-aware event grouping; cross-check each source caller record
+distinct_motif_count	160315	true	RAW_AUDIT_QC	repeat_events.distinct_motif_count;general_repeat_calls.distinct_motif_count	retain for compound-call QC
+interruption_count	160315	true	NORMALIZED_EXISTING	read_evidence.interruption_count;repeat_events.interruption_count;repeat_segments.interruption_count	direct/cross-table summary
+repeat_segments_json	160315	true	STRUCTURE_SOURCE	repeat_segments.repeat_event_id;repeat_segments;general_repeat_calls.repeat_segments_json	lossless JSON source; materialize deterministic event-grouped component rows
+interruption_segments_json	160315	true	STRUCTURE_SOURCE	repeat_interruptions.repeat_event_id;repeat_interruptions;general_repeat_calls.interruption_segments_json	lossless JSON source; materialize deterministic interruption child rows
+evidence_geometry	160315	true	NORMALIZED_V040	read_evidence.caller_evidence_geometry;repeat_events.caller_evidence_geometry;repeat_events.evidence_class;read_evidence.evidence_class	retain caller geometry; normalized evidence_class derives primarily from projection geometry_class
+sequence_context	160315	true	NORMALIZED_V040	read_evidence.sequence_context;repeat_events.sequence_context	direct
+sizing_status	160315	true	DERIVED_NORMALIZED	read_evidence.best_caller_sizing_status;repeat_events.caller_sizing_status;repeat_events.sizing_status;read_evidence.sizing_status	retain best caller-native value; EXACT_SPAN->exact_span; LOWER_BOUND_*->lower_bound; LOW_CONFIDENCE->no_call
+exact_repeat_bp	102836	true	NORMALIZED_EXISTING	repeat_events.exact_repeat_bp;read_evidence.repeat_bp_estimate	direct for EXACT_SPAN
+lower_bound_bp	154008	true	DERIVED_NORMALIZED	repeat_events.repeat_bp_lower_bound;read_evidence.repeat_bp_lower_bound	prefer interval_lower_bp; cross-check lower_bound_bp
+interval_lower_bp	154008	true	DERIVED_NORMALIZED	repeat_events.repeat_bp_lower_bound;read_evidence.repeat_bp_lower_bound	prefer interval_lower_bp; cross-check lower_bound_bp
+interval_upper_bp	102836	true	DERIVED_NORMALIZED	repeat_events.repeat_bp_upper_bound;read_evidence.repeat_bp_upper_bound	direct when finite; missing for one-sided lower-bound calls
+left_boundary_status	160315	true	NORMALIZED_V040	repeat_segments.left_boundary_status	direct
+right_boundary_status	160315	true	NORMALIZED_V040	repeat_segments.right_boundary_status	direct
+context_limited	160315	true	NORMALIZED_V040	read_evidence.context_limited;repeat_events.context_limited;read_evidence.qc_flags	direct plus CONTEXT_LIMITED flag
+touches_left_sequence_edge	160315	true	NORMALIZED_V040	repeat_segments.touches_left_sequence_edge	direct
+touches_right_sequence_edge	160315	true	NORMALIZED_V040	repeat_segments.touches_right_sequence_edge	direct
+prior_overlap_bp	160315	true	NORMALIZED_V040	read_evidence.prior_overlap_bp;repeat_events.prior_overlap_bp	direct; nonpositive overlap is QC review
+alternative_canonical_motif	27259	true	NORMALIZED_V040	read_evidence.alternative_canonical_motif;repeat_events.alternative_canonical_motif	direct
+alternative_score	27259	true	NORMALIZED_V040	read_evidence.alternative_score;repeat_events.alternative_score	direct
+primary_minus_alternative_score	27259	true	NORMALIZED_V040	read_evidence.primary_minus_alternative_score;repeat_events.primary_minus_alternative_score	direct
+hypothesis_count	160315	true	NORMALIZED_V040	read_evidence.hypothesis_count;repeat_events.hypothesis_count	direct
+note	160315	true	NORMALIZED_EXISTING	read_evidence.notes	prefix as GENERAL_CALLER_NOTE while retaining raw

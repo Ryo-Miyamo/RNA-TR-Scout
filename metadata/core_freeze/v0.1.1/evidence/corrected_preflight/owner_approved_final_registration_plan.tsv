@@ -1,0 +1,10 @@
+order	step	mutation_scope	action	acceptance_boundary
+1	OWNER_REVIEW	none	Owner approves Packet v0.1.1 and v0.1.2 scope split	No project mutation
+2	STAGE15T_READ_ONLY_PREFLIGHT	none	Rehash live project, evidence inputs, SSOT, gates, manifests; build exact install/rollback plan	No project mutation
+3	INSTALL_CANONICAL_EVIDENCE_AND_DOCS	docs/metadata only	Install Stage15R/S evidence, Packet v0.1.1, contract v0.1.2 and final audit docs	Pre-state SHA guards and rollback backup
+4	INSTALL_RELEASE_GATES_V0.3.4	validation only	Keep v0.3.3 history; install v0.3.4 scoped closure	G08/G20-G23/G25-G30 remain OPEN
+5	UPDATE_REPRODUCIBLE_SSOT_SOURCE	metadata/ssot/rnatr_ssot.py	Append guarded final registration block; do not direct-edit SQLite only	Exact pre-hash guard
+6	REBUILD_SSOT_AND_EXPORTS	SSOT only	Atomic rebuild, integrity/FK/current-view validation, exact exports	Active pipeline unchanged
+7	REFRESH_FREEZE_SNAPSHOT_AND_MANIFEST	metadata/core_freeze only	Copy final SSOT/gates/docs/evidence snapshot and regenerate manifest	Manifest coverage and SHA verification
+8	POST_REGISTRATION_GOLDEN_AND_AUDIT	none	Tier0/static plus full-evidence golden; exact post-state audit	No scientific output change
+9	CLEANUP	deletion separate	Retain rollback/Downloads until separate explicit approval	Not part of Freeze registration

@@ -1,0 +1,21 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Stable unique run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	input_fastq	string	true			.	Input FASTQ path.
+5	input_fastq_md5	string	true			.	MD5 of input FASTQ.
+6	input_bam	string	false			.	Input or produced BAM path.
+7	reference_fasta	string	true			.	Reference FASTA path.
+8	reference_build	string	true			.	Reference build, e.g. GRCh38.
+9	gencode_release	string	true			.	GENCODE release.
+10	tr_catalog_release	string	true			.	TR catalog release.
+11	strchive_commit	string	false			.	STRchive commit SHA.
+12	mapper_name	string	true			.	Primary mapper.
+13	mapper_version	string	true			.	Mapper version.
+14	mapper_command	string	true			.	Exact mapper command.
+15	parameter_set_id	string	true			.	Stable parameter-set identifier.
+16	library_platform	string	true			.	Sequencing platform.
+17	library_mode	string	true			.	direct RNA, cDNA, Iso-Seq, etc.
+18	software_git_commit	string	false			.	RNA-TR-Scout git commit.
+19	created_at	datetime	true			.	ISO-8601 creation time.
+20	notes	string	false			.	Free-text notes.

@@ -1,0 +1,12 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	false			.	Sample identifier.
+4	scope_type	enum	true	scope_type		.	Metric scope.
+5	scope_id	string	true			.	Run/sample/table/read/locus/region identifier.
+6	metric_name	string	true			.	Metric name.
+7	metric_value	string	true			.	Metric value as text.
+8	metric_unit	string	false			.	Unit.
+9	metric_status	enum	true	metric_status		.	PASS/WARN/FAIL/INFO.
+10	threshold	string	false			.	Threshold or rule.
+11	notes	string	false			.	Notes.

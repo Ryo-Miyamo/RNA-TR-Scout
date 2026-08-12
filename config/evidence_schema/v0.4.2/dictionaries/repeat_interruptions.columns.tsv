@@ -1,0 +1,26 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	interruption_id	string	true			.	Deterministic interruption-row identifier.
+5	caller_record_id	string	true			.	Parent general-repeat caller record.
+6	evidence_id	string	true			.	Parent read evidence.
+7	repeat_event_id	string	true			.	Parent raw-read repeat event.
+8	repeat_call_id	string	false			.	Associated repeat component, when defined.
+9	read_id	string	true			.	Read identifier.
+10	locus_id	string	false			.	Parent locus.
+11	interruption_index	integer	true			.	0-based interruption order.
+12	read_start	integer	true		0-based, end-exclusive	.	Interruption start on raw read.
+13	read_end	integer	true		0-based, end-exclusive	.	Interruption end on raw read.
+14	interruption_bp	integer	true			.	Interruption length in bp.
+15	sequence	string	false			.	Observed interruption sequence, when emitted.
+16	interruption_class	string	false			.	Caller/materializer interruption class.
+17	left_repeat_segment_index	integer	false			.	Flanking left repeat-segment index.
+18	right_repeat_segment_index	integer	false			.	Flanking right repeat-segment index.
+19	source_json	string	false			.	Lossless source JSON object for this interruption.
+20	notes	string	false			.	Materialization notes.
+21	operation_class	enum	false	interruption_operation_class		.	Structured interruption/edit operation class.
+22	discordance_origin_status	enum	false	discordance_origin_status		.	Origin interpretation; defaults to NOT_ASSESSED.
+23	discordance_origin_confidence	enum	false	discordance_origin_confidence		.	Confidence in origin interpretation.
+24	discordance_origin_evidence_flags	string_list	false			.	Evidence supporting origin interpretation.
+25	discordance_model_id	string	false			.	Versioned platform/library/error model.

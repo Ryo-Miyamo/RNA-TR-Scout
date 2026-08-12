@@ -1,0 +1,5186 @@
+{
+  "schema_name": "RNA-TR-Scout evidence schema",
+  "schema_version": "0.4.1",
+  "missing_value": ".",
+  "boolean_values": [
+    "true",
+    "false"
+  ],
+  "multi_value_delimiter": ";",
+  "coordinate_conventions": {
+    "genomic": "0-based, end-exclusive",
+    "read": "0-based, end-exclusive",
+    "repeat_units": "floating-point allowed"
+  },
+  "id_rules": {
+    "alignment_id": "stable unique string generated from run_id, read_id, alignment class, segment index, coordinates, and CIGAR",
+    "evidence_id": "first 24 hexadecimal characters of SHA-256(run_id|read_id|target_region_id|locus_id)",
+    "repeat_call_id": "first 24 hexadecimal characters of SHA-256(evidence_id|segment_index|motif|read_start|read_end)",
+    "molecule_cluster_id": "first 24 hexadecimal characters of SHA-256(run_id|sample_id|locus_id|cluster-representative signature)"
+  },
+  "critical_semantics": [
+    "RNA non-observation must never be encoded as absence of a DNA repeat expansion.",
+    "SPAN evidence requires both genomic-left and genomic-right unique flank anchors.",
+    "Censored evidence is a lower bound, not an exact repeat length.",
+    "Sequence evidence and independent-molecule evidence must remain separate.",
+    "Primary, secondary, and supplementary alignments must be retained until locus assignment is finalized.",
+    "TR and TR_FALLBACK regions use copy-number-first analysis; VC and complex disease regions use sequence-level analysis.",
+    "LEFT_ONLY_INTERNAL and RIGHT_ONLY_INTERNAL indicate a target-overlapping repeat tract supported by one genomic flank, without reaching the expected raw-read end; they are neither exact sizes nor censored lower bounds."
+  ],
+  "enums": {
+    "alignment_class": [
+      "primary",
+      "secondary",
+      "supplementary",
+      "unmapped"
+    ],
+    "strand": [
+      "+",
+      "-",
+      "."
+    ],
+    "qc_status": [
+      "PASS",
+      "WARN",
+      "FAIL",
+      "NOT_EVALUATED"
+    ],
+    "assignment_status": [
+      "assigned_unique",
+      "assigned_ambiguous",
+      "near_target_only",
+      "conflicting_segments",
+      "unassigned"
+    ],
+    "evidence_class": [
+      "SPAN",
+      "LEFT_ANCHORED_CENSORED_RIGHT",
+      "RIGHT_ANCHORED_CENSORED_LEFT",
+      "LEFT_ONLY_INTERNAL",
+      "RIGHT_ONLY_INTERNAL",
+      "REPEAT_ONLY_UNANCHORED",
+      "FLANKS_WITHOUT_REPEAT",
+      "NEARBY_ONLY",
+      "AMBIGUOUS_LOCUS",
+      "UNRESOLVED",
+      "BOTH_SIDES_CENSORED"
+    ],
+    "sizing_status": [
+      "exact_span",
+      "lower_bound",
+      "compound_sequence_model",
+      "partial_internal",
+      "no_call",
+      "not_attempted"
+    ],
+    "call_status": [
+      "PASS",
+      "LOW_CONFIDENCE",
+      "FAIL",
+      "NOT_EVALUATED"
+    ],
+    "confidence_label": [
+      "HIGH",
+      "MEDIUM",
+      "LOW",
+      "UNRESOLVED"
+    ],
+    "membership_role": [
+      "representative",
+      "member"
+    ],
+    "duplicate_likelihood": [
+      "low",
+      "medium",
+      "high",
+      "unknown"
+    ],
+    "cluster_confidence": [
+      "HIGH",
+      "MEDIUM",
+      "LOW",
+      "UNRESOLVED"
+    ],
+    "rna_evidence_status": [
+      "EVIDENCE_PRESENT",
+      "COVERED_NO_OUTLIER_SIGNAL",
+      "INSUFFICIENT_COVERAGE",
+      "NO_RNA_COVERAGE",
+      "AMBIGUOUS",
+      "NOT_EVALUATED"
+    ],
+    "evaluability_status": [
+      "EVALUABLE",
+      "PARTIALLY_EVALUABLE",
+      "NOT_EVALUABLE",
+      "NOT_EVALUATED"
+    ],
+    "expansion_signal_status": [
+      "STRONG_CANDIDATE",
+      "MODERATE_CANDIDATE",
+      "WEAK_CANDIDATE",
+      "NO_SIGNAL_IN_OBSERVED_RNA",
+      "NOT_ASSESSABLE"
+    ],
+    "region_structure_status": [
+      "SIMPLE_TR_RESOLVED",
+      "COMPOUND_STRUCTURE_RESOLVED",
+      "PARTIALLY_RESOLVED",
+      "UNRESOLVED",
+      "NOT_EVALUATED"
+    ],
+    "scope_type": [
+      "run",
+      "sample",
+      "table",
+      "read",
+      "locus",
+      "region"
+    ],
+    "metric_status": [
+      "PASS",
+      "WARN",
+      "FAIL",
+      "INFO"
+    ],
+    "failure_code": [
+      "NONE",
+      "READ_SEQUENCE_MISSING",
+      "BAM_FASTQ_ID_MISMATCH",
+      "NO_ALIGNMENT",
+      "LOW_MAPQ",
+      "MULTI_LOCUS",
+      "CONFLICTING_SUPPLEMENTARY_SEGMENTS",
+      "CHIMERIC_READ",
+      "INSUFFICIENT_LEFT_FLANK",
+      "INSUFFICIENT_RIGHT_FLANK",
+      "REPEAT_NOT_FOUND",
+      "REPEAT_BOUNDARY_UNCERTAIN",
+      "COMPOUND_STRUCTURE",
+      "AMBIGUOUS_MOTIF",
+      "LOW_BASE_QUALITY",
+      "INTERNAL_SOFTCLIP_ONLY",
+      "DUPLICATE_LIKE",
+      "TARGET_NOT_EVALUABLE",
+      "SOFTWARE_ERROR",
+      "ORIENTATION_INCONSISTENT_BRIDGE",
+      "TARGET_ENTRY_NOT_PROJECTED",
+      "HOMOPOLYMER_REVIEW",
+      "GENERAL_CALLER_NO_PROJECTED_TARGET",
+      "GENERAL_CALLER_UNSUPPORTED_STRATEGY",
+      "GENERAL_CALLER_NO_WINDOW_SEQUENCE",
+      "GENERAL_CALLER_ERROR",
+      "GENERAL_CALLER_LOW_CONFIDENCE",
+      "GENERAL_CALLER_PRIOR_OVERLAP_NONPOSITIVE"
+    ],
+    "caller_integration_status": [
+      "CALLED",
+      "CALLER_ERROR",
+      "NOT_ATTEMPTED_NO_PROJECTED_TARGET",
+      "NOT_ATTEMPTED_NO_WINDOW_SEQUENCE",
+      "NOT_ATTEMPTED_UNSUPPORTED_STRATEGY"
+    ],
+    "caller_call_status": [
+      "LOW_CONFIDENCE",
+      "PASS"
+    ],
+    "caller_sizing_status": [
+      "CONTEXT_LIMITED_LOWER_BOUND",
+      "EXACT_SPAN",
+      "LOWER_BOUND_BOTH_CENSORED",
+      "LOWER_BOUND_LEFT_CENSORED",
+      "LOWER_BOUND_RIGHT_CENSORED",
+      "LOWER_BOUND_UNKNOWN_GEOMETRY",
+      "LOW_CONFIDENCE"
+    ],
+    "motif_source": [
+      "CATALOG",
+      "DENOVO_CONTEXT",
+      "DENOVO_RESIDUAL"
+    ],
+    "compound_status": [
+      "COMPOUND",
+      "INTERRUPTED_SINGLE_MOTIF",
+      "SINGLE_MOTIF"
+    ],
+    "caller_evidence_geometry": [
+      "BOTH_CENSORED",
+      "LEFT_CENSORED",
+      "RIGHT_CENSORED",
+      "SPAN",
+      "UNKNOWN"
+    ],
+    "sequence_context": [
+      "FULL_READ",
+      "PROJECTION_WINDOW"
+    ],
+    "lps_status": [
+      "IMPLEMENTED_REFERENCE_V0.3.0"
+    ],
+    "boundary_status": [
+      "CENSORED_BY_GEOMETRY",
+      "CONTEXT_EDGE",
+      "LOW_CONFIDENCE",
+      "SEQUENCE_BOUNDED"
+    ],
+    "repeat_segment_role": [
+      "COMPONENT",
+      "PRIMARY"
+    ],
+    "caller_materialization_status": [
+      "CALLED_NOT_RETAINED",
+      "COMPETING_OVERLAPPING_ATTEMPT",
+      "NOT_CALLED",
+      "RETAINED_ADDITIONAL_EVENT",
+      "RETAINED_PRIMARY_EVENT"
+    ],
+    "discordance_origin_status": [
+      "LIKELY_BIOLOGICAL",
+      "LIKELY_TECHNICAL",
+      "MIXED_OR_AMBIGUOUS",
+      "NOT_ASSESSED",
+      "UNRESOLVED"
+    ],
+    "discordance_origin_confidence": [
+      "HIGH",
+      "LOW",
+      "MEDIUM",
+      "NOT_ASSESSED"
+    ],
+    "interruption_operation_class": [
+      "COMPOUND_BOUNDARY",
+      "DELETION",
+      "INSERTION",
+      "MOTIF_SWITCH",
+      "OTHER",
+      "SUBSTITUTION",
+      "UNKNOWN"
+    ],
+    "locus_distribution_status": [
+      "CLUSTERING_COMPLETE",
+      "INSUFFICIENT_EXACT_SUPPORT",
+      "NOT_RUN",
+      "REVIEW",
+      "SUMMARIZED_NO_CLUSTERING"
+    ],
+    "cluster_analysis_status": [
+      "INSUFFICIENT_DATA",
+      "MULTIMODAL",
+      "NOT_RUN",
+      "REVIEW",
+      "UNIMODAL"
+    ],
+    "length_cluster_semantics": [
+      "MATCHED_DNA_SUPPORTED_ALLELE_CLUSTER",
+      "SNP_PHASED_HAPLOTYPE_CLUSTER",
+      "UNPHASED_LENGTH_CLUSTER"
+    ],
+    "length_cluster_status": [
+      "NOT_INTERPRETABLE",
+      "PROVISIONAL",
+      "REVIEW",
+      "SUPPORTED"
+    ],
+    "censor_handling_method": [
+      "CENSOR_AWARE_INTERVAL_LIKELIHOOD",
+      "EXACT_ONLY",
+      "NOT_APPLICABLE"
+    ],
+    "length_cluster_phase_status": [
+      "MATCHED_DNA_SUPPORTED",
+      "ORTHOGONAL_SUPPORTED",
+      "SNP_PHASED",
+      "UNPHASED"
+    ],
+    "length_measurement_type": [
+      "BOTH_CENSORED_LOWER_BOUND",
+      "CONTEXT_LIMITED_LOWER_BOUND",
+      "EXACT",
+      "LEFT_CENSORED_LOWER_BOUND",
+      "LOW_CONFIDENCE",
+      "RIGHT_CENSORED_LOWER_BOUND"
+    ],
+    "cluster_membership_status": [
+      "CENSORED_AMBIGUOUS",
+      "CENSORED_COMPATIBLE",
+      "EXCLUDED_CONTEXT_LIMITED",
+      "FIT_EXACT",
+      "UNASSIGNED"
+    ]
+  },
+  "tables": {
+    "run_manifest": {
+      "filename": "run_manifest.tsv",
+      "grain": "one row per pipeline run",
+      "primary_key": [
+        "run_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Evidence schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Stable unique run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "input_fastq",
+          "type": "string",
+          "required": true,
+          "description": "Input FASTQ path.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "input_fastq_md5",
+          "type": "string",
+          "required": true,
+          "description": "MD5 of input FASTQ.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "input_bam",
+          "type": "string",
+          "required": false,
+          "description": "Input or produced BAM path.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "reference_fasta",
+          "type": "string",
+          "required": true,
+          "description": "Reference FASTA path.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "reference_build",
+          "type": "string",
+          "required": true,
+          "description": "Reference build, e.g. GRCh38.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "gencode_release",
+          "type": "string",
+          "required": true,
+          "description": "GENCODE release.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "tr_catalog_release",
+          "type": "string",
+          "required": true,
+          "description": "TR catalog release.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "strchive_commit",
+          "type": "string",
+          "required": false,
+          "description": "STRchive commit SHA.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mapper_name",
+          "type": "string",
+          "required": true,
+          "description": "Primary mapper.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mapper_version",
+          "type": "string",
+          "required": true,
+          "description": "Mapper version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mapper_command",
+          "type": "string",
+          "required": true,
+          "description": "Exact mapper command.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "parameter_set_id",
+          "type": "string",
+          "required": true,
+          "description": "Stable parameter-set identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "library_platform",
+          "type": "string",
+          "required": true,
+          "description": "Sequencing platform.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "library_mode",
+          "type": "string",
+          "required": true,
+          "description": "direct RNA, cDNA, Iso-Seq, etc.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "software_git_commit",
+          "type": "string",
+          "required": false,
+          "description": "RNA-TR-Scout git commit.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "required": true,
+          "description": "ISO-8601 creation time.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "description": "Free-text notes.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "alignment_segments": {
+      "filename": "alignment_segments.tsv.gz",
+      "grain": "one row per BAM alignment record or segment",
+      "primary_key": [
+        "alignment_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "description": "FASTQ/BAM read identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "alignment_id",
+          "type": "string",
+          "required": true,
+          "description": "Stable unique alignment identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "alignment_class",
+          "type": "enum",
+          "required": true,
+          "description": "Primary, secondary, supplementary, or unmapped.",
+          "enum": "alignment_class",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "segment_index",
+          "type": "integer",
+          "required": true,
+          "description": "0-based segment index.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "chrom",
+          "type": "string",
+          "required": false,
+          "description": "Reference contig.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "ref_start",
+          "type": "integer",
+          "required": false,
+          "description": "Reference start.",
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": "."
+        },
+        {
+          "name": "ref_end",
+          "type": "integer",
+          "required": false,
+          "description": "Reference end.",
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": "."
+        },
+        {
+          "name": "query_start",
+          "type": "integer",
+          "required": false,
+          "description": "Aligned query start.",
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": "."
+        },
+        {
+          "name": "query_end",
+          "type": "integer",
+          "required": false,
+          "description": "Aligned query end.",
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": "."
+        },
+        {
+          "name": "strand",
+          "type": "enum",
+          "required": true,
+          "description": "Alignment strand.",
+          "enum": "strand",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mapq",
+          "type": "integer",
+          "required": false,
+          "description": "Mapping quality.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sam_flag",
+          "type": "integer",
+          "required": true,
+          "description": "SAM flag integer.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "cigar",
+          "type": "string",
+          "required": false,
+          "description": "CIGAR string.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "aligned_query_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Aligned query bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "reference_span_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Reference span.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "edit_distance_nm",
+          "type": "integer",
+          "required": false,
+          "description": "NM tag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "alignment_score_as",
+          "type": "integer",
+          "required": false,
+          "description": "AS tag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "splice_junction_count",
+          "type": "integer",
+          "required": false,
+          "description": "Number of N operations.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "intron_bases",
+          "type": "integer",
+          "required": false,
+          "description": "Total N bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "insertion_bases",
+          "type": "integer",
+          "required": false,
+          "description": "Total inserted query bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "deletion_bases",
+          "type": "integer",
+          "required": false,
+          "description": "Total deleted reference bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "softclip_left_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Left soft clip in query orientation.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "softclip_right_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Right soft clip in query orientation.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "hardclip_left_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Left hard clip.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "hardclip_right_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Right hard clip.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "ts_tag",
+          "type": "string",
+          "required": false,
+          "description": "minimap2 transcript-strand tag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sa_tag_present",
+          "type": "boolean",
+          "required": true,
+          "description": "Whether SA tag is present.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "cs_tag",
+          "type": "string",
+          "required": false,
+          "description": "Optional cs tag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "md_tag",
+          "type": "string",
+          "required": false,
+          "description": "Optional MD tag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "is_chimeric_candidate",
+          "type": "boolean",
+          "required": true,
+          "description": "Potential chimera/split event.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "qc_status",
+          "type": "enum",
+          "required": true,
+          "description": "Alignment QC status.",
+          "enum": "qc_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "qc_flags",
+          "type": "string_list",
+          "required": false,
+          "description": "Semicolon-separated QC flags.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "read_evidence": {
+      "filename": "read_evidence.tsv.gz",
+      "grain": "one row per read \u00d7 target-region \u00d7 locus hypothesis",
+      "primary_key": [
+        "evidence_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "evidence_id",
+          "type": "string",
+          "required": true,
+          "description": "SHA-256(run_id|read_id|target_region_id|locus_id), first 24 hex characters.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "description": "Read identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "read_length_bp",
+          "type": "integer",
+          "required": true,
+          "description": "Read length.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mean_read_q",
+          "type": "float",
+          "required": false,
+          "description": "Mean Phred quality.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_region_id",
+          "type": "string",
+          "required": true,
+          "description": "Analysis/mapping target identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_source",
+          "type": "string",
+          "required": true,
+          "description": "TRExplorer or STRchive.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "region_type",
+          "type": "string",
+          "required": true,
+          "description": "TR, VC, TR_FALLBACK, DISEASE_REGION, etc.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "analysis_mode",
+          "type": "string",
+          "required": true,
+          "description": "Catalog-defined analysis mode.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": false,
+          "description": "TRExplorer locus hypothesis.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "motif",
+          "type": "string",
+          "required": false,
+          "description": "Catalog motif.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "canonical_motif",
+          "type": "string",
+          "required": false,
+          "description": "Canonical cyclic/reverse-complement motif.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "primary_alignment_id",
+          "type": "string",
+          "required": false,
+          "description": "Best supporting alignment.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "assignment_status",
+          "type": "enum",
+          "required": true,
+          "description": "Locus assignment result.",
+          "enum": "assignment_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "assignment_rank",
+          "type": "integer",
+          "required": true,
+          "description": "1-based rank among candidate loci.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "competing_locus_count",
+          "type": "integer",
+          "required": true,
+          "description": "Number of competing loci.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_overlap_bp",
+          "type": "integer",
+          "required": true,
+          "description": "Reference overlap with target.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_distance_bp",
+          "type": "integer",
+          "required": true,
+          "description": "0 if overlapping; otherwise nearest distance.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mapq_best",
+          "type": "integer",
+          "required": false,
+          "description": "Best supporting MAPQ.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "alignment_class_best",
+          "type": "enum",
+          "required": false,
+          "description": "Best supporting alignment class.",
+          "enum": "alignment_class",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "strand",
+          "type": "enum",
+          "required": true,
+          "description": "Genomic alignment strand.",
+          "enum": "strand",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "left_flank_anchor_bp",
+          "type": "integer",
+          "required": true,
+          "description": "Anchored genomic-left flank bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "right_flank_anchor_bp",
+          "type": "integer",
+          "required": true,
+          "description": "Anchored genomic-right flank bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "left_flank_identity",
+          "type": "float",
+          "required": false,
+          "description": "Genomic-left flank identity, 0\u20131.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "right_flank_identity",
+          "type": "float",
+          "required": false,
+          "description": "Genomic-right flank identity, 0\u20131.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "left_flank_unique",
+          "type": "boolean",
+          "required": true,
+          "description": "Left flank uniquely supports locus.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "right_flank_unique",
+          "type": "boolean",
+          "required": true,
+          "description": "Right flank uniquely supports locus.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "evidence_class",
+          "type": "enum",
+          "required": true,
+          "description": "SPAN/censored/unanchored classification.",
+          "enum": "evidence_class",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sizing_status",
+          "type": "enum",
+          "required": true,
+          "description": "Repeat sizing interpretation.",
+          "enum": "sizing_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_call_count",
+          "type": "integer",
+          "required": true,
+          "description": "Number of repeat segments/calls.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "best_repeat_call_id",
+          "type": "string",
+          "required": false,
+          "description": "Best repeat-segment call.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_bp_estimate",
+          "type": "float",
+          "required": false,
+          "description": "Best repeat length estimate.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_bp_lower_bound",
+          "type": "float",
+          "required": false,
+          "description": "Lower bound; mandatory for censored evidence.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_bp_upper_bound",
+          "type": "float",
+          "required": false,
+          "description": "Upper bound; missing for one-sided censored evidence.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_units_estimate",
+          "type": "float",
+          "required": false,
+          "description": "Repeat-unit estimate.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_purity",
+          "type": "float",
+          "required": false,
+          "description": "Best repeat purity, 0\u20131.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "interruption_count",
+          "type": "integer",
+          "required": false,
+          "description": "Interruption count.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "molecule_cluster_id",
+          "type": "string",
+          "required": false,
+          "description": "Inferred molecule cluster.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "confidence_label",
+          "type": "enum",
+          "required": true,
+          "description": "Rule-based confidence.",
+          "enum": "confidence_label",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "confidence_score",
+          "type": "float",
+          "required": false,
+          "description": "Optional 0\u20131 score.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "qc_status",
+          "type": "enum",
+          "required": true,
+          "description": "Evidence QC status.",
+          "enum": "qc_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "qc_flags",
+          "type": "string_list",
+          "required": false,
+          "description": "Semicolon-separated QC flags.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "failure_code",
+          "type": "enum",
+          "required": true,
+          "description": "Primary failure/no-call reason.",
+          "enum": "failure_code",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "description": "Free-text notes.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "best_projection_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Projection selected as the best caller attempt for this read-target-locus evidence."
+        },
+        {
+          "name": "best_caller_record_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Best general_repeat_calls caller_record_id for this evidence."
+        },
+        {
+          "name": "caller_attempt_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of general-caller attempts grouped into this evidence row."
+        },
+        {
+          "name": "caller_called_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of grouped caller attempts with integration_status=CALLED."
+        },
+        {
+          "name": "caller_error_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of grouped caller attempts with caller errors."
+        },
+        {
+          "name": "repeat_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of distinct retained raw-read repeat events after overlap-aware event grouping."
+        },
+        {
+          "name": "best_repeat_event_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Best retained repeat-event identifier."
+        },
+        {
+          "name": "best_caller_version",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Deterministic general repeat caller version of the best attempt."
+        },
+        {
+          "name": "best_caller_integration_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_integration_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Integration status of the best caller attempt."
+        },
+        {
+          "name": "best_caller_call_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_call_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native PASS/LOW_CONFIDENCE status of the best called attempt."
+        },
+        {
+          "name": "best_caller_sizing_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_sizing_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native sizing status of the best called attempt."
+        },
+        {
+          "name": "motif_source",
+          "type": "enum",
+          "required": false,
+          "enum": "motif_source",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Catalog or de-novo motif provenance of the best call."
+        },
+        {
+          "name": "compound_status",
+          "type": "enum",
+          "required": false,
+          "enum": "compound_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Single, interrupted-single, or compound classification of the best event."
+        },
+        {
+          "name": "lps_exact_sequence_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Exact-sequence longest pure segment length in bp for the best event."
+        },
+        {
+          "name": "lps_inferred_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Error-aware inferred longest pure segment length in bp for the best event."
+        },
+        {
+          "name": "lps_status",
+          "type": "enum",
+          "required": false,
+          "enum": "lps_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native LPS interpretation status."
+        },
+        {
+          "name": "caller_evidence_geometry",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_evidence_geometry",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native geometry retained separately from normalized evidence_class."
+        },
+        {
+          "name": "sequence_context",
+          "type": "enum",
+          "required": false,
+          "enum": "sequence_context",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "FULL_READ or PROJECTION_WINDOW sequence supplied to the best caller attempt."
+        },
+        {
+          "name": "context_limited",
+          "type": "boolean",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "True when best-event inference is limited by supplied sequence context."
+        },
+        {
+          "name": "prior_overlap_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Best called-tract overlap with projected locus prior."
+        },
+        {
+          "name": "hypothesis_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of repeat hypotheses evaluated for the best caller attempt."
+        },
+        {
+          "name": "alternative_canonical_motif",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Runner-up canonical motif for the best caller attempt."
+        },
+        {
+          "name": "alternative_score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Runner-up hypothesis score for the best caller attempt."
+        },
+        {
+          "name": "primary_minus_alternative_score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary minus runner-up score for the best caller attempt."
+        }
+      ]
+    },
+    "repeat_segments": {
+      "filename": "repeat_segments.tsv.gz",
+      "grain": "one row per repeat segment or motif component within read evidence",
+      "primary_key": [
+        "repeat_call_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_call_id",
+          "type": "string",
+          "required": true,
+          "description": "Unique repeat-call identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "evidence_id",
+          "type": "string",
+          "required": true,
+          "description": "Parent read-evidence identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "description": "Read identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": false,
+          "description": "Parent locus.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "segment_index",
+          "type": "integer",
+          "required": true,
+          "description": "0-based segment order.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "motif",
+          "type": "string",
+          "required": true,
+          "description": "Observed motif model.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "canonical_motif",
+          "type": "string",
+          "required": true,
+          "description": "Canonical motif.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "read_start",
+          "type": "integer",
+          "required": true,
+          "description": "Repeat start on read.",
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": "."
+        },
+        {
+          "name": "read_end",
+          "type": "integer",
+          "required": true,
+          "description": "Repeat end on read.",
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_bp",
+          "type": "integer",
+          "required": true,
+          "description": "Observed repeat bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_units_float",
+          "type": "float",
+          "required": true,
+          "description": "Observed repeat units.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "purity",
+          "type": "float",
+          "required": true,
+          "description": "Repeat purity, 0\u20131.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "match_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Motif-matching bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "mismatch_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Mismatching bases.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "insertion_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Insertions relative to periodic model.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "deletion_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Deletions relative to periodic model.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "interruption_count",
+          "type": "integer",
+          "required": true,
+          "description": "Interruption count.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "interruption_pattern",
+          "type": "string",
+          "required": false,
+          "description": "Compact interruption representation.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "left_boundary_confidence",
+          "type": "float",
+          "required": false,
+          "description": "0\u20131 boundary confidence.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "right_boundary_confidence",
+          "type": "float",
+          "required": false,
+          "description": "0\u20131 boundary confidence.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "call_method",
+          "type": "string",
+          "required": true,
+          "description": "Algorithm/method identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "call_score",
+          "type": "float",
+          "required": false,
+          "description": "Method-specific score.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "call_status",
+          "type": "enum",
+          "required": true,
+          "description": "Repeat-call status.",
+          "enum": "call_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "call_flags",
+          "type": "string_list",
+          "required": false,
+          "description": "Semicolon-separated flags.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_event_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Groups repeat components belonging to the same raw-read repeat event."
+        },
+        {
+          "name": "caller_record_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Source general_repeat_calls caller_record_id."
+        },
+        {
+          "name": "segment_role",
+          "type": "enum",
+          "required": true,
+          "enum": "repeat_segment_role",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "PRIMARY or COMPONENT within a retained repeat event."
+        },
+        {
+          "name": "motif_source",
+          "type": "enum",
+          "required": false,
+          "enum": "motif_source",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Motif provenance for this segment."
+        },
+        {
+          "name": "motif_path_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Motif-path length in bp."
+        },
+        {
+          "name": "repeat_units_path",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Repeat units along the error-aware motif path."
+        },
+        {
+          "name": "score_per_read_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller score normalized by aligned read bp."
+        },
+        {
+          "name": "left_boundary_status",
+          "type": "enum",
+          "required": false,
+          "enum": "boundary_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native left boundary status."
+        },
+        {
+          "name": "right_boundary_status",
+          "type": "enum",
+          "required": false,
+          "enum": "boundary_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native right boundary status."
+        },
+        {
+          "name": "touches_left_sequence_edge",
+          "type": "boolean",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Segment touches the left edge of supplied sequence context."
+        },
+        {
+          "name": "touches_right_sequence_edge",
+          "type": "boolean",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Segment touches the right edge of supplied sequence context."
+        }
+      ]
+    },
+    "molecule_clusters": {
+      "filename": "molecule_clusters.tsv.gz",
+      "grain": "one row per inferred original molecule cluster",
+      "primary_key": [
+        "molecule_cluster_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "molecule_cluster_id",
+          "type": "string",
+          "required": true,
+          "description": "Unique cluster identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": false,
+          "description": "Locus being clustered.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_region_id",
+          "type": "string",
+          "required": true,
+          "description": "Target region.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "representative_evidence_id",
+          "type": "string",
+          "required": true,
+          "description": "Representative evidence.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "representative_read_id",
+          "type": "string",
+          "required": true,
+          "description": "Representative read.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "cluster_size_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Read count in cluster.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "independent_molecule_weight",
+          "type": "float",
+          "required": true,
+          "description": "Default 1.0 per cluster.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "cluster_method",
+          "type": "string",
+          "required": true,
+          "description": "Clustering method/version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "start_tolerance_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Alignment-start tolerance.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "end_tolerance_bp",
+          "type": "integer",
+          "required": false,
+          "description": "Alignment-end tolerance.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "splice_chain_hash",
+          "type": "string",
+          "required": false,
+          "description": "Hash of splice chain.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "flank_hash",
+          "type": "string",
+          "required": false,
+          "description": "Hash of flank sequence.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sequence_similarity_min",
+          "type": "float",
+          "required": false,
+          "description": "Minimum within-cluster similarity.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "duplicate_likelihood",
+          "type": "enum",
+          "required": true,
+          "description": "Duplicate likelihood.",
+          "enum": "duplicate_likelihood",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "cluster_confidence",
+          "type": "enum",
+          "required": true,
+          "description": "Cluster confidence.",
+          "enum": "cluster_confidence",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "description": "Notes.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "molecule_membership": {
+      "filename": "molecule_membership.tsv.gz",
+      "grain": "one row per evidence row assigned to a molecule cluster",
+      "primary_key": [
+        "molecule_cluster_id",
+        "evidence_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "molecule_cluster_id",
+          "type": "string",
+          "required": true,
+          "description": "Cluster identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "evidence_id",
+          "type": "string",
+          "required": true,
+          "description": "Evidence identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "description": "Read identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "membership_role",
+          "type": "enum",
+          "required": true,
+          "description": "Representative/member.",
+          "enum": "membership_role",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "membership_score",
+          "type": "float",
+          "required": false,
+          "description": "0\u20131 membership score.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "evidence_weight",
+          "type": "float",
+          "required": true,
+          "description": "Weight in aggregate statistics.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "membership_reasons",
+          "type": "string_list",
+          "required": false,
+          "description": "Semicolon-separated reasons.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "locus_summary": {
+      "filename": "locus_summary.tsv.gz",
+      "grain": "one row per sample \u00d7 TRExplorer locus",
+      "primary_key": [
+        "run_id",
+        "sample_id",
+        "locus_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": true,
+          "description": "TRExplorer locus.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_region_id",
+          "type": "string",
+          "required": true,
+          "description": "Primary analysis region.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "gene_name",
+          "type": "string",
+          "required": false,
+          "description": "GENCODE/curated gene.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "primary_region",
+          "type": "string",
+          "required": false,
+          "description": "CDS/UTR/exon/intron/etc.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "priority_tier",
+          "type": "string",
+          "required": true,
+          "description": "T0/T1/T2/T3.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "disease_locus",
+          "type": "boolean",
+          "required": true,
+          "description": "Forced disease locus.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "rna_evidence_status",
+          "type": "enum",
+          "required": true,
+          "description": "RNA evidence state; never call no coverage negative.",
+          "enum": "rna_evidence_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "evaluability_status",
+          "type": "enum",
+          "required": true,
+          "description": "Whether the locus is evaluable.",
+          "enum": "evaluability_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "total_candidate_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Candidate read count.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "assigned_unique_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Uniquely assigned reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "assigned_ambiguous_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Ambiguous reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "span_reads",
+          "type": "integer",
+          "required": true,
+          "description": "SPAN reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "left_censored_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Left-anchored/right-censored reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "right_censored_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Right-anchored/left-censored reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "repeat_only_unanchored_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Unanchored repeat-only reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "molecule_clusters",
+          "type": "integer",
+          "required": true,
+          "description": "Number of molecule clusters.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "independent_molecule_count_estimate",
+          "type": "float",
+          "required": true,
+          "description": "Weighted independent-molecule estimate.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "max_repeat_bp",
+          "type": "float",
+          "required": false,
+          "description": "Maximum exact repeat estimate.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "max_repeat_units",
+          "type": "float",
+          "required": false,
+          "description": "Maximum exact repeat units.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "max_repeat_lower_bound_bp",
+          "type": "float",
+          "required": false,
+          "description": "Maximum censored lower bound.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "median_repeat_bp_span",
+          "type": "float",
+          "required": false,
+          "description": "Median among SPAN calls.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "p95_repeat_bp_span",
+          "type": "float",
+          "required": false,
+          "description": "95th percentile among SPAN calls.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "max_repeat_purity",
+          "type": "float",
+          "required": false,
+          "description": "Maximum purity.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "min_mapq_support",
+          "type": "integer",
+          "required": false,
+          "description": "Minimum MAPQ among supporting reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "best_confidence_label",
+          "type": "enum",
+          "required": true,
+          "description": "Best evidence confidence.",
+          "enum": "confidence_label",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "expansion_signal_status",
+          "type": "enum",
+          "required": true,
+          "description": "Candidate status; absence is not a DNA-negative call.",
+          "enum": "expansion_signal_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "expansion_signal_reason",
+          "type": "string",
+          "required": false,
+          "description": "Rule/reason.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "manual_review_required",
+          "type": "boolean",
+          "required": true,
+          "description": "Manual review flag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "qc_flags",
+          "type": "string_list",
+          "required": false,
+          "description": "Semicolon-separated flags.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "description": "Notes.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "region_summary": {
+      "filename": "region_summary.tsv.gz",
+      "grain": "one row per sample \u00d7 analysis region",
+      "primary_key": [
+        "run_id",
+        "sample_id",
+        "target_region_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_region_id",
+          "type": "string",
+          "required": true,
+          "description": "Analysis region.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "target_source",
+          "type": "string",
+          "required": true,
+          "description": "TRExplorer or STRchive.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "region_type",
+          "type": "string",
+          "required": true,
+          "description": "TR/VC/DISEASE_REGION.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "analysis_mode",
+          "type": "string",
+          "required": true,
+          "description": "Catalog-defined mode.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "candidate_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Candidate reads.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "unique_assigned_reads",
+          "type": "integer",
+          "required": true,
+          "description": "Unique assignments.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "molecule_clusters",
+          "type": "integer",
+          "required": true,
+          "description": "Molecule clusters.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "candidate_locus_count",
+          "type": "integer",
+          "required": true,
+          "description": "Candidate loci in region.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "region_structure_status",
+          "type": "enum",
+          "required": true,
+          "description": "Resolved/unresolved structure.",
+          "enum": "region_structure_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "best_evidence_id",
+          "type": "string",
+          "required": false,
+          "description": "Best evidence row.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "manual_review_required",
+          "type": "boolean",
+          "required": true,
+          "description": "Manual review flag.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "qc_flags",
+          "type": "string_list",
+          "required": false,
+          "description": "Semicolon-separated flags.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "description": "Notes.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "qc_metrics": {
+      "filename": "qc_metrics.tsv.gz",
+      "grain": "one row per QC metric",
+      "primary_key": [
+        "run_id",
+        "scope_type",
+        "scope_id",
+        "metric_name"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "description": "Schema version.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "description": "Run identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": false,
+          "description": "Sample identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "scope_type",
+          "type": "enum",
+          "required": true,
+          "description": "Metric scope.",
+          "enum": "scope_type",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "scope_id",
+          "type": "string",
+          "required": true,
+          "description": "Run/sample/table/read/locus/region identifier.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "metric_name",
+          "type": "string",
+          "required": true,
+          "description": "Metric name.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "metric_value",
+          "type": "string",
+          "required": true,
+          "description": "Metric value as text.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "metric_unit",
+          "type": "string",
+          "required": false,
+          "description": "Unit.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "metric_status",
+          "type": "enum",
+          "required": true,
+          "description": "PASS/WARN/FAIL/INFO.",
+          "enum": "metric_status",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "threshold",
+          "type": "string",
+          "required": false,
+          "description": "Threshold or rule.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "description": "Notes.",
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": "."
+        }
+      ]
+    },
+    "general_repeat_calls": {
+      "filename": "general_repeat_calls.tsv.gz",
+      "grain": "one row per projection / general-caller attempt, including not-attempted records",
+      "primary_key": [
+        "caller_record_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence schema version."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Run identifier."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sample identifier."
+        },
+        {
+          "name": "caller_record_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "SHA-256(GENERAL_CALL|run_id|projection_id|caller_version), first 24 hex."
+        },
+        {
+          "name": "evidence_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Many-to-one foreign key to read_evidence evidence_id."
+        },
+        {
+          "name": "materialization_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_materialization_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Whether this attempt was retained as an event, retained as supporting/competing evidence, or produced no materialized call."
+        },
+        {
+          "name": "repeat_event_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Retained raw-read event identifier, when this caller attempt contributes to one."
+        },
+        {
+          "name": "primary_repeat_call_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary normalized repeat-segment row derived from this caller attempt."
+        },
+        {
+          "name": "projection_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "target_region_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "target_source",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "region_type",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "representative_locus_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "assignment_rank",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "read_candidate_target_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "scan_priority",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "scan_strategy",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "geometry_class",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "potential_evidence_class",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "strand",
+          "type": "enum",
+          "required": false,
+          "enum": "strand",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "best_mapq",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "catalog_motifs",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "candidate_window_read_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "candidate_window_read_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "projected_target_read_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "projected_target_read_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "integration_status",
+          "type": "enum",
+          "required": true,
+          "enum": "caller_integration_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "caller_error",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "local_prior_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "local_prior_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "raw_prior_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "raw_prior_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "raw_tract_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "raw_tract_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "caller_version",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "call_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_call_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "canonical_motif",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "oriented_motif",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "motif_source",
+          "type": "enum",
+          "required": false,
+          "enum": "motif_source",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "read_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "read_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "repeat_bp_observed",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "motif_path_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "repeat_units_path",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "score_per_read_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "matches",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "mismatches",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "insertions",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "deletions",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "purity",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "prior_start",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "prior_end",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "prior_span_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "left_extension_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "right_extension_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "catalog_motif_used",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "lps_exact_sequence_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "lps_inferred_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "lps_status",
+          "type": "enum",
+          "required": false,
+          "enum": "lps_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "compound_status",
+          "type": "enum",
+          "required": false,
+          "enum": "compound_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "repeat_segment_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "distinct_motif_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "interruption_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "repeat_segments_json",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "interruption_segments_json",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "evidence_geometry",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_evidence_geometry",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "sequence_context",
+          "type": "enum",
+          "required": false,
+          "enum": "sequence_context",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "sizing_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_sizing_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "exact_repeat_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "lower_bound_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "interval_lower_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "interval_upper_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "left_boundary_status",
+          "type": "enum",
+          "required": false,
+          "enum": "boundary_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "right_boundary_status",
+          "type": "enum",
+          "required": false,
+          "enum": "boundary_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "context_limited",
+          "type": "boolean",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "touches_left_sequence_edge",
+          "type": "boolean",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "touches_right_sequence_edge",
+          "type": "boolean",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "prior_overlap_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "alternative_canonical_motif",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "alternative_score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "primary_minus_alternative_score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "hypothesis_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless deterministic general caller v0.4.1 output field."
+        }
+      ]
+    },
+    "repeat_events": {
+      "filename": "repeat_events.tsv.gz",
+      "grain": "one row per retained non-overlapping raw-read repeat event",
+      "primary_key": [
+        "repeat_event_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence schema version."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Run identifier."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sample identifier."
+        },
+        {
+          "name": "repeat_event_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Deterministic raw-read repeat-event identifier."
+        },
+        {
+          "name": "evidence_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent read evidence."
+        },
+        {
+          "name": "primary_caller_record_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary caller attempt selected for this event."
+        },
+        {
+          "name": "primary_repeat_call_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary repeat component for this event."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Read identifier."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent locus."
+        },
+        {
+          "name": "event_index",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "0-based non-overlapping event order on the raw read."
+        },
+        {
+          "name": "read_start",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Event start on raw read."
+        },
+        {
+          "name": "read_end",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Event end on raw read."
+        },
+        {
+          "name": "repeat_bp_observed",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Observed event span in bp."
+        },
+        {
+          "name": "exact_repeat_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Exact repeat bp when sizing_status=exact_span."
+        },
+        {
+          "name": "repeat_bp_lower_bound",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Event lower bound when censored/context-limited."
+        },
+        {
+          "name": "repeat_bp_upper_bound",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Event upper bound when finite."
+        },
+        {
+          "name": "repeat_units_estimate",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary-motif event units when unambiguous."
+        },
+        {
+          "name": "canonical_motif",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary canonical motif."
+        },
+        {
+          "name": "oriented_motif",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary oriented motif."
+        },
+        {
+          "name": "motif_source",
+          "type": "enum",
+          "required": true,
+          "enum": "motif_source",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Catalog/de-novo motif provenance."
+        },
+        {
+          "name": "compound_status",
+          "type": "enum",
+          "required": true,
+          "enum": "compound_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Single/interrupted/compound event class."
+        },
+        {
+          "name": "segment_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of normalized repeat components in this event."
+        },
+        {
+          "name": "distinct_motif_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of distinct canonical motifs in this event."
+        },
+        {
+          "name": "interruption_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of normalized interruption intervals."
+        },
+        {
+          "name": "purity",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary event purity."
+        },
+        {
+          "name": "score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary event caller score."
+        },
+        {
+          "name": "score_per_read_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary event normalized caller score."
+        },
+        {
+          "name": "lps_exact_sequence_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Exact-sequence LPS."
+        },
+        {
+          "name": "lps_inferred_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Error-aware inferred LPS."
+        },
+        {
+          "name": "lps_status",
+          "type": "enum",
+          "required": false,
+          "enum": "lps_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "LPS interpretation status."
+        },
+        {
+          "name": "evidence_class",
+          "type": "enum",
+          "required": true,
+          "enum": "evidence_class",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Normalized event evidence class."
+        },
+        {
+          "name": "sizing_status",
+          "type": "enum",
+          "required": true,
+          "enum": "sizing_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Normalized event sizing status."
+        },
+        {
+          "name": "caller_sizing_status",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_sizing_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native event sizing status."
+        },
+        {
+          "name": "call_status",
+          "type": "enum",
+          "required": true,
+          "enum": "call_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "PASS/LOW_CONFIDENCE/FAIL/NOT_EVALUATED."
+        },
+        {
+          "name": "caller_evidence_geometry",
+          "type": "enum",
+          "required": false,
+          "enum": "caller_evidence_geometry",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller-native event geometry."
+        },
+        {
+          "name": "sequence_context",
+          "type": "enum",
+          "required": false,
+          "enum": "sequence_context",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sequence context supplied to caller."
+        },
+        {
+          "name": "context_limited",
+          "type": "boolean",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "True when event inference is sequence-context limited."
+        },
+        {
+          "name": "prior_overlap_bp",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Event overlap with projected locus prior."
+        },
+        {
+          "name": "hypothesis_count",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Number of evaluated hypotheses."
+        },
+        {
+          "name": "alternative_canonical_motif",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Runner-up canonical motif."
+        },
+        {
+          "name": "alternative_score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Runner-up score."
+        },
+        {
+          "name": "primary_minus_alternative_score",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary minus runner-up score."
+        },
+        {
+          "name": "event_flags",
+          "type": "string_list",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Semicolon-separated materialization/QC flags."
+        },
+        {
+          "name": "match_bp_total",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sum of match bp over normalized repeat components."
+        },
+        {
+          "name": "mismatch_bp_total",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sum of mismatch bp; alignment operation, not automatically a biological interruption."
+        },
+        {
+          "name": "insertion_bp_total",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sum of insertion bp; alignment operation, not automatically a biological interruption."
+        },
+        {
+          "name": "deletion_bp_total",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sum of deletion bp; alignment operation, not automatically a biological interruption."
+        },
+        {
+          "name": "interruption_bp_total",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sum of normalized interruption-interval bp, distinct from mismatch/indel totals."
+        },
+        {
+          "name": "mismatch_fraction",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Mismatch fraction over the event edit denominator."
+        },
+        {
+          "name": "indel_fraction",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Insertion-plus-deletion fraction over the event edit denominator."
+        },
+        {
+          "name": "edit_fraction",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Mismatch-plus-indel fraction over the event edit denominator."
+        },
+        {
+          "name": "discordance_origin_status",
+          "type": "enum",
+          "required": false,
+          "enum": "discordance_origin_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Origin interpretation; defaults to NOT_ASSESSED."
+        },
+        {
+          "name": "discordance_origin_confidence",
+          "type": "enum",
+          "required": false,
+          "enum": "discordance_origin_confidence",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Confidence in the origin interpretation."
+        },
+        {
+          "name": "discordance_origin_evidence_flags",
+          "type": "string_list",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence supporting the origin interpretation."
+        },
+        {
+          "name": "discordance_model_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Versioned platform/library/error model used for origin assessment."
+        }
+      ]
+    },
+    "repeat_interruptions": {
+      "filename": "repeat_interruptions.tsv.gz",
+      "grain": "one row per interruption interval within a general repeat call",
+      "primary_key": [
+        "interruption_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence schema version."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Run identifier."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sample identifier."
+        },
+        {
+          "name": "interruption_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Deterministic interruption-row identifier."
+        },
+        {
+          "name": "caller_record_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent general-repeat caller record."
+        },
+        {
+          "name": "evidence_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent read evidence."
+        },
+        {
+          "name": "repeat_event_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent raw-read repeat event."
+        },
+        {
+          "name": "repeat_call_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Associated repeat component, when defined."
+        },
+        {
+          "name": "read_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Read identifier."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent locus."
+        },
+        {
+          "name": "interruption_index",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "0-based interruption order."
+        },
+        {
+          "name": "read_start",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Interruption start on raw read."
+        },
+        {
+          "name": "read_end",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "0-based, end-exclusive",
+          "missing_value": ".",
+          "description": "Interruption end on raw read."
+        },
+        {
+          "name": "interruption_bp",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Interruption length in bp."
+        },
+        {
+          "name": "sequence",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Observed interruption sequence, when emitted."
+        },
+        {
+          "name": "interruption_class",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Caller/materializer interruption class."
+        },
+        {
+          "name": "left_repeat_segment_index",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Flanking left repeat-segment index."
+        },
+        {
+          "name": "right_repeat_segment_index",
+          "type": "integer",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Flanking right repeat-segment index."
+        },
+        {
+          "name": "source_json",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lossless source JSON object for this interruption."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Materialization notes."
+        },
+        {
+          "name": "operation_class",
+          "type": "enum",
+          "required": false,
+          "enum": "interruption_operation_class",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Structured interruption/edit operation class."
+        },
+        {
+          "name": "discordance_origin_status",
+          "type": "enum",
+          "required": false,
+          "enum": "discordance_origin_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Origin interpretation; defaults to NOT_ASSESSED."
+        },
+        {
+          "name": "discordance_origin_confidence",
+          "type": "enum",
+          "required": false,
+          "enum": "discordance_origin_confidence",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Confidence in origin interpretation."
+        },
+        {
+          "name": "discordance_origin_evidence_flags",
+          "type": "string_list",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence supporting origin interpretation."
+        },
+        {
+          "name": "discordance_model_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Versioned platform/library/error model."
+        }
+      ]
+    },
+    "locus_repeat_distributions": {
+      "filename": "locus_repeat_distributions.tsv.gz",
+      "grain": "one row per sample x locus x optional motif stratum",
+      "primary_key": [
+        "locus_distribution_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence schema version."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Analysis run identifier."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sample identifier."
+        },
+        {
+          "name": "locus_distribution_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Deterministic sample-locus distribution identifier; prefix RLD_."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Locus identifier."
+        },
+        {
+          "name": "canonical_motif",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Primary canonical motif stratum."
+        },
+        {
+          "name": "distribution_status",
+          "type": "enum",
+          "required": true,
+          "enum": "locus_distribution_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Distribution aggregation status."
+        },
+        {
+          "name": "aggregation_method_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Versioned aggregation method."
+        },
+        {
+          "name": "event_count_total",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "All retained read-level events."
+        },
+        {
+          "name": "exact_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Exact, uncensored event count."
+        },
+        {
+          "name": "left_censored_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Left-censored event count."
+        },
+        {
+          "name": "right_censored_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Right-censored event count."
+        },
+        {
+          "name": "both_censored_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Both-censored event count."
+        },
+        {
+          "name": "context_limited_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Context-limited event count."
+        },
+        {
+          "name": "low_confidence_event_count",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Low-confidence event count."
+        },
+        {
+          "name": "exact_length_min_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Minimum exact event length."
+        },
+        {
+          "name": "exact_length_median_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Median exact event length."
+        },
+        {
+          "name": "exact_length_p95_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "95th percentile exact event length."
+        },
+        {
+          "name": "exact_length_max_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Maximum exact event length."
+        },
+        {
+          "name": "read_level_distribution_preserved",
+          "type": "boolean",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Must be true; repeat_events remain queryable."
+        },
+        {
+          "name": "cluster_analysis_status",
+          "type": "enum",
+          "required": true,
+          "enum": "cluster_analysis_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "NOT_RUN/INSUFFICIENT_DATA/UNIMODAL/MULTIMODAL/REVIEW."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Distribution-level notes."
+        }
+      ]
+    },
+    "repeat_length_clusters": {
+      "filename": "repeat_length_clusters.tsv.gz",
+      "grain": "one row per inferred RNA repeat-length cluster",
+      "primary_key": [
+        "repeat_length_cluster_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence schema version."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Analysis run identifier."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sample identifier."
+        },
+        {
+          "name": "repeat_length_cluster_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "RNA length-cluster identifier; prefix RLC_."
+        },
+        {
+          "name": "locus_distribution_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Parent locus distribution."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Locus identifier."
+        },
+        {
+          "name": "cluster_index",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "0-based cluster index."
+        },
+        {
+          "name": "cluster_label",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Neutral C1/C2/... label unless phasing evidence permits stronger semantics."
+        },
+        {
+          "name": "cluster_semantics",
+          "type": "enum",
+          "required": true,
+          "enum": "length_cluster_semantics",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Unphased length cluster or phase-supported cluster."
+        },
+        {
+          "name": "cluster_status",
+          "type": "enum",
+          "required": true,
+          "enum": "length_cluster_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Cluster status."
+        },
+        {
+          "name": "fit_method_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Versioned fitting method."
+        },
+        {
+          "name": "censor_handling_method",
+          "type": "enum",
+          "required": true,
+          "enum": "censor_handling_method",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "EXACT_ONLY or explicit censor-aware model."
+        },
+        {
+          "name": "exact_event_count_used",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Exact events used for fit."
+        },
+        {
+          "name": "censored_event_count_supporting",
+          "type": "integer",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Censored events used as interval/lower-bound support."
+        },
+        {
+          "name": "cluster_center_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Model-based cluster center."
+        },
+        {
+          "name": "cluster_median_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Median exact length."
+        },
+        {
+          "name": "cluster_dispersion_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Cluster dispersion."
+        },
+        {
+          "name": "cluster_lower_ci_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Lower confidence interval."
+        },
+        {
+          "name": "cluster_upper_ci_bp",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Upper confidence interval."
+        },
+        {
+          "name": "cluster_weight",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Estimated mixture weight."
+        },
+        {
+          "name": "phase_status",
+          "type": "enum",
+          "required": true,
+          "enum": "length_cluster_phase_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Phasing/orthogonal support status."
+        },
+        {
+          "name": "phase_evidence_source",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "SNP/read phasing or matched-DNA evidence."
+        },
+        {
+          "name": "haplotype_id",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Forbidden for unphased clusters."
+        },
+        {
+          "name": "allele_label",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Forbidden without phase/orthogonal support."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Cluster notes."
+        }
+      ]
+    },
+    "repeat_length_cluster_membership": {
+      "filename": "repeat_length_cluster_membership.tsv.gz",
+      "grain": "one row per read-level event x candidate length cluster",
+      "primary_key": [
+        "cluster_membership_id"
+      ],
+      "columns": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Evidence schema version."
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Analysis run identifier."
+        },
+        {
+          "name": "sample_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Sample identifier."
+        },
+        {
+          "name": "cluster_membership_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Event-cluster membership identifier; prefix RLM_."
+        },
+        {
+          "name": "repeat_event_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Source read-level repeat event."
+        },
+        {
+          "name": "repeat_length_cluster_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Target RNA repeat-length cluster."
+        },
+        {
+          "name": "locus_id",
+          "type": "string",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Locus identifier."
+        },
+        {
+          "name": "length_measurement_type",
+          "type": "enum",
+          "required": true,
+          "enum": "length_measurement_type",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Exact or explicit censored/context-limited type."
+        },
+        {
+          "name": "membership_status",
+          "type": "enum",
+          "required": true,
+          "enum": "cluster_membership_status",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Membership/use status."
+        },
+        {
+          "name": "membership_probability",
+          "type": "float",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Optional membership probability."
+        },
+        {
+          "name": "used_for_fit",
+          "type": "boolean",
+          "required": true,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "True only under an allowed exact or explicit censor-aware model."
+        },
+        {
+          "name": "notes",
+          "type": "string",
+          "required": false,
+          "enum": "",
+          "coordinate_convention": "",
+          "missing_value": ".",
+          "description": "Membership notes."
+        }
+      ]
+    }
+  },
+  "compatibility": {
+    "policy": "append-only existing normalized tables plus lossless caller-attempt and interruption tables",
+    "source_schema_version": "0.3.2",
+    "read_evidence_legacy_prefix_columns": [
+      "schema_version",
+      "run_id",
+      "sample_id",
+      "evidence_id",
+      "read_id",
+      "read_length_bp",
+      "mean_read_q",
+      "target_region_id",
+      "target_source",
+      "region_type",
+      "analysis_mode",
+      "locus_id",
+      "motif",
+      "canonical_motif",
+      "primary_alignment_id",
+      "assignment_status",
+      "assignment_rank",
+      "competing_locus_count",
+      "target_overlap_bp",
+      "target_distance_bp",
+      "mapq_best",
+      "alignment_class_best",
+      "strand",
+      "left_flank_anchor_bp",
+      "right_flank_anchor_bp",
+      "left_flank_identity",
+      "right_flank_identity",
+      "left_flank_unique",
+      "right_flank_unique",
+      "evidence_class",
+      "sizing_status",
+      "repeat_call_count",
+      "best_repeat_call_id",
+      "repeat_bp_estimate",
+      "repeat_bp_lower_bound",
+      "repeat_bp_upper_bound",
+      "repeat_units_estimate",
+      "repeat_purity",
+      "interruption_count",
+      "molecule_cluster_id",
+      "confidence_label",
+      "confidence_score",
+      "qc_status",
+      "qc_flags",
+      "failure_code",
+      "notes"
+    ],
+    "repeat_segments_legacy_prefix_columns": [
+      "schema_version",
+      "run_id",
+      "sample_id",
+      "repeat_call_id",
+      "evidence_id",
+      "read_id",
+      "locus_id",
+      "segment_index",
+      "motif",
+      "canonical_motif",
+      "read_start",
+      "read_end",
+      "repeat_bp",
+      "repeat_units_float",
+      "purity",
+      "match_bp",
+      "mismatch_bp",
+      "insertion_bp",
+      "deletion_bp",
+      "interruption_count",
+      "interruption_pattern",
+      "left_boundary_confidence",
+      "right_boundary_confidence",
+      "call_method",
+      "call_score",
+      "call_status",
+      "call_flags"
+    ],
+    "historical_v0.3.2_outputs_rewritten": false,
+    "read_evidence_grain": "one row per read x target-region x locus hypothesis",
+    "general_caller_attempts_many_to_one_read_evidence": true,
+    "nonoverlapping_multi_event_preservation": true,
+    "derived_from_schema_version": "0.4.0",
+    "v040_table_prefixes_unchanged": {
+      "read_evidence": [
+        "schema_version",
+        "run_id",
+        "sample_id",
+        "evidence_id",
+        "read_id",
+        "read_length_bp",
+        "mean_read_q",
+        "target_region_id",
+        "target_source",
+        "region_type",
+        "analysis_mode",
+        "locus_id",
+        "motif",
+        "canonical_motif",
+        "primary_alignment_id",
+        "assignment_status",
+        "assignment_rank",
+        "competing_locus_count",
+        "target_overlap_bp",
+        "target_distance_bp",
+        "mapq_best",
+        "alignment_class_best",
+        "strand",
+        "left_flank_anchor_bp",
+        "right_flank_anchor_bp",
+        "left_flank_identity",
+        "right_flank_identity",
+        "left_flank_unique",
+        "right_flank_unique",
+        "evidence_class",
+        "sizing_status",
+        "repeat_call_count",
+        "best_repeat_call_id",
+        "repeat_bp_estimate",
+        "repeat_bp_lower_bound",
+        "repeat_bp_upper_bound",
+        "repeat_units_estimate",
+        "repeat_purity",
+        "interruption_count",
+        "molecule_cluster_id",
+        "confidence_label",
+        "confidence_score",
+        "qc_status",
+        "qc_flags",
+        "failure_code",
+        "notes",
+        "best_projection_id",
+        "best_caller_record_id",
+        "caller_attempt_count",
+        "caller_called_count",
+        "caller_error_count",
+        "repeat_event_count",
+        "best_repeat_event_id",
+        "best_caller_version",
+        "best_caller_integration_status",
+        "best_caller_call_status",
+        "best_caller_sizing_status",
+        "motif_source",
+        "compound_status",
+        "lps_exact_sequence_bp",
+        "lps_inferred_bp",
+        "lps_status",
+        "caller_evidence_geometry",
+        "sequence_context",
+        "context_limited",
+        "prior_overlap_bp",
+        "hypothesis_count",
+        "alternative_canonical_motif",
+        "alternative_score",
+        "primary_minus_alternative_score"
+      ],
+      "repeat_interruptions": [
+        "schema_version",
+        "run_id",
+        "sample_id",
+        "interruption_id",
+        "caller_record_id",
+        "evidence_id",
+        "repeat_event_id",
+        "repeat_call_id",
+        "read_id",
+        "locus_id",
+        "interruption_index",
+        "read_start",
+        "read_end",
+        "interruption_bp",
+        "sequence",
+        "interruption_class",
+        "left_repeat_segment_index",
+        "right_repeat_segment_index",
+        "source_json",
+        "notes"
+      ],
+      "general_repeat_calls": [
+        "schema_version",
+        "run_id",
+        "sample_id",
+        "caller_record_id",
+        "evidence_id",
+        "materialization_status",
+        "repeat_event_id",
+        "primary_repeat_call_id",
+        "projection_id",
+        "read_id",
+        "target_region_id",
+        "target_source",
+        "region_type",
+        "representative_locus_id",
+        "assignment_rank",
+        "read_candidate_target_count",
+        "scan_priority",
+        "scan_strategy",
+        "geometry_class",
+        "potential_evidence_class",
+        "strand",
+        "best_mapq",
+        "catalog_motifs",
+        "candidate_window_read_start",
+        "candidate_window_read_end",
+        "projected_target_read_start",
+        "projected_target_read_end",
+        "integration_status",
+        "caller_error",
+        "local_prior_start",
+        "local_prior_end",
+        "raw_prior_start",
+        "raw_prior_end",
+        "raw_tract_start",
+        "raw_tract_end",
+        "caller_version",
+        "call_status",
+        "canonical_motif",
+        "oriented_motif",
+        "motif_source",
+        "read_start",
+        "read_end",
+        "repeat_bp_observed",
+        "motif_path_bp",
+        "repeat_units_path",
+        "score",
+        "score_per_read_bp",
+        "matches",
+        "mismatches",
+        "insertions",
+        "deletions",
+        "purity",
+        "prior_start",
+        "prior_end",
+        "prior_span_bp",
+        "left_extension_bp",
+        "right_extension_bp",
+        "catalog_motif_used",
+        "lps_exact_sequence_bp",
+        "lps_inferred_bp",
+        "lps_status",
+        "compound_status",
+        "repeat_segment_count",
+        "distinct_motif_count",
+        "interruption_count",
+        "repeat_segments_json",
+        "interruption_segments_json",
+        "evidence_geometry",
+        "sequence_context",
+        "sizing_status",
+        "exact_repeat_bp",
+        "lower_bound_bp",
+        "interval_lower_bp",
+        "interval_upper_bp",
+        "left_boundary_status",
+        "right_boundary_status",
+        "context_limited",
+        "touches_left_sequence_edge",
+        "touches_right_sequence_edge",
+        "prior_overlap_bp",
+        "alternative_canonical_motif",
+        "alternative_score",
+        "primary_minus_alternative_score",
+        "hypothesis_count",
+        "note"
+      ],
+      "repeat_events": [
+        "schema_version",
+        "run_id",
+        "sample_id",
+        "repeat_event_id",
+        "evidence_id",
+        "primary_caller_record_id",
+        "primary_repeat_call_id",
+        "read_id",
+        "locus_id",
+        "event_index",
+        "read_start",
+        "read_end",
+        "repeat_bp_observed",
+        "exact_repeat_bp",
+        "repeat_bp_lower_bound",
+        "repeat_bp_upper_bound",
+        "repeat_units_estimate",
+        "canonical_motif",
+        "oriented_motif",
+        "motif_source",
+        "compound_status",
+        "segment_count",
+        "distinct_motif_count",
+        "interruption_count",
+        "purity",
+        "score",
+        "score_per_read_bp",
+        "lps_exact_sequence_bp",
+        "lps_inferred_bp",
+        "lps_status",
+        "evidence_class",
+        "sizing_status",
+        "caller_sizing_status",
+        "call_status",
+        "caller_evidence_geometry",
+        "sequence_context",
+        "context_limited",
+        "prior_overlap_bp",
+        "hypothesis_count",
+        "alternative_canonical_motif",
+        "alternative_score",
+        "primary_minus_alternative_score",
+        "event_flags"
+      ],
+      "repeat_segments": [
+        "schema_version",
+        "run_id",
+        "sample_id",
+        "repeat_call_id",
+        "evidence_id",
+        "read_id",
+        "locus_id",
+        "segment_index",
+        "motif",
+        "canonical_motif",
+        "read_start",
+        "read_end",
+        "repeat_bp",
+        "repeat_units_float",
+        "purity",
+        "match_bp",
+        "mismatch_bp",
+        "insertion_bp",
+        "deletion_bp",
+        "interruption_count",
+        "interruption_pattern",
+        "left_boundary_confidence",
+        "right_boundary_confidence",
+        "call_method",
+        "call_score",
+        "call_status",
+        "call_flags",
+        "repeat_event_id",
+        "caller_record_id",
+        "segment_role",
+        "motif_source",
+        "motif_path_bp",
+        "repeat_units_path",
+        "score_per_read_bp",
+        "left_boundary_status",
+        "right_boundary_status",
+        "touches_left_sequence_edge",
+        "touches_right_sequence_edge"
+      ]
+    }
+  },
+  "foreign_keys": [
+    {
+      "from": "read_evidence.best_caller_record_id",
+      "to": "general_repeat_calls.caller_record_id",
+      "nullable": true
+    },
+    {
+      "from": "read_evidence.best_repeat_call_id",
+      "to": "repeat_segments.repeat_call_id",
+      "nullable": true
+    },
+    {
+      "from": "general_repeat_calls.evidence_id",
+      "to": "read_evidence.evidence_id",
+      "nullable": false
+    },
+    {
+      "from": "general_repeat_calls.repeat_event_id",
+      "to": "repeat_events.repeat_event_id",
+      "nullable": true
+    },
+    {
+      "from": "general_repeat_calls.primary_repeat_call_id",
+      "to": "repeat_segments.repeat_call_id",
+      "nullable": true
+    },
+    {
+      "from": "repeat_events.evidence_id",
+      "to": "read_evidence.evidence_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_events.primary_caller_record_id",
+      "to": "general_repeat_calls.caller_record_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_events.primary_repeat_call_id",
+      "to": "repeat_segments.repeat_call_id",
+      "nullable": true
+    },
+    {
+      "from": "repeat_segments.evidence_id",
+      "to": "read_evidence.evidence_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_segments.repeat_event_id",
+      "to": "repeat_events.repeat_event_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_segments.caller_record_id",
+      "to": "general_repeat_calls.caller_record_id",
+      "nullable": true
+    },
+    {
+      "from": "repeat_interruptions.evidence_id",
+      "to": "read_evidence.evidence_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_interruptions.caller_record_id",
+      "to": "general_repeat_calls.caller_record_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_interruptions.repeat_event_id",
+      "to": "repeat_events.repeat_event_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_interruptions.repeat_call_id",
+      "to": "repeat_segments.repeat_call_id",
+      "nullable": true
+    },
+    {
+      "from": "repeat_length_clusters.locus_distribution_id",
+      "to": "locus_repeat_distributions.locus_distribution_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_length_cluster_membership.repeat_event_id",
+      "to": "repeat_events.repeat_event_id",
+      "nullable": false
+    },
+    {
+      "from": "repeat_length_cluster_membership.repeat_length_cluster_id",
+      "to": "repeat_length_clusters.repeat_length_cluster_id",
+      "nullable": false
+    }
+  ]
+}

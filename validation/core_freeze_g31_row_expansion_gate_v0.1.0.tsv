@@ -1,0 +1,2 @@
+gate_id	requirement	blocking_for_core_freeze	current_status	machine_result	evidence	validator_pass_sufficient	ssot_registration
+G31	Full-scale row expansion, multiplicity, concentration, catalog overlap, and 11b candidate-entry-rate audit	true	FAIL_BLOCKING	FAIL_OVEREXPANSION_OR_LINEAGE	/mnt/intelssd/rnatr_project/qc/15_stage15d_g31_row_expansion_audit/ENCSR307SHM_stage15c_full5312696_seed20260809_mm2splice_v1/v0.1.0/stage15d_g31_row_expansion_audit.qc.tsv	false	NOT_RUN

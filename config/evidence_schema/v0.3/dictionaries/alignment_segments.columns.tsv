@@ -1,0 +1,36 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	read_id	string	true			.	FASTQ/BAM read identifier.
+5	alignment_id	string	true			.	Stable unique alignment identifier.
+6	alignment_class	enum	true	alignment_class		.	Primary, secondary, supplementary, or unmapped.
+7	segment_index	integer	true			.	0-based segment index.
+8	chrom	string	false			.	Reference contig.
+9	ref_start	integer	false		0-based, end-exclusive	.	Reference start.
+10	ref_end	integer	false		0-based, end-exclusive	.	Reference end.
+11	query_start	integer	false		0-based, end-exclusive	.	Aligned query start.
+12	query_end	integer	false		0-based, end-exclusive	.	Aligned query end.
+13	strand	enum	true	strand		.	Alignment strand.
+14	mapq	integer	false			.	Mapping quality.
+15	sam_flag	integer	true			.	SAM flag integer.
+16	cigar	string	false			.	CIGAR string.
+17	aligned_query_bp	integer	false			.	Aligned query bases.
+18	reference_span_bp	integer	false			.	Reference span.
+19	edit_distance_nm	integer	false			.	NM tag.
+20	alignment_score_as	integer	false			.	AS tag.
+21	splice_junction_count	integer	false			.	Number of N operations.
+22	intron_bases	integer	false			.	Total N bases.
+23	insertion_bases	integer	false			.	Total inserted query bases.
+24	deletion_bases	integer	false			.	Total deleted reference bases.
+25	softclip_left_bp	integer	false			.	Left soft clip in query orientation.
+26	softclip_right_bp	integer	false			.	Right soft clip in query orientation.
+27	hardclip_left_bp	integer	false			.	Left hard clip.
+28	hardclip_right_bp	integer	false			.	Right hard clip.
+29	ts_tag	string	false			.	minimap2 transcript-strand tag.
+30	sa_tag_present	boolean	true			.	Whether SA tag is present.
+31	cs_tag	string	false			.	Optional cs tag.
+32	md_tag	string	false			.	Optional MD tag.
+33	is_chimeric_candidate	boolean	true			.	Potential chimera/split event.
+34	qc_status	enum	true	qc_status		.	Alignment QC status.
+35	qc_flags	string_list	false			.	Semicolon-separated QC flags.

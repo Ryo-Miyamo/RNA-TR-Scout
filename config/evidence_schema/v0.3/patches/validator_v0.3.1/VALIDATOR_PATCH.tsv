@@ -1,0 +1,10 @@
+field	value
+validator_version	0.3.1
+schema_version	0.3.0
+patched_at	2026-08-03T14:56:50+09:00
+bug	global missing token "." incorrectly took precedence over explicit enum value "."
+affected_field	alignment_segments.strand
+affected_records	unmapped alignment records
+schema_change	false
+data_change	false
+validator_sha256	10c9d4bbb5c9dac314d400768eb27206173933759c877225bd0ca2c692d8aba9

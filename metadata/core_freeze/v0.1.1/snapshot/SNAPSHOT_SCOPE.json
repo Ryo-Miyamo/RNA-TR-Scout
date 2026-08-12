@@ -1,0 +1,12 @@
+{
+  "active_pipeline_changed": false,
+  "base_manifest_path": "metadata/core_freeze/v0.1.0/core_freeze_manifest.tsv",
+  "base_manifest_sha256": "b384eee38da66c95f8c66e43792830d83491e29ce37af53fcf7e8db05852e3ae",
+  "contract_version": "rnatr_core_freeze_delta_snapshot_v0.1.1",
+  "current_readme_path": "docs/README_CANONICAL_STRUCTURE_v0.1.1.md",
+  "freeze_id": "LOCAL_CORE_FREEZE_V0.1.0",
+  "historical_readme_preserved_sha256": "3f89a6dc0bc0a1c8f4441f1ede28d64b440c0971930789bc06e3baf80a742e52",
+  "schema_changed": false,
+  "scientific_core_changed": false,
+  "snapshot_role": "Stage15T final-governance delta over immutable Stage15Q v0.1.0 base snapshot"
+}

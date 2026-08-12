@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rna-tr-scout"
+version = "0.3.2"
+description = "Long-read RNA tandem-repeat evidence caller"
+requires-python = ">=3.10"
+authors = [
+  {name = "RNA-TR-Scout developers"}
+]
+license = {text = "Research software; license not yet selected"}
+dependencies = []
+
+[project.scripts]
+rnatr-scout = "rnatr_scout.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,26 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Analysis run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	repeat_length_cluster_id	string	true			.	RNA length-cluster identifier; prefix RLC_.
+5	locus_distribution_id	string	true			.	Parent locus distribution.
+6	locus_id	string	true			.	Locus identifier.
+7	cluster_index	integer	true			.	0-based cluster index.
+8	cluster_label	string	true			.	Neutral C1/C2/... label unless phasing evidence permits stronger semantics.
+9	cluster_semantics	enum	true	length_cluster_semantics		.	Unphased length cluster or phase-supported cluster.
+10	cluster_status	enum	true	length_cluster_status		.	Cluster status.
+11	fit_method_id	string	true			.	Versioned fitting method.
+12	censor_handling_method	enum	true	censor_handling_method		.	EXACT_ONLY or explicit censor-aware model.
+13	exact_event_count_used	integer	true			.	Exact events used for fit.
+14	censored_event_count_supporting	integer	true			.	Censored events used as interval/lower-bound support.
+15	cluster_center_bp	float	false			.	Model-based cluster center.
+16	cluster_median_bp	float	false			.	Median exact length.
+17	cluster_dispersion_bp	float	false			.	Cluster dispersion.
+18	cluster_lower_ci_bp	float	false			.	Lower confidence interval.
+19	cluster_upper_ci_bp	float	false			.	Upper confidence interval.
+20	cluster_weight	float	false			.	Estimated mixture weight.
+21	phase_status	enum	true	length_cluster_phase_status		.	Phasing/orthogonal support status.
+22	phase_evidence_source	string	false			.	SNP/read phasing or matched-DNA evidence.
+23	haplotype_id	string	false			.	Forbidden for unphased clusters.
+24	allele_label	string	false			.	Forbidden without phase/orthogonal support.
+25	notes	string	false			.	Cluster notes.

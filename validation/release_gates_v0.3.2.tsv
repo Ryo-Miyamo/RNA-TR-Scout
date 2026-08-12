@@ -1,0 +1,36 @@
+gate_id	gate	level	blocking_for_v1	status	evidence_or_next_action
+G01	General caller deterministic across hash seeds	algorithm	true	PASS	Stage14F2/14G, deterministic 250k/500k, and Stage15E shard_065 hash-seed logical parity
+G02	Synthetic truth and semantic invariants	algorithm	true	PASS	Stage14G
+G03	Python/native 100k exact parity	implementation	true	PASS	Stage14G all 388571 rows
+G04	Native caller-only projected 5.31M runtime <=30 min	performance	false	PASS	Stage14G projected 18.90 min; BAM-to-final 30-min target remains separate and open
+G05	Prepared-job/native-caller to validated final-evidence package	production	true	PASS	Stage14K2/14L2
+G06	5M-read BAM-input runtime <=60 min with first-freeze documented tolerance <=62 min	performance	true	PASS_WITH_DOCUMENTED_TOLERANCE	Empirical 5,312,696-read BAM-to-final v0.1.6 = 60.041256352 min; strict <=60 was exceeded by 2.475 s; mapping excluded, partition/validators/publication included
+G07	5M-read restartability/memory/artifact audit	production	true	PASS_WITH_SCOPE_AMENDMENT	Stage15E rehashed all 1,884 checkpoint artifacts/140,029,015,504 bytes before stop and resume, rejected a copied-manifest SHA corruption fixture, freshly reran caller and materializer for shard_065 under PYTHONHASHSEED=20260810, reconstructed 144 shards using 1 fresh plus 143 frozen shards with exact package parity, published atomically, and passed a zero-scientific-command second-resume no-op; scope is checkpoint-based caller-to-final, not an upstream BAM partition/11b/11d3/11e full rerun
+G08	Real truth-bearing biological validation	biology	true	OPEN	Disease/synthetic-RNA/orthogonal truth data
+G09	Large-cohort RNA technical/background distribution	population	false	OPEN	Defer until production core is frozen
+G10	FASTQ-to-final mapping-inclusive performance	convenience	false	OPEN	Report minimap2 separately; current full mapping = 75.433333 min
+G11	Mismatch/indel/interruption/purity/LPS preserved separately	schema_contract	true	PASS	Schema v0.4.2 retains separate fields and explicit missingness
+G12	Biological-vs-technical origin classifier truth validation	schema_contract	false	OPEN	Current package uses NOT_ASSESSED
+G13	Read-level RNA repeat-length distribution retained	schema_contract	true	PASS	repeat_events remains source of truth
+G14	RNA repeat-length clustering algorithm validated	schema_contract	false	OPEN	Implement after core freeze and sufficient same-locus support
+G15	Allele/haplotype labels prohibited without phase evidence	schema_contract	true	PASS	Validator/contract rejects unsupported labels
+G16	Censored/context-limited reads not naively mixed as exact observations	schema_contract	true	PASS	Exact-only or explicit censor-aware handling required
+G17	Mapping-complete BAM to validated schema v0.4.2 package	production	true	PASS	100k/250k/500k, full 5.31M empirical package, and Stage15E exact full-package reconstruction PASS
+G18	Called non-locus-anchored attempts retained but not eventized	materialization	true	PASS	Lossless materialization contract
+G19	failure_code/qc_flags/materialization_status semantics are distinct	schema_contract	true	PASS	Stage14L2 contract
+G20	Read-keyed biology joinability for transcript, haplotype, observability, and molecule independence	biology_output	true	OPEN	Freeze and validate sidecar schemas after core technical completion
+G21	Molecule-level distribution retained through sample-by-locus summarization	interpretation_output	true	OPEN	Implement molecule_repeat_state and censor-aware sample_locus_summary
+G22	Purpose-specific ranking lanes with unconditional known-disease retention	interpretation_output	true	OPEN	Implement biology/triage lanes after core freeze
+G23	Researcher-facing candidate dossier fully traceable to core and sidecars	interpretation_output	true	OPEN	Implement dossier and reverse-traceability validator
+G24	Major-checkpoint Architecture consistency audit and closure	architecture_contract	true	OPEN	POST_250K and PRE_RELEASE_CANDIDATE audits are completed. PRE-RC v0.1.1 identified and Stage15G remediates stale SSOT current-state metadata plus lifecycle classification without changing the active pipeline, frozen schema, or scientific outputs. PRE_BIOLOGY remains mandatory and must reconstruct state from exact original code, SSOT, schema, contracts, validators, runners, and formal artifacts.
+G25	Automatic version-pinned reference bootstrap with resumable download and checksum verification	release_readiness	true	OPEN_PLANNED	Implement reference manifest/downloader/cache; large references excluded from GitHub
+G26	CPU/RAM/output/tmp resource detection before execution	release_readiness	true	OPEN_PLANNED	Expose resource report and override provenance
+G27	Memory-aware automatic shard/concurrency selection with manual overrides	release_readiness	true	OPEN_PLANNED	Use empirical resource model; support --threads --memory-gb --tmp-dir
+G28	Scientific logical output reproducibility across supported hardware/concurrency profiles	release_readiness	true	OPEN_PLANNED	Stage15E is same-machine checkpoint-based evidence and does not close cross-profile or cross-machine reproducibility
+G29	Clean-machine clone-to-setup-to-test reproducibility	release_readiness	true	OPEN_PLANNED	Validate independent clean environment without hidden developer paths
+G30	Empirical minimum/recommended/tested hardware profiles in README	release_readiness	true	OPEN_PLANNED	Derive from release-scale measurements
+G31-T	Technical multiplicity integrity and absence of scale-dependent row runaway	technical_audit	true	PASS_WITH_SCOPE_AMENDMENT	11b-through-materialization row conservation, primary ID uniqueness, 0.0311% read-locus excess, stable 100k/500k/full multiplicity, and low target concentration; original v0.1.0 machine FAIL preserved
+G31-B	Biological interpretation of 79.29% candidate entry and ~4.9 loci/read	biology_interpretation	false	OPEN_DEFERRED_TO_BIOLOGY_LAYER	Interpret catalog overlap, +/-500bp padding, transcript concentration, motif equivalence, and recall-preserving candidate narrowing after technical core freeze
+G32	Authoritative Core Freeze Packet preserving the frozen Core contract	core_freeze_governance	true	OPEN_PLANNED	After PRE-RC audit and active-path decision, create a versioned, checksummed Core Freeze Packet from reread originals covering active production path, frozen schema/API/join keys, scientific semantics, performance/restart/validator contracts, known limitations, and biology-layer interface.
+G33	Golden regression suite for frozen scientific-output semantics	regression_contract	true	OPEN_PLANNED	Freeze representative test inputs, expected outputs, exact/logical parity rules, validators, versions, manifests, and SHA-256 bindings so biology additions and performance optimization cannot silently change the Core scientific contract.
+G34	Project-wide canonical documentation and artifact-retention structure	architecture_governance	true	OPEN_PLANNED	Promote project-wide architecture/governance/contracts/freeze/regression documents to one unambiguous canonical layout; retain stage-local copies as history or pointers; classify Downloads artifacts before any move or deletion.

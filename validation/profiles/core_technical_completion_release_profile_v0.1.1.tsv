@@ -1,0 +1,11 @@
+gate_id	requirement	blocking_for_core_freeze	current_status	evidence_or_next_action
+CTC01	Core correctness, formal run-ID contract, and deterministic 500k dual-replicate scaling	true	PASS	500k v0.1.1 execution plus v0.1.4 compare amendment: exact A/B package and caller determinism, checkpoint logical reproducibility, nested-250k scientific parity
+CTC02	Empirical 5.31M-class BAM-input core runtime; <=60 min strict benchmark or <=62 min documented thesis tolerance	true	OPEN	500k linear projection 59.392700 min; empirical full run required
+CTC03	Release-scale hash-seed / package determinism	true	OPEN	Full-scale alternate-seed caller/materializer finalization or independent full replicate
+CTC04	Full-scale selective restart/resume and no-op second resume	true	OPEN	Intentional full-scale checkpoint stop, corrupt-checkpoint rejection, selective resume, exact final parity
+CTC05	Full-scale validators, bounded memory, negative fixture, atomic publication, memory and artifact audit	true	REVIEW	500k package validator peak RSS 27888656 kB; naive full-scale projection exceeds host RAM, so memory-bounded equivalent validator is required before full run
+CTC06	PRE_RELEASE_CANDIDATE Architecture consistency audit with no blocking conflicts or release-blocking REVIEW	true	OPEN	Run after full-scale gates and before release tag
+CTC07	Explicit active-path promotion and clean-install reproducibility	true	OPEN	Release-candidate install/run validation while preserving reference/audit lane
+CTC08	Immutable thesis-citable GitHub release with tag, full commit SHA, checksums, environment lock and CITATION.cff	true	OPEN	Prepare v0.5.0-rc1 then final v0.5.0 after all blockers PASS
+CTC09	5.31M-class BAM-input runtime <=30 minutes	false	TARGET_NOT_MET	Maintain as formal target; continue in a subsequent version if substantial redesign is required
+CTC10	Biology/interpretation layer remains separately versioned and does not block core freeze	false	PASS	G20-G23 remain OPEN for the post-core biology phase

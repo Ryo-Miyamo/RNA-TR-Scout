@@ -1,0 +1,56 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	repeat_event_id	string	true			.	Deterministic raw-read repeat-event identifier.
+5	evidence_id	string	true			.	Parent read evidence.
+6	primary_caller_record_id	string	true			.	Primary caller attempt selected for this event.
+7	primary_repeat_call_id	string	false			.	Primary repeat component for this event.
+8	read_id	string	true			.	Read identifier.
+9	locus_id	string	false			.	Parent locus.
+10	event_index	integer	true			.	0-based non-overlapping event order on the raw read.
+11	read_start	integer	true		0-based, end-exclusive	.	Event start on raw read.
+12	read_end	integer	true		0-based, end-exclusive	.	Event end on raw read.
+13	repeat_bp_observed	integer	true			.	Observed event span in bp.
+14	exact_repeat_bp	integer	false			.	Exact repeat bp when sizing_status=exact_span.
+15	repeat_bp_lower_bound	integer	false			.	Event lower bound when censored/context-limited.
+16	repeat_bp_upper_bound	integer	false			.	Event upper bound when finite.
+17	repeat_units_estimate	float	false			.	Primary-motif event units when unambiguous.
+18	canonical_motif	string	true			.	Primary canonical motif.
+19	oriented_motif	string	true			.	Primary oriented motif.
+20	motif_source	enum	true	motif_source		.	Catalog/de-novo motif provenance.
+21	compound_status	enum	true	compound_status		.	Single/interrupted/compound event class.
+22	segment_count	integer	true			.	Number of normalized repeat components in this event.
+23	distinct_motif_count	integer	true			.	Number of distinct canonical motifs in this event.
+24	interruption_count	integer	true			.	Number of normalized interruption intervals.
+25	purity	float	false			.	Primary event purity.
+26	score	float	false			.	Primary event caller score.
+27	score_per_read_bp	float	false			.	Primary event normalized caller score.
+28	lps_exact_sequence_bp	integer	false			.	Exact-sequence LPS.
+29	lps_inferred_bp	integer	false			.	Error-aware inferred LPS.
+30	lps_status	enum	false	lps_status		.	LPS interpretation status.
+31	evidence_class	enum	true	evidence_class		.	Normalized event evidence class.
+32	sizing_status	enum	true	sizing_status		.	Normalized event sizing status.
+33	caller_sizing_status	enum	false	caller_sizing_status		.	Caller-native event sizing status.
+34	call_status	enum	true	call_status		.	PASS/LOW_CONFIDENCE/FAIL/NOT_EVALUATED.
+35	caller_evidence_geometry	enum	false	caller_evidence_geometry		.	Caller-native event geometry.
+36	sequence_context	enum	false	sequence_context		.	Sequence context supplied to caller.
+37	context_limited	boolean	true			.	True when event inference is sequence-context limited.
+38	prior_overlap_bp	integer	false			.	Event overlap with projected locus prior.
+39	hypothesis_count	integer	false			.	Number of evaluated hypotheses.
+40	alternative_canonical_motif	string	false			.	Runner-up canonical motif.
+41	alternative_score	float	false			.	Runner-up score.
+42	primary_minus_alternative_score	float	false			.	Primary minus runner-up score.
+43	event_flags	string_list	false			.	Semicolon-separated materialization/QC flags.
+44	match_bp_total	integer	false			.	Sum of match bp over normalized repeat components.
+45	mismatch_bp_total	integer	false			.	Sum of mismatch bp; alignment operation, not automatically a biological interruption.
+46	insertion_bp_total	integer	false			.	Sum of insertion bp; alignment operation, not automatically a biological interruption.
+47	deletion_bp_total	integer	false			.	Sum of deletion bp; alignment operation, not automatically a biological interruption.
+48	interruption_bp_total	integer	false			.	Sum of normalized interruption-interval bp, distinct from mismatch/indel totals.
+49	mismatch_fraction	float	false			.	Mismatch fraction over the event edit denominator.
+50	indel_fraction	float	false			.	Insertion-plus-deletion fraction over the event edit denominator.
+51	edit_fraction	float	false			.	Mismatch-plus-indel fraction over the event edit denominator.
+52	discordance_origin_status	enum	false	discordance_origin_status		.	Origin interpretation; defaults to NOT_ASSESSED.
+53	discordance_origin_confidence	enum	false	discordance_origin_confidence		.	Confidence in the origin interpretation.
+54	discordance_origin_evidence_flags	string_list	false			.	Evidence supporting the origin interpretation.
+55	discordance_model_id	string	false			.	Versioned platform/library/error model used for origin assessment.

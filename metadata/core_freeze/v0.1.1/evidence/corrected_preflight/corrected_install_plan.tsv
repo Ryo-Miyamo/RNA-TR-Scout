@@ -1,0 +1,12 @@
+order	phase	action	acceptance
+1	canonical_docs	Install corrected README/current-contract index; preserve old versions/history	prestate SHA guards + rollback
+2	owner_approved_contracts	Install canonical wrappers plus exact approved Packet/CTC source bodies	no substantive source rewrite
+3	technical_contracts	Install Stage15R reverse-trace, Stage15S extensibility and final-hygiene contracts	exact audited hashes
+4	release_gates	Install exact owner-approved release_gates_v0.3.4.tsv	SHA ba57781d...; G25-G30 remain OPEN_PLANNED
+5	evidence	Retain exact Stage15R/S/T bundles and approval record under metadata/core_freeze/v0.1.1/evidence	copy only; Downloads unchanged
+6	ssot_source	Patch reproducible rnatr_ssot.py with audited Stage15T overlay	pre-hash guard; compile; rollback
+7	ssot_rebuild	Atomic rebuild/export; compare with simulated poststate	integrity PASS; current_pipeline byte-identical
+8	snapshot_manifest	Generate v0.1.1 snapshot and manifest	all rows path/bytes/SHA PASS
+9	golden	Run v0.1.5 final-governance wrapper full-evidence, reusing v0.1.4 scientific suite	Tier0-Tier4 PASS; expected scientific outputs unchanged
+10	post_install	Generate registration record/final manifest and tier0-only rehash	full rollback on blocking failure
+11	cleanup	No Downloads/rollback deletion	separate later approval

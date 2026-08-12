@@ -1,0 +1,11 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	molecule_cluster_id	string	true			.	Cluster identifier.
+5	evidence_id	string	true			.	Evidence identifier.
+6	read_id	string	true			.	Read identifier.
+7	membership_role	enum	true	membership_role		.	Representative/member.
+8	membership_score	float	false			.	0–1 membership score.
+9	evidence_weight	float	true			.	Weight in aggregate statistics.
+10	membership_reasons	string_list	false			.	Semicolon-separated reasons.

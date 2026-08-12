@@ -1,0 +1,4 @@
+field	value
+schema_version	0.3.1
+source_schema	0.3.0
+patch_reason	add one-flank internal repeat evidence states

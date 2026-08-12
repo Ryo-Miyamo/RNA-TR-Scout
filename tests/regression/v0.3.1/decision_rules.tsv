@@ -1,0 +1,14 @@
+rule_id	rule_name	condition	required_action	guardrail
+R001	SPAN_INTERVAL	Both genomic flanks are validated	Use the raw-read interval between flanks as exact span	Do not extend a local motif tract into flanks
+R002	SHORT_EXACT_SPAN	Both flanks validated and interval <12 bp	Retain exact span with reduced sequence confidence	12 bp is an algorithmic periodicity threshold, not a biological repeat threshold
+R003	LOW_PERIODICITY_EXACT	Both flanks validated but motif periodicity is low	Retain exact total span and request sequence-model review	Geometry and sequence model are separate evidence axes
+R004	CENSORED_LOWER_BOUND	One genomic flank validated and repeat tract reaches expected raw-read end	Emit lower bound only	The opposite flank is absent, so exact allele length is unknown
+R005	ONE_FLANK_INTERNAL	One genomic flank validated but tract stops before expected raw-read end	Emit partial_internal	Emit neither exact size nor lower bound
+R006	REPEAT_ONLY	No validated genomic flank	Retain sequence evidence without allele sizing	Repeat-like sequence alone cannot establish locus-bounded allele length
+R007	EVENT_GROUPING	Exact intervals overlap on the same raw read	Create one event and preserve sequence/target hypotheses beneath it	Read-level P1/P2 rank is not an event identifier
+R008	LOCUS_SUPPORT	Detected tract overlaps only a small fraction of the target	Classify local periodic overextension	Recurrence cannot rescue target-overlap failure
+R009	CHIMERA	Chimeric, supplementary, or multi-chromosome evidence undermines locus assignment	Exclude from locus-specific repeat sizing	Keep as regression negative rather than deleting the record
+R010	REFERENCE_ARCHITECTURE	Reference comparison is requested	Measure the actual reference sequence architecture	Catalog interval length is not reference allele length
+R011	FLANK_RESCUE	Residual sequence is tested as a genomic flank	Require unique, high-quality, expected-side alignment	Residual sequence may be repeat continuation, low complexity, adapter, or chimera
+R012	SPLICE_BLOCK_QC	A post-N full-read block is proposed as an anchor	Require block-level match support, span balance, and low indel fractions	Whole-read MAPQ cannot validate an insertion-dominated pseudo-anchor
+R013	EXPANSION_GUARDRAIL	Allele is not bounded by validated flanks	Do not emit reference-relative expansion status	Observed RNA tract length is not complete expressed allele length

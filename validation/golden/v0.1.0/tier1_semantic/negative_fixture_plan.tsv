@@ -1,0 +1,11 @@
+test_id	fixture	expected	description
+N01	portable_manifest_absolute_path	REJECT	Insert absolute path into portable Core result manifest.
+N02	resource_sha_drift	REJECT	Change one resource checksum while retaining path.
+N03	missing_scientific_table	REJECT	Remove one required schema-v0.4.2 table.
+N04	duplicate_primary_id	REJECT	Duplicate evidence/event/call/interruption primary identity.
+N05	broken_cross_table_reference	REJECT	Point event/segment/interruption to absent parent identity.
+N06	partition_manifest_sha_drift	REJECT	Modify one partition-manifest entry before resume.
+N07	completed_shard_output_drift	REJECT	Modify validated shard output before resume.
+N08	published_package_final_state_missing	RECOVER_NO_SCIENTIFIC_COMMAND	Omit final state after atomic publication.
+N09	second_resume	NOOP	Require zero scientific commands and unchanged fingerprints.
+N10	platform_profile_universalization	REJECT_CONTRACT	Claim physical BAM+FASTQ/minimap2 as universal future-platform requirement.

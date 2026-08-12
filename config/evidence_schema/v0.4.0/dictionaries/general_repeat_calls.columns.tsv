@@ -1,0 +1,86 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	caller_record_id	string	true			.	SHA-256(GENERAL_CALL|run_id|projection_id|caller_version), first 24 hex.
+5	evidence_id	string	true			.	Many-to-one foreign key to read_evidence evidence_id.
+6	materialization_status	enum	false	caller_materialization_status		.	Whether this attempt was retained as an event, retained as supporting/competing evidence, or produced no materialized call.
+7	repeat_event_id	string	false			.	Retained raw-read event identifier, when this caller attempt contributes to one.
+8	primary_repeat_call_id	string	false			.	Primary normalized repeat-segment row derived from this caller attempt.
+9	projection_id	string	true			.	Lossless deterministic general caller v0.4.1 output field.
+10	read_id	string	true			.	Lossless deterministic general caller v0.4.1 output field.
+11	target_region_id	string	true			.	Lossless deterministic general caller v0.4.1 output field.
+12	target_source	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+13	region_type	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+14	representative_locus_id	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+15	assignment_rank	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+16	read_candidate_target_count	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+17	scan_priority	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+18	scan_strategy	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+19	geometry_class	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+20	potential_evidence_class	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+21	strand	enum	false	strand		.	Lossless deterministic general caller v0.4.1 output field.
+22	best_mapq	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+23	catalog_motifs	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+24	candidate_window_read_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+25	candidate_window_read_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+26	projected_target_read_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+27	projected_target_read_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+28	integration_status	enum	true	caller_integration_status		.	Lossless deterministic general caller v0.4.1 output field.
+29	caller_error	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+30	local_prior_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+31	local_prior_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+32	raw_prior_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+33	raw_prior_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+34	raw_tract_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+35	raw_tract_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+36	caller_version	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+37	call_status	enum	false	caller_call_status		.	Lossless deterministic general caller v0.4.1 output field.
+38	canonical_motif	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+39	oriented_motif	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+40	motif_source	enum	false	motif_source		.	Lossless deterministic general caller v0.4.1 output field.
+41	read_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+42	read_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+43	repeat_bp_observed	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+44	motif_path_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+45	repeat_units_path	float	false			.	Lossless deterministic general caller v0.4.1 output field.
+46	score	float	false			.	Lossless deterministic general caller v0.4.1 output field.
+47	score_per_read_bp	float	false			.	Lossless deterministic general caller v0.4.1 output field.
+48	matches	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+49	mismatches	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+50	insertions	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+51	deletions	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+52	purity	float	false			.	Lossless deterministic general caller v0.4.1 output field.
+53	prior_start	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+54	prior_end	integer	false		0-based, end-exclusive	.	Lossless deterministic general caller v0.4.1 output field.
+55	prior_span_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+56	left_extension_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+57	right_extension_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+58	catalog_motif_used	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+59	lps_exact_sequence_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+60	lps_inferred_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+61	lps_status	enum	false	lps_status		.	Lossless deterministic general caller v0.4.1 output field.
+62	compound_status	enum	false	compound_status		.	Lossless deterministic general caller v0.4.1 output field.
+63	repeat_segment_count	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+64	distinct_motif_count	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+65	interruption_count	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+66	repeat_segments_json	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+67	interruption_segments_json	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+68	evidence_geometry	enum	false	caller_evidence_geometry		.	Lossless deterministic general caller v0.4.1 output field.
+69	sequence_context	enum	false	sequence_context		.	Lossless deterministic general caller v0.4.1 output field.
+70	sizing_status	enum	false	caller_sizing_status		.	Lossless deterministic general caller v0.4.1 output field.
+71	exact_repeat_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+72	lower_bound_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+73	interval_lower_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+74	interval_upper_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+75	left_boundary_status	enum	false	boundary_status		.	Lossless deterministic general caller v0.4.1 output field.
+76	right_boundary_status	enum	false	boundary_status		.	Lossless deterministic general caller v0.4.1 output field.
+77	context_limited	boolean	false			.	Lossless deterministic general caller v0.4.1 output field.
+78	touches_left_sequence_edge	boolean	false			.	Lossless deterministic general caller v0.4.1 output field.
+79	touches_right_sequence_edge	boolean	false			.	Lossless deterministic general caller v0.4.1 output field.
+80	prior_overlap_bp	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+81	alternative_canonical_motif	string	false			.	Lossless deterministic general caller v0.4.1 output field.
+82	alternative_score	float	false			.	Lossless deterministic general caller v0.4.1 output field.
+83	primary_minus_alternative_score	float	false			.	Lossless deterministic general caller v0.4.1 output field.
+84	hypothesis_count	integer	false			.	Lossless deterministic general caller v0.4.1 output field.
+85	note	string	false			.	Lossless deterministic general caller v0.4.1 output field.

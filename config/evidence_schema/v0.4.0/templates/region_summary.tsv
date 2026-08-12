@@ -1,0 +1,1 @@
+schema_version	run_id	sample_id	target_region_id	target_source	region_type	analysis_mode	candidate_reads	unique_assigned_reads	molecule_clusters	candidate_locus_count	region_structure_status	best_evidence_id	manual_review_required	qc_flags	notes

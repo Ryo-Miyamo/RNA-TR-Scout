@@ -1,0 +1,13 @@
+column_order	column_name	type	required	enum	coordinate_convention	missing_value	description
+1	schema_version	string	true			.	Evidence schema version.
+2	run_id	string	true			.	Analysis run identifier.
+3	sample_id	string	true			.	Sample identifier.
+4	cluster_membership_id	string	true			.	Event-cluster membership identifier; prefix RLM_.
+5	repeat_event_id	string	true			.	Source read-level repeat event.
+6	repeat_length_cluster_id	string	true			.	Target RNA repeat-length cluster.
+7	locus_id	string	true			.	Locus identifier.
+8	length_measurement_type	enum	true	length_measurement_type		.	Exact or explicit censored/context-limited type.
+9	membership_status	enum	true	cluster_membership_status		.	Membership/use status.
+10	membership_probability	float	false			.	Optional membership probability.
+11	used_for_fit	boolean	true			.	True only under an allowed exact or explicit censor-aware model.
+12	notes	string	false			.	Membership notes.

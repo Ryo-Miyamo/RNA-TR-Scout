@@ -1,0 +1,142 @@
+{
+  "golden_suite_version": "rnatr_golden_regression_suite_v0.1.4",
+  "tier0": {
+    "biology_sidecar_contract": "docs/contracts/rnatr_biology_sidecar_manifest_contract_v0.1.0.json",
+    "candidate_assignment_trace_contract": "docs/contracts/RNA_TR_Scout_Candidate_assignment_reverse_traceability_contract_v0.1.0.md",
+    "cross_platform_boundary_contract": "docs/contracts/rnatr_cross_platform_boundary_audit_v0.1.0.tsv",
+    "current_pipeline": "metadata/ssot/exports/current_pipeline.tsv",
+    "freeze_manifest": "metadata/core_freeze/v0.1.0/core_freeze_manifest.tsv",
+    "future_extensibility_contract": "docs/contracts/RNA_TR_Scout_Future_extensibility_boundary_contract_v0.1.0.md",
+    "hash_guards": {
+      "config/core_runtime/v0.1.0/resource_manifest.json": "4418837acb0aa744fef0810d6db0260b6c534789a5e7e92ef123f9f79e848a2e",
+      "config/evidence_schema/v0.4.2/rnatr_v041_validate_locus_aggregation.py": "dc29030c2d739c87d2d8e3b6eac493e8cf131b2d7f7e819a7d4435bbcd40b29b",
+      "config/evidence_schema/v0.4.2/rnatr_v041_validate_package.py": "e978b109d094f665ec62387ffda35c81d0aa9e8156972069f18a1b0b6c49bba5",
+      "config/evidence_schema/v0.4.2/rnatr_v042_validate_flank_uniqueness.py": "039024835de2bc1f096e562eed69788ecad9e481575b1b8cd58241edf2e87ab5",
+      "config/evidence_schema/v0.4.2/rnatr_v04_validate_package.py": "370c93d7730ce919b9c86056f3cd28d49266d41dc34005450d27aaa41d22a96c",
+      "config/evidence_schema/v0.4.2/schema/rnatr_v04_table_schema.json": "c0509a0669344dba0b07cd1bb9e71f2aeb01e0196df47ec9178f1d2464b515f1",
+      "metadata/ssot/exports/current_pipeline.tsv": "d9df193145d3b9e39e85498ba2c5699bd0918c802d1b0bdc892224034e9602b7",
+      "metadata/ssot/rnatr_ssot.py": "8e9a6664e302e6cb222a3c7b71458cd235f5b4681ec42a22208dc1adeecdc1ff",
+      "metadata/ssot/rnatr_ssot.sqlite": "58997dc429886302dcee7553f0e09bb57d8295598c05d74b907014122f5bc1d7",
+      "scripts/rnatr_core_generic_sharded_v0.1.2.py": "76ccd6a41f95bd0d2bbf1bf0fba1b26e4232e8f526fae6ec86d3b3f06197784b",
+      "scripts/rnatr_core_generic_unit_v0.1.1.py": "cff4bfc874cb07db6a98dfb679866a4f75a0eaa10c7c16c3bf3698fd5abf79f5",
+      "scripts/rnatr_core_production_entry_v0.1.0.py": "c6cf8298fb2dfb52b6bfbd7eda8d701356823644668d6d952abac09cc06358c4",
+      "scripts/rnatr_prebiology_manifest_smoke_v0.1.0.py": "eeb6442cdf9bebfec631ef718ad6298e27ec0d753a9f9ea999a24d4998d181dc",
+      "src/rnatr_scout/general_caller/native_v0.4.1/librnatr_native_periodic_kernel_v0.1.0.so": "9745a4e33e9a899ec78417b499ccc35f770b7fd7adfffe1ab533fa14ead3ae69",
+      "src/rnatr_scout/general_caller/native_v0.4.1/rnatr_general_repeat_caller_ref_v0.2.1.py": "083574803f25e99e8997520be39d521b6eaa194b927c1945da9f47c7c888bc06",
+      "src/rnatr_scout/general_caller/native_v0.4.1/rnatr_general_repeat_caller_ref_v0.2.1_base.py": "55234ee934b406fc1c74e0ff012e1100d7248d03a83c05e5363a0b0ac866a733",
+      "validation/release_gates_v0.3.3.tsv": "6df48d735b7e44c7854d5c4e081161d7a61bc3fcf0c8db2698718cf4242ee65f"
+    },
+    "package_validator": "config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py",
+    "prebiology_smoke": "scripts/rnatr_prebiology_manifest_smoke_v0.1.0.py",
+    "public_code_no_fixed_binding": [
+      "scripts/rnatr_core_production_entry_v0.1.0.py",
+      "scripts/rnatr_core_generic_sharded_v0.1.2.py"
+    ],
+    "public_entry": "scripts/rnatr_core_production_entry_v0.1.0.py",
+    "resource_manifest": "config/core_runtime/v0.1.0/resource_manifest.json",
+    "result_manifest_contract": "docs/contracts/rnatr_core_result_manifest_contract_v0.1.0.json",
+    "scientific_freeze_scope": "docs/governance/RNA_TR_Scout_Core_scientific_freeze_scope_v0.1.0.md"
+  },
+  "tier1": {
+    "general_caller_manifest": "validation/golden/v0.1.0/tier1_semantic/general_caller/canonical_validation_manifest.tsv",
+    "regression_fixtures": [
+      {
+        "cases": 18,
+        "name": "regression_v0.3.1",
+        "relative_root": "tier1_semantic/regression/v0.3.1",
+        "rules": 13
+      },
+      {
+        "cases": 20,
+        "name": "regression_v0.3.2",
+        "relative_root": "tier1_semantic/regression/v0.3.2",
+        "rules": 16
+      }
+    ]
+  },
+  "tier2": {
+    "bam": "validation/golden/v0.1.0/tier2_real_read/inputs/shard_088.sorted.bam",
+    "bam_sha256": "0bb240a5293f08bc3231ad3ff0b8aa64bec813404cee4ff48932733726d89c18",
+    "caller_workers": 2,
+    "expected_plain_tables": {
+      "general_repeat_calls.tsv": {
+        "rows": 13959,
+        "sha256": "b3ae0bfa87a5c6ba03e23942e485e74d1daa91761216bbe0f1d736fe6f245516"
+      },
+      "read_evidence.tsv": {
+        "rows": 13959,
+        "sha256": "df3d8a780c36e55635f66c2090d1c0aa6e9d651388bff173d2816ba88f107671"
+      },
+      "repeat_events.tsv": {
+        "rows": 5949,
+        "sha256": "1f773ad0466f551eeff759264125feeeb267ca5e96d9d333f30dee9832d6749c"
+      },
+      "repeat_interruptions.tsv": {
+        "rows": 37,
+        "sha256": "2b479e0b3689848b84f8d5ca6cd31e37634a9275a51e235e3c1448a6b87404c8"
+      },
+      "repeat_segments.tsv": {
+        "rows": 5994,
+        "sha256": "1848881b2f75606b84f07a0bc82e0119a12a7f3b730bbc9471267d28ea8edd4f"
+      }
+    },
+    "fastq": "validation/golden/v0.1.0/tier2_real_read/inputs/shard_088.source_reads.fastq.gz",
+    "fastq_sha256": "59a1704c9c3c386c279f18d9d57320f6b6a91a3d2d54cccc4de8ec5729601a74",
+    "max_unit_workers": 1,
+    "pythonhashseed": "0",
+    "run_id": "ENCSR307SHM_stage15a500k_seed20260809_mm2splice_v1",
+    "sample_id": "ENCSR307SHM",
+    "shards": 1
+  },
+  "tier3": {
+    "bam": "validation/golden/v0.1.0/tier3_100k/inputs/pilot100k.sorted.bam",
+    "bam_sha256": "0b1ec4e051ac1067fe7207c076e1eff10e45335b49190902944496a9461300e6",
+    "caller_workers": 2,
+    "expected_plain_tables": {
+      "general_repeat_calls.tsv": {
+        "rows": 388571,
+        "sha256": "21edb2595f24849282cf2d67e9f0a257d756c8d9c82d9619b297fd83d769bf85"
+      },
+      "read_evidence.tsv": {
+        "rows": 388571,
+        "sha256": "4c66159929b780ff6b637f1842b5fa994b4322e5deae17fef3a24a313d4190f9"
+      },
+      "repeat_events.tsv": {
+        "rows": 160297,
+        "sha256": "3996edc2491e2ca3f47be5ec5c931f8ac9b2e66213d93e864253a11a4a1bc51e"
+      },
+      "repeat_interruptions.tsv": {
+        "rows": 848,
+        "sha256": "d835cc0786c5972e6fe114d1524d72948010d29dc6ba1ad18e1918b07c7f5556"
+      },
+      "repeat_segments.tsv": {
+        "rows": 161265,
+        "sha256": "ac8ac589591a9629100b5edc2613bc77b21346eb389d06b57254e7afecb8859e"
+      }
+    },
+    "fastq": "validation/golden/v0.1.0/tier3_100k/inputs/pilot100k.canonical.fastq.gz",
+    "fastq_sha256": "559dd0f3cb7d7de3c108a68a0d36efb895aae8f63e1a78aa4acd1d91b2c27173",
+    "intentional_stop_after_shards": 3,
+    "max_unit_workers": 3,
+    "pythonhashseed": "0",
+    "run_id": "ENCSR307SHM_pilot100k_mm2splice_v1",
+    "sample_id": "ENCSR307SHM",
+    "shards": 12
+  },
+  "tier4": {
+    "evidence": [
+      {
+        "name": "Stage15C_fullscale_registration",
+        "path": "metadata/core_freeze/v0.1.0/evidence/stage15d_fullscale_registration.tar.gz",
+        "scope": "5.31M empirical Stage15C BAM-to-final 60.041256352 min PASS_WITH_DOCUMENTED_TOLERANCE",
+        "sha256": "ac87add1992e239c415dffa6827728af7b9b479ffd24fdb67895aed4c1d9a626"
+      },
+      {
+        "name": "Stage15E_restart_reconstruction",
+        "path": "metadata/core_freeze/v0.1.0/evidence/stage15e_restart.tar.gz",
+        "scope": "checkpoint-based release-scale reconstruction/restart; not generic v0.1.2 direct 5.31M rerun",
+        "sha256": "4e4ffb3ae62b7baa14bc42df0831bd0ecf6f1a9c3606feab9c6a9aa437cd997c"
+      }
+    ]
+  }
+}

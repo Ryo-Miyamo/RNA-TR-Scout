@@ -1,0 +1,1 @@
+schema_version	run_id	sample_id	input_fastq	input_fastq_md5	input_bam	reference_fasta	reference_build	gencode_release	tr_catalog_release	strchive_commit	mapper_name	mapper_version	mapper_command	parameter_set_id	library_platform	library_mode	software_git_commit	created_at	notes

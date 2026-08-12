@@ -1,0 +1,6 @@
+role	current_path	status	prior_version_or_scope
+core_freeze_scope	docs/contracts/RNA_TR_Scout_Core_Technical_Completion_and_Freeze_contract_v0.1.2.md	CURRENT_REGISTERED	v0.1.1 retained as history
+candidate_reverse_trace	docs/contracts/RNA_TR_Scout_Candidate_assignment_reverse_traceability_contract_v0.1.1.md	CURRENT_REGISTERED	v0.1.0 retained as pending historical state
+future_extensibility	docs/contracts/RNA_TR_Scout_Future_extensibility_boundary_contract_v0.1.1.md	CURRENT_REGISTERED	v0.1.0 retained as pending historical state
+biology_sidecar	docs/contracts/RNA_TR_Scout_Biology_sidecar_interface_contract_v0.1.0.md	CURRENT	unchanged
+core_result_manifest	docs/contracts/rnatr_core_result_manifest_contract_v0.1.0.json	CURRENT	unchanged

@@ -1,0 +1,5 @@
+tier	name	authority	current_examples	meaning
+1	CONSTRUCTED_TRUTH	HIGHEST	synthetic fixtures; disease-inspired broad simulation	Known sequence truth for algorithm correctness
+2	EXPERIMENTAL_ORTHOGONAL_TRUTH	HIGH	future synthetic RNA; same-individual DNA-sized samples	Truth-bearing real-world validation
+3	EMPIRICAL_REPLICATE_CROSS_PLATFORM	MEDIUM	six-sample engineering panel; future platform/replicate data	Robustness and reproducibility
+4	SOFTWARE_REGRESSION	LOWEST_FOR_TRUTH	legacy P0/P1; Python/native parity	Implementation continuity only

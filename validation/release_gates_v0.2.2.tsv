@@ -1,0 +1,20 @@
+gate_id	gate	level	blocking_for_v1	status	evidence_or_next_action
+G01	General caller deterministic across hash seeds	algorithm	true	PASS	Stage 14F2 and 14G
+G02	Synthetic truth and semantic invariants	algorithm	true	PASS	Stage 14G
+G03	Python/native 100k exact parity	implementation	true	PASS	Stage 14G all 388571 rows
+G04	Native caller-only projected 5.31M runtime <=30 min	performance	false	PASS	Stage 14G projected 18.90 min
+G05	100k prepared-job/native-caller to validated final-evidence package	production	true	PASS	Stage14K2/14L2; starts from frozen motif/projection jobs, not BAM
+G06	5M-read BAM-input runtime <=60 min	performance	true	OPEN	Run after G05; target <=30 min
+G07	5M-read restartability/memory/artifact audit	production	true	OPEN	Full-scale validation after G05
+G08	Real truth-bearing biological validation	biology	true	OPEN	Disease/synthetic-RNA/orthogonal truth data
+G09	Large-cohort RNA technical/background distribution	population	false	OPEN	Defer until production caller stable and fast
+G10	FASTQ-to-final mapping-inclusive performance	convenience	false	OPEN	Report minimap2 separately
+G11	Mismatch/indel/interruption/purity/LPS preserved separately	schema_contract	true	PASS	Stage14K must populate or explicitly mark missing values without conflation.
+G12	Biological-vs-technical origin classifier truth validation	schema_contract	false	OPEN	Develop only after truth-bearing evidence; Stage14K uses NOT_ASSESSED.
+G13	Read-level RNA repeat-length distribution retained	schema_contract	true	PASS	repeat_events remains source of truth.
+G14	RNA repeat-length clustering algorithm validated	schema_contract	false	OPEN	Implement after production materialization and sufficient same-locus support.
+G15	Allele/haplotype labels prohibited without phase evidence	schema_contract	true	PASS	Validator rejects unphased allele labels.
+G16	Censored/context-limited reads not naively mixed as exact observations	schema_contract	true	PASS	Validator requires exact-only or explicit censor-aware handling.
+G17	100k mapping-complete BAM input to validated schema v0.4.2 package	production	true	OPEN	Build isolated BAM-to-final integration before active switch
+G18	Called non-locus-anchored attempts retained but not eventized	materialization	true	PASS	18 attempts retained losslessly; all locus summaries LOW/WARN; prior-overlap condition retained in qc_flags/materialization_status
+G19	failure_code/qc_flags/materialization_status semantics are distinct	schema_contract	true	PASS	Stage14L2 contract; singular primary failure plus non-exclusive flags
