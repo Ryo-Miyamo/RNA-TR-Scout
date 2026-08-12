@@ -1,0 +1,72 @@
+# RNA-TR-Scout repository hygiene
+# The immutable Local Core Freeze root commit predates this file.
+
+# Raw sequencing / alignment data
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.cram
+*.crai
+*.sam
+*.pod5
+*.fast5
+
+# Large/reference payloads and indexes
+*.mmi
+*.tbi
+*.csi
+external_reference/
+results/
+
+# Local databases / caches
+*.sqlite
+*.sqlite3
+*.db
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime / scratch / rollback
+work/
+tmp/
+temp/
+scratch/
+**/rollback*/
+**/rollback_*/
+*.tmp
+*.temp
+
+# Environment and machine-local configuration
+.env
+.env.*
+*.local.env
+config/paths.env
+config/paths.env.before_T9
+**/resource_bindings.local.json
+
+# Credentials / keys
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Archives and generated bundles
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+
+# Editors / OS
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
