@@ -70,3 +70,7 @@ id_ed25519
 *.swo
 .DS_Store
 Thumbs.db
+
+# Release-installed runtime resources / local packaging metadata
+catalogs/
+*.egg-info/
