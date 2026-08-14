@@ -1,0 +1,34 @@
+{
+  "assembly_family": "GRCh38",
+  "compatibility_classes": [
+    "VALIDATED_CATALOG_PROFILE",
+    "CUSTOM_COMPATIBLE_CATALOG",
+    "INCOMPATIBLE_CATALOG"
+  ],
+  "contig_alias_policy": "STRICT_NAMES_NO_AUTOMATIC_NORMALIZATION",
+  "golden_scope_rule": "Only exact five-file validated profile is inside frozen exact golden scope.",
+  "profile_name": "RNA-TR-Scout Local Core Freeze validated runtime catalog",
+  "profile_version": "rnatr_catalog_runtime_validated_profile_v0.1.0",
+  "validated_files": {
+    "analysis_regions": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/TRExplorer_v2.rnatr_pilot_analysis_regions.final.tsv.gz",
+      "sha256": "562802c3757785d0ef7d4b7b10ac5582b53bdce1d380d76dccb15711a2ebf9d3"
+    },
+    "disease_regions": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/STRchive_disease_regions.final.tsv.gz",
+      "sha256": "056ae07de7b8f6299fadcabfefb7b596bc2c5a35591c06870dbed4d7fb519796"
+    },
+    "mapping_target_bed": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz",
+      "sha256": "6ec444b0ffcb9da4452b24d1654ed6c4b945c3cd3e8379e4e4cbe6e72931cfe2"
+    },
+    "mapping_target_bed_index": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz.tbi",
+      "sha256": "9803a3b268e9a7ca30edbf4c312a0d60b90a9bb9c34fdcd243348caa9bc4e77d"
+    },
+    "mapping_target_tsv": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.tsv.gz",
+      "sha256": "3edffe6f5d31922ca0c58759186639e77f51c48745ac5e22ad3aad0a010fec75"
+    }
+  }
+}
