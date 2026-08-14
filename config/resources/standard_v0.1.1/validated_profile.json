@@ -1,0 +1,83 @@
+{
+  "build_inputs": {
+    "primary_annotation_gtf_gz": {
+      "decompressed_sha256": "04af7379ad6c214f49758db270938a38c41bebbf7b9dc8e24065d8f3a9f08d0d",
+      "filename": "gencode.v50.primary_assembly.annotation.gtf.gz",
+      "sha256": "89bbad69a8c89fee5fadec0a2f14a098752d27a4ef7f24e4de9bac681e1b18f4",
+      "url": "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_50/gencode.v50.primary_assembly.annotation.gtf.gz"
+    },
+    "reference_fasta_gz": {
+      "decompressed_sha256": "e49b92b3e4f321bf254c042f25b726d9931c4d74c7523e8b6bb530e63b0cfd4b",
+      "filename": "GRCh38.primary_assembly.genome.fa.gz",
+      "sha256": "b760d18dbb651dd14dfc290083371b3ef3bff122d43a9cefb13ca4ecf38f05ca",
+      "url": "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_50/GRCh38.primary_assembly.genome.fa.gz"
+    }
+  },
+  "catalog_bundle": {
+    "bundle_root": "rnatr-validated-catalog-grch38-local-core-freeze-v0.1.0",
+    "distribution_note": "Final public hosting URL is not yet fixed.",
+    "filename": "rnatr-validated-catalog-grch38-local-core-freeze-v0.1.0.tar.gz",
+    "public_url": "",
+    "runtime_subdir": "catalogs",
+    "sha256": "1aa0a9a6ef294514572e4343323a2f65a5469d63ea0400c6f1998043db97e8fa"
+  },
+  "catalog_outputs": {
+    "analysis_regions": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/TRExplorer_v2.rnatr_pilot_analysis_regions.final.tsv.gz",
+      "sha256": "562802c3757785d0ef7d4b7b10ac5582b53bdce1d380d76dccb15711a2ebf9d3"
+    },
+    "disease_regions": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/STRchive_disease_regions.final.tsv.gz",
+      "sha256": "056ae07de7b8f6299fadcabfefb7b596bc2c5a35591c06870dbed4d7fb519796"
+    },
+    "mapping_target_bed": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz",
+      "sha256": "6ec444b0ffcb9da4452b24d1654ed6c4b945c3cd3e8379e4e4cbe6e72931cfe2"
+    },
+    "mapping_target_bed_index": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz.tbi",
+      "sha256": "9803a3b268e9a7ca30edbf4c312a0d60b90a9bb9c34fdcd243348caa9bc4e77d"
+    },
+    "mapping_target_tsv": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.tsv.gz",
+      "sha256": "3edffe6f5d31922ca0c58759186639e77f51c48745ac5e22ad3aad0a010fec75"
+    }
+  },
+  "profile_name": "RNA-TR-Scout standard validated GRCh38 resources",
+  "profile_version": "rnatr_standard_resources_validated_profile_v0.1.1",
+  "reference_directory": "refs/gencode_v50",
+  "reference_outputs": {
+    "junction_bed12": {
+      "relative_path": "refs/gencode_v50/junctions/gencode.v50.multi_exon_transcripts.bed12",
+      "sha256": "34b5a798c2f9bba3b42592e6d2c6599dc77597ff4e8e8f073c4d20fe012a6d5c"
+    },
+    "reference_fai": {
+      "relative_path": "refs/gencode_v50/GRCh38.primary_assembly.genome.fa.fai",
+      "sha256": "a2c323ea4cff34d7123ace4578f7e122b2d2f5a22f40dc23eb8b97d17723d169"
+    },
+    "reference_fasta": {
+      "relative_path": "refs/gencode_v50/GRCh38.primary_assembly.genome.fa",
+      "sha256": "e49b92b3e4f321bf254c042f25b726d9931c4d74c7523e8b6bb530e63b0cfd4b"
+    },
+    "reference_mmi": {
+      "relative_path": "refs/gencode_v50/GRCh38.primary_assembly.genome.mmi",
+      "sha256": "cb30925b54062db756bd1edbc6fbbf6b553ac734124dff1138717d581fc1085e"
+    }
+  },
+  "runtime_scope": {
+    "assembly": "GRCh38 primary assembly",
+    "gencode_release": 50,
+    "ordinary_user_downloads_full_strchive": false,
+    "ordinary_user_downloads_full_trexplorer": false,
+    "ordinary_user_manages_sha": false,
+    "polyA_gtf_required": false
+  },
+  "tools": {
+    "minimap2": {
+      "validated_version": "2.31-r1302"
+    },
+    "samtools": {
+      "validated_version_prefix": "samtools 1.24"
+    }
+  }
+}
