@@ -74,3 +74,4 @@ Thumbs.db
 # Release-installed runtime resources / local packaging metadata
 catalogs/
 *.egg-info/
+refs/
