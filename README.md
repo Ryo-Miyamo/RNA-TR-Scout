@@ -54,3 +54,23 @@ run-local minimap2 index is built rather than trusting an unverified custom FAI/
 
 Custom TRExplorer/STRchive-derived catalogs are a separate post-Freeze extension and are not
 enabled merely by disabling the frozen Core catalog SHA guards.
+## Catalog resources
+
+Standard RNA-TR-Scout users do **not** need to download the full TRExplorer or STRchive source
+datasets. The validated GRCh38 profile uses a compact RNA-TR-Scout catalog bundle derived from
+TRExplorer v2.0 and the STRchive source snapshot at commit
+`88502a64bd47ae464b908757122cc7e4bbeed8c8` (repository version metadata: 2.24.2).
+
+The validated bundle contains 349,410 TRExplorer-derived analysis regions and 80
+STRchive-derived disease regions; together they produce 349,490 mapping-target rows. RNA-TR-Scout
+checks the validated resource identities automatically during installation/runtime validation, so
+ordinary users do not need to manage catalog checksums manually.
+
+Users or developers who intentionally want to incorporate a newer TRExplorer or STRchive release
+should build a separate custom RNA-TR-Scout catalog through the catalog adaptation and validation
+workflow. Such a catalog is recorded as `CUSTOM_COMPATIBLE_CATALOG` and is outside the exact
+golden-validation scope of the frozen validated profile.
+
+See
+[`docs/catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md`](docs/catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md)
+for validated build provenance and the advanced catalog-rebuilding path.
