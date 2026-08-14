@@ -1,0 +1,65 @@
+{
+  "mapping_parameters": {
+    "minimap2": [
+      "-ax",
+      "splice",
+      "-t",
+      "16",
+      "--junc-bed",
+      "{junction_bed12}",
+      "--secondary=yes",
+      "-N",
+      "10",
+      "--MD",
+      "--cs=long",
+      "-R",
+      "{read_group}",
+      "{reference_mmi}",
+      "{fastq}"
+    ],
+    "samtools_sort": [
+      "-@",
+      "8",
+      "-m",
+      "1G"
+    ]
+  },
+  "profile_name": "RNATR_VALIDATED_ONT_CDNA_GRCH38",
+  "profile_version": "rnatr_ont_cdna_validated_profile_v0.2.0",
+  "resources": {
+    "compatibility_bed": {
+      "relative_path": "catalogs/trexplorer_v2/rnatr_pilot_v03/final/RNA-TR-Scout_v0.3.mapping_target_regions.bed.gz",
+      "sha256": "6ec444b0ffcb9da4452b24d1654ed6c4b945c3cd3e8379e4e4cbe6e72931cfe2"
+    },
+    "junction_bed12": {
+      "relative_path": "refs/gencode_v50/junctions/gencode.v50.multi_exon_transcripts.bed12",
+      "sha256": "34b5a798c2f9bba3b42592e6d2c6599dc77597ff4e8e8f073c4d20fe012a6d5c"
+    },
+    "reference_fai": {
+      "relative_path": "refs/gencode_v50/GRCh38.primary_assembly.genome.fa.fai",
+      "sha256": "a2c323ea4cff34d7123ace4578f7e122b2d2f5a22f40dc23eb8b97d17723d169"
+    },
+    "reference_fasta": {
+      "relative_path": "refs/gencode_v50/GRCh38.primary_assembly.genome.fa",
+      "sha256": "e49b92b3e4f321bf254c042f25b726d9931c4d74c7523e8b6bb530e63b0cfd4b"
+    },
+    "reference_mmi": {
+      "relative_path": "refs/gencode_v50/GRCh38.primary_assembly.genome.mmi",
+      "sha256": "cb30925b54062db756bd1edbc6fbbf6b553ac734124dff1138717d581fc1085e"
+    }
+  },
+  "tools": {
+    "minimap2": {
+      "validated_version": "2.31-r1302"
+    },
+    "samtools": {
+      "validated_version_prefix": "samtools 1.24"
+    }
+  },
+  "validated_scope": {
+    "assembly_family": "GRCh38",
+    "catalog_note": "Frozen RNA-TR-Scout TRExplorer/STRchive-derived catalog set.",
+    "platform": "ONT_CDNA",
+    "reference_note": "Validated with GENCODE release 50 GRCh38 primary-assembly resources."
+  }
+}

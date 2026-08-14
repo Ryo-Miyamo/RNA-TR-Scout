@@ -40,3 +40,17 @@ documentation cleanup, and the final public release decision remain later work.
 
 This repository is **private and intended for laboratory-internal sharing at this stage**.
 Do not describe the current repository state as the public RNA-TR-Scout v0.5.0 release.
+## Reference and tool compatibility
+
+The current validated ONT-cDNA profile uses the documented GRCh38 / GENCODE v50 resources and
+minimap2 2.31-r1302. Exact SHA/tool-version matches identify this validated profile; they are not
+general execution-permission gates.
+
+Other GRCh38-compatible references and mapper versions may be used through the post-Freeze
+compatibility-aware mapping adapter. Such runs are recorded as custom profiles and are outside
+exact golden-validation scope. Reference compatibility is checked against the frozen validated
+RNA-TR-Scout mapping-target catalog. For a custom FASTA, the FASTA itself is inspected and a
+run-local minimap2 index is built rather than trusting an unverified custom FAI/MMI.
+
+Custom TRExplorer/STRchive-derived catalogs are a separate post-Freeze extension and are not
+enabled merely by disabling the frozen Core catalog SHA guards.
