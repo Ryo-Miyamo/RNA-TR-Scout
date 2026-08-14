@@ -8,5 +8,7 @@ dependencies:
   - samtools=1.24
   - htslib=1.24
   - bedtools=2.31.1
+  - minimap2=2.31
+  - seqkit=2.13.0
   - pip
   - setuptools>=64

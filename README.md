@@ -20,12 +20,21 @@ installation, and release engineering without rewriting that frozen point.
 ## Current scope
 
 The validated current profile is ONT cDNA with the frozen RNA-TR-Scout scientific Core.
-Large sequencing inputs, reference/catalog payloads, SQLite databases, and historical evidence
-archives are intentionally not stored in Git. Their frozen identities remain checksum-bound by
-the Core Freeze manifest.
 
-Biology-layer interpretation, clean-install validation, cross-hardware release readiness, and
-the public `v0.5.0` release remain later work.
+Post-Freeze release engineering has now validated both:
+
+- source-checkout BAM + read-coherent FASTQ -> frozen Core final from a fresh private GitHub clone
+  and fresh mamba environment; and
+- the ONT-cDNA FASTQ -> minimap2 splice-aware BAM -> frozen Core final path on the validated
+  Linux x86-64 platform.
+
+Large sequencing inputs, reference/catalog payloads, SQLite databases, and historical evidence
+archives are intentionally not stored in Git. Their identities are checksum-bound by release
+resource manifests or frozen provenance.
+
+These results do **not** make the repository the public `v0.5.0` release. Portable reference
+acquisition, public CLI integration, native-wheel strategy, cross-hardware validation, release
+documentation cleanup, and the final public release decision remain later work.
 
 ## Repository status
 
