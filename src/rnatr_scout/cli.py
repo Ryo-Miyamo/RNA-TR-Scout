@@ -20,6 +20,10 @@ from .p3_bridge import (
 )
 from .fasta import fetch_fasta_record
 from .p3_pair import run_isolated_pair_alignment
+from .public_workflow import (
+    add_public_subparsers,
+    dispatch_public_command,
+)
 
 
 def _boolean(text: str) -> bool:
@@ -304,12 +308,18 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
     )
 
+    add_public_subparsers(subparsers)
+
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     arguments = parser.parse_args(argv)
+
+    public_result = dispatch_public_command(arguments)
+    if public_result is not None:
+        return public_result
 
     if arguments.command == "version":
         print(__version__)
