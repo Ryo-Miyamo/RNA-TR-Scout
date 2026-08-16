@@ -16,13 +16,13 @@ The currently tested setup is:
 
 At a high level, RNA-TR-Scout:
 
-1. maps ONT-cDNA reads to the genome, or accepts an existing mapped BAM;
+1. maps ONT-cDNA reads to the genome, or accepts a suitable existing RNA-seq BAM;
 2. identifies reads that overlap known or candidate tandem-repeat regions;
 3. projects the repeat locus onto the original read sequence;
 4. searches the read for repeat motifs and repeat structure; and
 5. produces read-level tables that can be used for downstream analysis.
 
-The software keeps the original RNA-read evidence rather than reducing each locus immediately to a single genotype-like value.
+The software keeps the original RNA-read evidence so that repeat length, motif structure, interruptions, mapping ambiguity, and incomplete observations can be examined downstream.
 
 ## Quick start
 
@@ -64,7 +64,7 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-RNA-TR-Scout will map the reads with the tested ONT-cDNA mapping workflow and then perform repeat analysis.
+RNA-TR-Scout will map the reads with the tested ONT-cDNA splice-aware mapping workflow and then perform repeat analysis.
 
 ### Start from an existing BAM
 
@@ -76,7 +76,9 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-The original FASTQ is still required because repeat measurement uses the source read sequence. Read identifiers in the BAM and FASTQ must correspond to the same reads.
+Do not treat `--bam` as accepting an arbitrary BAM. The intended input is a **genome-aligned long-read RNA-seq BAM produced with splice-aware mapping to a compatible reference**. The original FASTQ is also required, and BAM/FASTQ read identifiers must correspond to the same reads.
+
+If you are unsure how an existing BAM was produced, starting from FASTQ and letting RNA-TR-Scout perform the mapping is the safer option.
 
 ### Mapping only
 
@@ -86,6 +88,16 @@ rnatr-scout map \
   --output-bam sample.sorted.bam \
   --sample-id SAMPLE01
 ```
+
+## Disk space and memory planning
+
+The standard reference setup downloads approximately **0.9 GB of compressed GENCODE data** (GRCh38 primary-assembly FASTA plus GENCODE v50 primary-assembly GTF), in addition to the RNA-TR-Scout repeat-catalog bundle. The installer expands the reference and builds a minimap2 index, so reference setup requires substantially more space than the compressed download alone. Plan for **tens of GB of free disk space** during initial setup.
+
+Analysis working space depends strongly on the number and length of reads. For multi-million-read datasets, plan for **hundreds of GB rather than a few GB**. A practical conservative target for a roughly five-million-read FASTQ-to-final run is about **300 GB of free working disk space**, in addition to the input data. Smaller datasets require much less space.
+
+For the current ONT-cDNA mapping workflow, **32 GB RAM is a sensible practical target**; 16 GB may be tight during human-genome mapping.
+
+See the [user guide](docs/USER_GUIDE.md) for more detail on resource planning.
 
 ## Main outputs
 
@@ -113,15 +125,21 @@ See the [user guide](docs/USER_GUIDE.md) for a more detailed explanation of the 
 
 ## Interpreting the results
 
-RNA-TR-Scout reports **what is observed in RNA reads**. It does not by itself establish a DNA genotype.
-
 Three points are especially important:
 
-- A repeat that is not observed in RNA should not automatically be interpreted as absent from the genome. The transcript may not have been expressed, sequenced, or covered across the repeat.
+- A repeat that is not observed in RNA should not automatically be interpreted as absent from the genome. The relevant transcript may not have been expressed, sequenced, or covered across the repeat.
 - Some repeat measurements are exact, while others are lower bounds because the read or sequence context ends before the full repeat can be resolved.
 - A candidate repeat locus can be identified even when the current caller cannot produce a final repeat measurement. A missing motif or repeat length therefore does not necessarily mean that no repeat is present.
 
-The tool intentionally preserves these distinctions so that downstream analyses can separate biological signals from limitations of RNA coverage and repeat observability.
+The tool preserves these distinctions so that downstream analyses can separate biological signals from limitations of RNA coverage and repeat observability.
+
+## Current limitations of repeat calling
+
+The current automatic caller is designed primarily for periodic tandem-repeat structures and can represent several useful features, including multiple motif components and interruptions in supported calls.
+
+It is **not yet a general solver for highly complex or sequence-variable repeat regions**. Loci with complicated variation-cluster-like architecture or other repeat structures requiring specialized sequence-level interpretation may still be identified as candidate read/locus evidence without receiving a complete automatic repeat measurement.
+
+These cases are retained in the output rather than silently being interpreted as negative calls.
 
 ## Currently tested scope
 
@@ -130,13 +148,14 @@ RNA-TR-Scout has been tested end-to-end with ONT cDNA data on more than one Linu
 The current standard setup uses:
 
 - GRCh38 / GENCODE v50
-- minimap2 for ONT-cDNA mapping
+- splice-aware minimap2 mapping for ONT cDNA
 - a compact RNA-TR-Scout repeat catalog derived from TRExplorer and STRchive resources
 
 Other compatible references or custom repeat catalogs can be explored, but they have not yet been tested as extensively as the standard setup.
 
 The following are planned or still under development:
 
+- more complete analysis of complex sequence-variable repeat architectures
 - ONT direct RNA
 - PacBio Iso-Seq and Kinnex
 - non-x86-64 systems
@@ -147,7 +166,7 @@ The following are planned or still under development:
 
 For most users:
 
-- [User guide](docs/USER_GUIDE.md) — installation, running the software, outputs, interpretation, resume, and troubleshooting
+- [User guide](docs/USER_GUIDE.md) — installation, input requirements, running the software, outputs, interpretation, resource planning, resume, and troubleshooting
 - [Catalog resources](docs/catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md) — for users who need to rebuild or modify repeat catalogs
 
 Detailed development, reproducibility, and validation records are kept separately under `docs/release/` and related internal documentation directories. They are not required for ordinary use of RNA-TR-Scout.
