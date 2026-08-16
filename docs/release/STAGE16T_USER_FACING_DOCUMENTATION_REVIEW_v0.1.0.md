@@ -36,17 +36,20 @@ Internal validation terminology is retained in the audit trail rather than remov
    - explains RNA-TR-Scout in ordinary research language;
    - summarizes the analysis flow from mapping to repeat evidence;
    - gives setup and public-CLI examples;
+   - states that existing BAM input should be genome-aligned long-read RNA-seq produced with splice-aware mapping to a compatible reference;
    - introduces the five main scientific tables in plain language;
-   - highlights the main RNA-versus-DNA interpretation cautions;
+   - describes current repeat-calling limitations for highly complex or sequence-variable repeat architectures;
+   - highlights the main RNA observability cautions without unnecessary genotype language;
    - describes tested scope without exposing stage/fixture/golden-validation vocabulary;
    - directs advanced validation readers to internal documentation.
 
 2. `docs/USER_GUIDE.md`
-   - explains FASTQ and BAM+FASTQ input modes;
+   - explains FASTQ and BAM+FASTQ input modes and mapping assumptions;
    - explains installation and environment activation;
    - documents `resources-status`, `map`, and `run`;
    - gives a conceptual analysis flow;
    - explains each of the five scientific tables and how to use them together;
+   - explains the current boundary for complex sequence-variable repeat architecture;
    - explains restart/resume;
    - explains RNA non-observation, censored length, projection-versus-measurement, and technical candidate multiplicity in researcher-facing language;
    - describes current tested scope and areas still under development.
@@ -67,9 +70,18 @@ The documentation was checked directly against the current repository implementa
 - standard resource installation behavior in `scripts/rnatr_install_standard_resources_v0.1.1.py`;
 - frozen scientific input contract in `config/core_runtime/v0.1.0/resource_manifest.json`;
 - evidence schema v0.4.2 table names and grains;
-- merged-package publication behavior and exact/deterministic output contracts in `scripts/rnatr_core_generic_sharded_v0.1.2.py`.
+- merged-package publication behavior and exact/deterministic output contracts in `scripts/rnatr_core_generic_sharded_v0.1.2.py`;
+- the accepted ONT-cDNA splice-aware mapping contract.
 
 A setup issue identified during the documentation audit remains correctly documented: the setup helper creates the isolated environment but cannot activate the caller's parent shell, so user instructions explicitly activate the created environment before invoking `rnatr-scout`.
+
+## Disk-usage wording correction
+
+Owner review identified that an earlier draft's statement that roughly 300 GB of free working space was a practical target for a five-million-read run could be misread as a measured requirement. That number was a conservative safety margin, not an observed peak.
+
+The user-facing documentation now states only the measured fact available from the full-scale restart audit: approximately **140 GB of checkpoint/work files** were present at one audited stage of a 5.31-million-read run. It explicitly states that this is **not a measured peak-disk requirement** and that peak disk usage has not yet been formally benchmarked.
+
+A formal full-scale peak-disk benchmark should be completed before public release so that storage guidance can be based on measured peak usage. This is a release-engineering/operational benchmark and does not require modification of scientific Core semantics.
 
 ## Current intentional release limitations stated in user-facing documentation
 
@@ -79,7 +91,9 @@ User-facing wording now states these limitations without internal release vocabu
 - current installation uses a Git source checkout rather than a simplified public package;
 - ONT direct RNA and PacBio Iso-Seq/Kinnex are still under development;
 - non-x86-64 systems are not yet part of the standard tested workflow;
+- more complete automated interpretation of highly complex sequence-variable repeat architectures remains future work;
 - custom references/catalogs have received less testing than the standard setup;
+- peak disk usage for full-scale runs has not yet been formally benchmarked;
 - the repository remains a private pre-release rather than the public v0.5.0 release.
 
 ## Owner visual-review points
@@ -89,9 +103,12 @@ Before Stage16T is marked formally complete, confirm that:
 1. the README now reads like software documentation for a research user rather than an internal validation report;
 2. the opening explanation of what RNA-TR-Scout does is understandable;
 3. the Quick Start is sufficiently straightforward;
-4. the five-table descriptions are biologically/intuitively understandable enough for intended users;
-5. the RNA-evidence interpretation cautions are clear without becoming overly technical;
-6. the current tested scope is neither understated nor overclaimed; and
-7. internal stage/Freeze/golden-validation language is appropriately confined to development/validation records.
+4. BAM input requirements are clear without becoming overly technical;
+5. the five-table descriptions are biologically/intuitively understandable enough for intended users;
+6. the repeat-calling limitations are stated clearly and without overclaiming;
+7. the RNA-evidence interpretation cautions are clear without becoming patronizing;
+8. disk-space wording distinguishes measured observations from unmeasured peak requirements;
+9. the current tested scope is neither understated nor overclaimed; and
+10. internal stage/Freeze/golden-validation language is appropriately confined to development/validation records.
 
 No Stage16T formal PASS is asserted until this owner-facing visual review is accepted.
