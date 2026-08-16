@@ -103,17 +103,13 @@ The standard reference installer obtains two GENCODE source files for the tested
 
 Together these compressed downloads are approximately **0.9 GB**. The installer then decompresses the genome and builds a minimap2 index and junction resource, so the installed reference occupies substantially more space than the original download. Allow **tens of GB of free space** for installation rather than planning from the compressed download size alone.
 
-Run-time storage depends strongly on the number and length of reads because RNA-TR-Scout keeps restartable intermediate files and read-level evidence. For large datasets, temporary and intermediate data can be much larger than the final TSV files.
+Run-time storage depends strongly on the number and length of reads because RNA-TR-Scout keeps restartable intermediate files and detailed read-level evidence. For large datasets, temporary and intermediate data can be much larger than the final TSV files.
 
-As a conservative practical guide:
+In a **5.31-million-read development run**, approximately **140 GB of checkpoint/work files** were present at one audited restart stage. This is an observed working-data volume, **not a measured peak-disk requirement**. Peak disk usage has not yet been formally benchmarked, so a fixed minimum free-space requirement for a five-million-read run is not stated yet.
 
-- small pilot datasets: tens of GB are usually sufficient;
-- multi-million-read datasets: plan for **hundreds of GB** of working space;
-- for a roughly five-million-read ONT-cDNA FASTQ-to-final run, about **300 GB of free working disk space** is a sensible conservative target, separate from the original input FASTQ.
+For the current ONT-cDNA mapping workflow, human-genome mapping has been observed around the mid-teens of GB of peak RAM during development. **32 GB RAM is a comfortable practical target**. Systems with 16 GB may be tight, especially if other processes are active.
 
-The current validated mapping command uses 16 minimap2 threads and an 8-thread samtools sort configuration. Human-genome ONT-cDNA mapping has been observed around the mid-teens of GB of peak RAM during development, so **32 GB RAM is a comfortable practical target**. Systems with 16 GB may be tight, especially if other processes are active.
-
-These are practical planning values, not hard scientific thresholds. Actual requirements vary with read count, read length, worker settings, filesystem behavior, and whether previously completed intermediate work can be reused.
+These values are practical observations rather than hard scientific thresholds. Actual requirements vary with read count, read length, worker settings, filesystem behavior, and retained intermediate state. A formal peak-disk benchmark is planned before public release so that user-facing storage guidance can be based on measured peak usage rather than a speculative safety margin.
 
 ## 4. Mapping only
 
