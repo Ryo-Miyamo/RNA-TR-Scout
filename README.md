@@ -93,7 +93,9 @@ rnatr-scout map \
 
 The standard reference setup downloads approximately **0.9 GB of compressed GENCODE data** (GRCh38 primary-assembly FASTA plus GENCODE v50 primary-assembly GTF), in addition to the RNA-TR-Scout repeat-catalog bundle. The installer expands the reference and builds a minimap2 index, so reference setup requires substantially more space than the compressed download alone. Plan for **tens of GB of free disk space** during initial setup.
 
-Analysis working space depends strongly on the number and length of reads. For multi-million-read datasets, plan for **hundreds of GB rather than a few GB**. A practical conservative target for a roughly five-million-read FASTQ-to-final run is about **300 GB of free working disk space**, in addition to the input data. Smaller datasets require much less space.
+Analysis working space depends strongly on the number and length of reads. RNA-TR-Scout currently retains restartable intermediate files and detailed read-level evidence, so large runs can use substantial disk space.
+
+In a **5.31-million-read development run**, approximately **140 GB of checkpoint/work files** were present at one audited restart stage. This is an observed working-data volume, **not a measured peak-disk requirement**. Peak disk usage has not yet been formally benchmarked, so no fixed minimum free-space requirement is claimed for a five-million-read run at this stage.
 
 For the current ONT-cDNA mapping workflow, **32 GB RAM is a sensible practical target**; 16 GB may be tight during human-genome mapping.
 
