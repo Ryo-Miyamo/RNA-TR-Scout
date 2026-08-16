@@ -19,7 +19,7 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-RNA-TR-Scout will first map the reads to the tested GRCh38 reference setup and then perform tandem-repeat analysis.
+RNA-TR-Scout will first map the reads to the tested GRCh38 reference setup using a splice-aware long-read RNA mapping workflow and then perform tandem-repeat analysis.
 
 ### BAM + FASTQ input
 
@@ -33,7 +33,11 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-The original FASTQ is required because repeat measurement uses the source read sequence. The BAM and FASTQ should represent the same reads with matching read identifiers.
+The BAM should be a **genome-aligned long-read RNA-seq BAM produced with splice-aware mapping to a compatible reference**. An arbitrary DNA-style or non-splice-aware BAM should not be assumed to be suitable.
+
+The original FASTQ is required because repeat measurement uses the source read sequence. The BAM and FASTQ must represent the same reads with matching read identifiers.
+
+The current public workflow checks BAM/FASTQ read identity and basic BAM validity, but it does not fully reconstruct or prove how an externally supplied BAM was mapped. If the mapping history is uncertain, starting from FASTQ and allowing RNA-TR-Scout to perform mapping is the preferred option.
 
 If `--run-id` is omitted, `--sample-id` is used as the run identifier.
 
@@ -90,7 +94,28 @@ After activating the environment, you can also check resource readiness with:
 rnatr-scout resources-status
 ```
 
-## 3. Mapping only
+## 3. Disk space and memory planning
+
+The standard reference installer obtains two GENCODE source files for the tested setup:
+
+- GRCh38 primary-assembly FASTA (`.fa.gz`)
+- GENCODE v50 primary-assembly annotation (`.gtf.gz`)
+
+Together these compressed downloads are approximately **0.9 GB**. The installer then decompresses the genome and builds a minimap2 index and junction resource, so the installed reference occupies substantially more space than the original download. Allow **tens of GB of free space** for installation rather than planning from the compressed download size alone.
+
+Run-time storage depends strongly on the number and length of reads because RNA-TR-Scout keeps restartable intermediate files and read-level evidence. For large datasets, temporary and intermediate data can be much larger than the final TSV files.
+
+As a conservative practical guide:
+
+- small pilot datasets: tens of GB are usually sufficient;
+- multi-million-read datasets: plan for **hundreds of GB** of working space;
+- for a roughly five-million-read ONT-cDNA FASTQ-to-final run, about **300 GB of free working disk space** is a sensible conservative target, separate from the original input FASTQ.
+
+The current validated mapping command uses 16 minimap2 threads and an 8-thread samtools sort configuration. Human-genome ONT-cDNA mapping has been observed around the mid-teens of GB of peak RAM during development, so **32 GB RAM is a comfortable practical target**. Systems with 16 GB may be tight, especially if other processes are active.
+
+These are practical planning values, not hard scientific thresholds. Actual requirements vary with read count, read length, worker settings, filesystem behavior, and whether previously completed intermediate work can be reused.
+
+## 4. Mapping only
 
 To generate a mapped BAM without running repeat analysis:
 
@@ -101,11 +126,13 @@ rnatr-scout map \
   --sample-id SAMPLE01
 ```
 
-The standard tested mapping setup uses GRCh38 / GENCODE v50 and minimap2 for ONT-cDNA reads.
+The standard tested mapping setup uses GRCh38 / GENCODE v50 and minimap2 with splice-aware mapping for ONT-cDNA reads.
+
+The tested mapping configuration retains secondary alignments and uses transcript-derived splice-junction information. This matters because repeat-containing RNA reads may map ambiguously and because exon-spanning RNA alignments need to be represented correctly.
 
 Other compatible GRCh38 references may be usable, but the standard reference setup has received the most testing so far.
 
-## 4. What happens during analysis
+## 5. What happens during analysis
 
 Conceptually, RNA-TR-Scout performs the following steps:
 
@@ -118,7 +145,17 @@ Conceptually, RNA-TR-Scout performs the following steps:
 
 This distinction between **locus projection** and **repeat measurement** is important. A read may overlap and successfully project to a repeat locus even when the current caller cannot produce a final repeat length or motif measurement.
 
-## 5. Output files
+## 6. What kinds of repeat structure are currently supported?
+
+The current automatic caller is strongest for **periodic tandem-repeat structures** for which a repeat unit or a small set of repeat motifs can be meaningfully scanned along the read. Supported calls can include multiple motif components and interruption intervals.
+
+RNA-TR-Scout is **not yet a general sequence-assembly or graph-based solver for every complex repeat locus**. In particular, highly sequence-variable regions, complicated variation-cluster-like architectures, or loci requiring specialized locus-specific interpretation may not receive a complete automatic repeat measurement with the current caller.
+
+Such loci can still produce useful read/locus evidence if the genomic candidate can be assigned and projected. When the current calling strategy is not applicable, the result is retained as an unmeasured or unsupported calling attempt rather than being converted into a false negative.
+
+This distinction is important when examining loci whose biological variation is not well described by a simple copy-number change of one periodic motif.
+
+## 7. Output files
 
 A normal run writes its final result package under:
 
@@ -162,7 +199,7 @@ Compressed `.tsv.gz` copies of the main tables are also produced.
 
 The output directory contains additional files for reproducibility and quality control, including information about the resources used, input-read consistency, validation, run provenance, and performance.
 
-## 6. How the tables relate to one another
+## 8. How the tables relate to one another
 
 The output is intentionally read-centered rather than being reduced immediately to one row per genomic locus.
 
@@ -176,11 +213,9 @@ For most exploratory analyses:
 
 Stable identifiers are included so that these tables can be joined without relying on row order.
 
-## 7. Important interpretation points
+## 9. Important interpretation points
 
-RNA-TR-Scout reports **RNA evidence**. It does not by itself determine the underlying DNA genotype.
-
-### RNA non-observation is not the same as DNA absence
+### RNA non-observation does not establish genomic absence
 
 A repeat may fail to appear in RNA data because:
 
@@ -191,7 +226,7 @@ A repeat may fail to appear in RNA data because:
 - RNA processing changes which part of the locus is present in the mature transcript; or
 - the repeat-containing molecule is difficult to sequence or map.
 
-Therefore, “not observed” should not be interpreted as “not present in the genome.”
+Therefore, RNA non-observation should be treated as an observability issue rather than automatically as evidence of genomic absence.
 
 ### Some repeat lengths are lower bounds
 
@@ -211,7 +246,7 @@ The same RNA read can generate multiple technical candidate assignments because 
 
 These rows should not automatically be counted as separate biological repeat loci.
 
-## 8. Resume after interruption
+## 10. Resume after interruption
 
 Runs can be resumed after interruption.
 
@@ -228,14 +263,14 @@ rnatr-scout run \
 
 RNA-TR-Scout checks completed work before reusing it. Re-running `--resume` on an already completed tested run is expected to leave the scientific outputs unchanged.
 
-## 9. Current tested scope
+## 11. Current tested scope
 
 The current standard setup has been tested end-to-end for:
 
 - Oxford Nanopore cDNA long-read RNA sequencing
 - Linux x86-64
 - GRCh38 / GENCODE v50
-- minimap2-based mapping
+- splice-aware minimap2 mapping
 - the RNA-TR-Scout compact repeat catalog derived from TRExplorer and STRchive resources
 - FASTQ-to-final analysis
 - mapped-BAM plus source-FASTQ analysis
@@ -243,12 +278,13 @@ The current standard setup has been tested end-to-end for:
 
 The workflow has also been reproduced on more than one Linux x86-64 computer with reproducible scientific outputs for the test data used during development.
 
-This does not imply that every operating system, processor architecture, sequencing platform, reference build, or custom catalog has been tested.
+This does not imply that every operating system, processor architecture, sequencing platform, reference build, mapping workflow, or custom catalog has been tested.
 
-## 10. Areas still under development
+## 12. Areas still under development
 
 The following are not yet part of the standard tested user workflow:
 
+- more complete analysis of complex sequence-variable repeat architectures
 - ONT direct RNA
 - PacBio Iso-Seq
 - PacBio Kinnex
@@ -258,7 +294,7 @@ The following are not yet part of the standard tested user workflow:
 
 Custom references and custom repeat catalogs are possible areas for advanced use, but they have received less testing than the standard setup.
 
-## 11. Catalogs and references
+## 13. Catalogs and references
 
 Ordinary users do not need to download or manage the complete upstream TRExplorer and STRchive source repositories.
 
@@ -268,7 +304,7 @@ Users who intentionally want to rebuild or modify the catalog should see:
 
 [`catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md`](catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md)
 
-## 12. Command-line help
+## 14. Command-line help
 
 ```bash
 rnatr-scout --help
@@ -279,7 +315,7 @@ rnatr-scout resources-status --help
 
 For ordinary use, these commands should be preferred over the internal development scripts stored elsewhere in the repository.
 
-## 13. Development and validation records
+## 15. Development and validation records
 
 Detailed reproducibility, software-validation, and release-engineering records are retained in `docs/release/` and related internal documentation directories.
 
