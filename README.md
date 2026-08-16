@@ -34,6 +34,20 @@ python scripts/rnatr_setup_source_checkout_v0.1.1.py \
 
 The compact catalog bundle does not yet have a finalized public download URL, so the current release-engineering candidate requires it to be supplied explicitly.
 
+By default the setup helper creates the isolated environment at:
+
+```text
+~/.local/share/rnatr-scout/envs/source-checkout-v0.1
+```
+
+Activate that environment before using the public CLI, for example:
+
+```bash
+mamba activate ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
+```
+
+or use `conda activate` if conda is your environment manager.
+
 Check resource readiness:
 
 ```bash
@@ -97,6 +111,7 @@ The final package also contains the Core result manifest, package manifest, vali
 ## Documentation
 
 - [User guide](docs/USER_GUIDE.md) — installation, input modes, CLI examples, outputs, restart/resume, interpretation, and validated scope
+- [Stage16S cross-hardware parity record](docs/release/STAGE16S_CROSS_HARDWARE_PARITY_v0.1.1.md)
 - [Catalog resources](docs/catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md) — validated catalog provenance and advanced custom-catalog rebuilding
 - [Clean-install contract](docs/release/CLEAN_INSTALL_CONTRACT_v0.1.0.md)
 - [ONT-cDNA mapping contract](docs/release/MAPPING_CONTRACT_ONT_CDNA_v0.1.0.md)
