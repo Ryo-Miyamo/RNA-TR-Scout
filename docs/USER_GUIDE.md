@@ -60,6 +60,20 @@ By default, the isolated environment is created under:
 ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
 ```
 
+The setup process does not modify the parent shell. Before using `rnatr-scout`, activate the created environment with the environment manager available on your system, for example:
+
+```bash
+mamba activate ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
+```
+
+or:
+
+```bash
+conda activate ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
+```
+
+Alternatively, commands can be executed without activation by using `mamba run --prefix ...` or `conda run --prefix ...`.
+
 The validated environment currently pins Python 3.10.20, pysam 0.24.0, samtools/htslib 1.24, bedtools 2.31.1, minimap2 2.31, and seqkit 2.13.0.
 
 The current release-engineering candidate does not yet have a finalized public URL for the compact catalog bundle. Until that is resolved, supply the validated bundle explicitly with `--catalog-bundle`.
@@ -70,7 +84,7 @@ If the environment and resources are already installed, they can be rechecked wi
 python scripts/rnatr_setup_source_checkout_v0.1.1.py --verify-only
 ```
 
-You can also inspect resource readiness through the public CLI:
+You can also inspect resource readiness through the public CLI after activating the environment:
 
 ```bash
 rnatr-scout resources-status
