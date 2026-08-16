@@ -1,16 +1,16 @@
 # RNA-TR-Scout user guide
 
-RNA-TR-Scout detects and describes tandem-repeat evidence observed in long-read RNA sequencing data. The currently validated user profile is **Oxford Nanopore cDNA on Linux x86-64** with the frozen RNA-TR-Scout scientific Core.
+RNA-TR-Scout detects and characterizes tandem-repeat sequences observed in long-read RNA sequencing data.
 
-This guide describes the ordinary source-checkout workflow. Stage-numbered development scripts, internal SHA values, and frozen runtime wiring are intentionally not part of the normal user interface.
+This guide is written for researchers who want to run the software and interpret its outputs. Internal development-stage names, validation fixture names, commit hashes, and release-audit terminology are intentionally kept out of the main workflow.
 
-## 1. What you provide
+## 1. What you can start from
 
-RNA-TR-Scout supports two user-facing input modes.
+RNA-TR-Scout currently supports two main input modes.
 
-### FASTQ mode
+### FASTQ input
 
-Provide a source ONT-cDNA FASTQ. RNA-TR-Scout runs the validated minimap2 splice-aware mapping adapter and then the frozen Core.
+Provide an ONT-cDNA FASTQ file:
 
 ```bash
 rnatr-scout run \
@@ -19,9 +19,11 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-### BAM + FASTQ mode
+RNA-TR-Scout will first map the reads to the tested GRCh38 reference setup and then perform tandem-repeat analysis.
 
-Provide an already mapped BAM together with the **read-coherent source FASTQ** from which that BAM was produced.
+### BAM + FASTQ input
+
+If you already have a mapped BAM, provide both the BAM and the original FASTQ:
 
 ```bash
 rnatr-scout run \
@@ -31,36 +33,36 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-The FASTQ is not optional in BAM mode. The frozen scientific input contract requires both the mapped alignments and the original read sequences with matching read identifiers.
+The original FASTQ is required because repeat measurement uses the source read sequence. The BAM and FASTQ should represent the same reads with matching read identifiers.
 
 If `--run-id` is omitted, `--sample-id` is used as the run identifier.
 
-## 2. Installation and validated environment
+## 2. Installation
 
-The accepted distribution path at this stage is a **Git source checkout**, not a wheel.
+The current pre-release installation method uses a Git source checkout and an isolated mamba/conda environment.
 
-Requirements for the validated profile:
+Requirements for the currently tested setup:
 
 - Linux x86-64
 - Git
 - mamba or conda
-- network access for reference acquisition unless validated source files are supplied locally
-- the validated RNA-TR-Scout catalog bundle
+- network access for reference installation unless the required files are already available locally
+- the RNA-TR-Scout repeat-catalog bundle
 
-From the repository root, the setup helper creates and verifies the pinned environment, installs the source checkout in editable mode, checks the native periodic kernel, runs Core/mapping self-tests, and installs or verifies the standard resources.
+From the repository root:
 
 ```bash
 python scripts/rnatr_setup_source_checkout_v0.1.1.py \
   --catalog-bundle /path/to/rnatr_catalog_bundle.tar.gz
 ```
 
-By default, the isolated environment is created under:
+By default, the environment is created at:
 
 ```text
 ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
 ```
 
-The setup process does not modify the parent shell. Before using `rnatr-scout`, activate the created environment with the environment manager available on your system, for example:
+Activate it before running the command-line interface:
 
 ```bash
 mamba activate ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
@@ -72,19 +74,17 @@ or:
 conda activate ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
 ```
 
-Alternatively, commands can be executed without activation by using `mamba run --prefix ...` or `conda run --prefix ...`.
+The setup checks the required software and installs or verifies the standard reference resources.
 
-The validated environment currently pins Python 3.10.20, pysam 0.24.0, samtools/htslib 1.24, bedtools 2.31.1, minimap2 2.31, and seqkit 2.13.0.
+At the present pre-release stage, the compact repeat catalog does not yet have a finalized public download location, so the catalog bundle must be supplied explicitly during setup.
 
-The current release-engineering candidate does not yet have a finalized public URL for the compact catalog bundle. Until that is resolved, supply the validated bundle explicitly with `--catalog-bundle`.
-
-If the environment and resources are already installed, they can be rechecked with:
+To verify an existing installation:
 
 ```bash
 python scripts/rnatr_setup_source_checkout_v0.1.1.py --verify-only
 ```
 
-You can also inspect resource readiness through the public CLI after activating the environment:
+After activating the environment, you can also check resource readiness with:
 
 ```bash
 rnatr-scout resources-status
@@ -92,7 +92,7 @@ rnatr-scout resources-status
 
 ## 3. Mapping only
 
-To run only the validated ONT-cDNA mapping adapter:
+To generate a mapped BAM without running repeat analysis:
 
 ```bash
 rnatr-scout map \
@@ -101,59 +101,121 @@ rnatr-scout map \
   --sample-id SAMPLE01
 ```
 
-The validated standard reference profile is GRCh38 / GENCODE v50. Compatible custom GRCh38 references may be used through the post-Freeze compatibility-aware mapping path, but they are outside exact golden-validation scope.
+The standard tested mapping setup uses GRCh38 / GENCODE v50 and minimap2 for ONT-cDNA reads.
 
-## 4. Output directory
+Other compatible GRCh38 references may be usable, but the standard reference setup has received the most testing so far.
 
-A normal run writes the scientific result package under:
+## 4. What happens during analysis
+
+Conceptually, RNA-TR-Scout performs the following steps:
+
+1. maps each long RNA read to the genome, if a BAM was not supplied;
+2. identifies reads that overlap repeat loci in the catalog;
+3. projects each candidate repeat locus from genome coordinates onto the original read sequence;
+4. examines the projected read sequence for repeat motifs and repeat structure;
+5. records repeat events, motif components, interruptions, and cases that could not be fully measured; and
+6. writes the evidence in linked tabular files for downstream analysis.
+
+This distinction between **locus projection** and **repeat measurement** is important. A read may overlap and successfully project to a repeat locus even when the current caller cannot produce a final repeat length or motif measurement.
+
+## 5. Output files
+
+A normal run writes its final result package under:
 
 ```text
 <output-dir>/final/
 ```
 
-The five primary scientific tables are:
+The five main scientific tables are described below.
 
-| File | Meaning / grain |
-|---|---|
-| `read_evidence.tsv` and `.tsv.gz` | One row per read × target-region × locus hypothesis. This is the main evidence-level table and contains the stable `evidence_id`. |
-| `general_repeat_calls.tsv` and `.tsv.gz` | One row per projection/general-caller attempt, including attempts that were not callable. |
-| `repeat_events.tsv` and `.tsv.gz` | One row per retained non-overlapping repeat event on the raw read. |
-| `repeat_segments.tsv` and `.tsv.gz` | One row per repeat segment or motif component within an evidence record. |
-| `repeat_interruptions.tsv` and `.tsv.gz` | One row per interruption interval within a general repeat call. |
+### `read_evidence.tsv`
 
-The plain TSV files are the exact scientific parity artifacts. Deterministic gzip copies are also emitted.
+This is usually the best table to start with.
 
-The final directory also contains provenance and QC artifacts such as:
+Each row represents evidence connecting a read to a candidate repeat locus. It contains the identifiers needed to connect that read-locus observation to repeat calls, events, segments, and interruptions in the other tables.
 
-- `core_result_manifest.json`
-- `package_manifest.tsv`
-- `validation_summary.tsv`
-- `input_read_coherence.tsv`
-- `shard_manifest.tsv`
-- `performance.tsv`
-- `resource_bindings.local.json`
+### `general_repeat_calls.tsv`
 
-These support reproducibility, validation, restart/recovery, and downstream traceability.
+This table records repeat-calling attempts for projected candidates.
 
-## 5. Important interpretation rules
+Importantly, it also records cases in which the locus could be projected onto the read but no final repeat measurement was produced. A missing motif, repeat length, purity, or related value therefore does **not** automatically mean that no repeat exists at that locus.
 
-RNA-TR-Scout reports **RNA evidence**, not a definitive DNA genotype.
+### `repeat_events.tsv`
 
-In particular:
+This table contains repeat events retained on the original RNA reads after repeat scanning.
 
-- RNA non-observation must not be interpreted as absence of a DNA repeat expansion.
-- Exact repeat length requires appropriate spanning evidence. Censored observations are lower bounds, not exact sizes.
-- A projected candidate can exist even when final repeat measurement is unavailable; projection success and successful repeat calling are separate concepts.
-- Candidate multiplicity is a technical assignment property and should not automatically be interpreted as multiple independent biological repeat loci.
-- Primary, secondary, and supplementary alignments are retained through locus assignment because repeat-containing reads may map ambiguously.
+A read may contain more than one retained event, depending on the sequence and locus context.
 
-For most downstream analysis, start with `read_evidence.tsv` and join to the other four scientific tables using the stable IDs (`evidence_id`, `repeat_event_id`, `repeat_call_id`, `caller_record_id`, and `interruption_id`).
+### `repeat_segments.tsv`
 
-## 6. Resume after interruption
+This table describes the motif components or repeat segments that make up retained repeat evidence.
 
-Runs are restartable. Re-run the same command with `--resume` and the same `--output-dir`, inputs, sample/run identifiers, and scientific configuration.
+It is useful when examining repeat architecture rather than only an overall repeat length.
 
-Example:
+### `repeat_interruptions.tsv`
+
+This table records interruptions within repeat tracts when they are detected.
+
+It can be used to distinguish a relatively pure repeat from one containing intervening or altered sequence.
+
+Compressed `.tsv.gz` copies of the main tables are also produced.
+
+The output directory contains additional files for reproducibility and quality control, including information about the resources used, input-read consistency, validation, run provenance, and performance.
+
+## 6. How the tables relate to one another
+
+The output is intentionally read-centered rather than being reduced immediately to one row per genomic locus.
+
+For most exploratory analyses:
+
+1. start with `read_evidence.tsv`;
+2. identify the reads and loci of interest;
+3. join to `general_repeat_calls.tsv` to see whether repeat measurement was attempted and whether a final call was available;
+4. use `repeat_events.tsv` and `repeat_segments.tsv` to examine repeat structure; and
+5. use `repeat_interruptions.tsv` when interruption structure is relevant.
+
+Stable identifiers are included so that these tables can be joined without relying on row order.
+
+## 7. Important interpretation points
+
+RNA-TR-Scout reports **RNA evidence**. It does not by itself determine the underlying DNA genotype.
+
+### RNA non-observation is not the same as DNA absence
+
+A repeat may fail to appear in RNA data because:
+
+- the locus is not expressed in the sampled tissue;
+- the relevant transcript is rare;
+- sequencing coverage is insufficient;
+- the read does not extend across the repeat;
+- RNA processing changes which part of the locus is present in the mature transcript; or
+- the repeat-containing molecule is difficult to sequence or map.
+
+Therefore, “not observed” should not be interpreted as “not present in the genome.”
+
+### Some repeat lengths are lower bounds
+
+If a read does not span enough sequence to establish the complete repeat tract, the observed repeat length may represent only a lower bound.
+
+Exact and censored observations should be treated differently in downstream analysis.
+
+### Projection success is not the same as successful repeat measurement
+
+A candidate locus can be mapped successfully onto a read while the repeat caller still cannot provide a final measurement.
+
+This can happen because the sequence does not meet the requirements of the currently implemented calling strategy, because the read context is incomplete, or because the local repeat structure is more complicated than the current caller supports.
+
+### Multiple candidate rows do not necessarily mean multiple biological repeats
+
+The same RNA read can generate multiple technical candidate assignments because of overlapping target regions, alternative alignments, nearby loci, or related mapping/projection possibilities.
+
+These rows should not automatically be counted as separate biological repeat loci.
+
+## 8. Resume after interruption
+
+Runs can be resumed after interruption.
+
+Re-run the same command with `--resume`, using the same output directory and the same input data and identifiers:
 
 ```bash
 rnatr-scout run \
@@ -164,57 +226,49 @@ rnatr-scout run \
   --resume
 ```
 
-The frozen restart contract verifies completed work before reusing it. A second resume on an already complete validated run has been tested to reach the `SECOND_RESUME_NOOP` state without changing the five scientific outputs.
+RNA-TR-Scout checks completed work before reusing it. Re-running `--resume` on an already completed tested run is expected to leave the scientific outputs unchanged.
 
-## 7. What has been validated
+## 9. Current tested scope
 
-The current internal release-engineering state has passed:
+The current standard setup has been tested end-to-end for:
 
-- fresh source-checkout installation on Linux x86-64;
-- validated resource installation and verification;
-- ONT-cDNA FASTQ → minimap2 splice-aware mapping → frozen Core → final output;
-- BAM + read-coherent FASTQ → frozen Core → final output;
-- exact five-table golden parity for the validated Tier2 test;
-- restart/resume and second-resume no-op behavior;
-- execution of the frozen native periodic kernel on a second Linux x86-64 PC (`deeplearningboxii`);
-- cross-hardware exact scientific parity of all five Tier2 scientific tables on that second machine.
-
-The Stage16S v0.1.0 validator report initially contained a SHA mismatch for `repeat_interruptions`; this was traced to an incorrectly transcribed expected SHA in the validator, not to a scientific-output difference. Stage16S v0.1.1 re-evaluated against the canonical golden manifest and passed.
-
-These validations demonstrate exact parity for the tested Linux x86-64 systems and fixtures. They should **not** be interpreted as a universal guarantee for every CPU, operating system, sequencing platform, reference, or catalog.
-
-## 8. Current scope and non-goals
-
-Validated now:
-
-- ONT cDNA
+- Oxford Nanopore cDNA long-read RNA sequencing
 - Linux x86-64
-- GRCh38 / GENCODE v50 validated reference profile
-- validated TRExplorer/STRchive-derived RNA-TR-Scout catalog bundle
-- source-checkout installation
-- public CLI commands `resources-status`, `map`, and `run`
+- GRCh38 / GENCODE v50
+- minimap2-based mapping
+- the RNA-TR-Scout compact repeat catalog derived from TRExplorer and STRchive resources
+- FASTQ-to-final analysis
+- mapped-BAM plus source-FASTQ analysis
+- interrupted-run resume
 
-Not yet part of the validated public release scope:
+The workflow has also been reproduced on more than one Linux x86-64 computer with reproducible scientific outputs for the test data used during development.
+
+This does not imply that every operating system, processor architecture, sequencing platform, reference build, or custom catalog has been tested.
+
+## 10. Areas still under development
+
+The following are not yet part of the standard tested user workflow:
 
 - ONT direct RNA
-- PacBio Iso-Seq / Kinnex
-- non-x86-64 platforms
-- public wheel installation
-- arbitrary custom catalogs as exact-golden equivalents
-- automatic public download of the compact catalog bundle
-- the final public `v0.5.0` release decision
+- PacBio Iso-Seq
+- PacBio Kinnex
+- non-x86-64 systems
+- simplified public package installation
+- automatic public download of the compact repeat catalog
 
-## 9. Catalogs and references
+Custom references and custom repeat catalogs are possible areas for advanced use, but they have received less testing than the standard setup.
 
-Ordinary users do not need the complete upstream TRExplorer or STRchive source repositories. The validated runtime uses a compact RNA-TR-Scout catalog bundle derived from TRExplorer v2.0 and a pinned STRchive source snapshot.
+## 11. Catalogs and references
 
-Advanced users who intentionally rebuild or update catalogs should follow:
+Ordinary users do not need to download or manage the complete upstream TRExplorer and STRchive source repositories.
+
+The standard workflow uses a compact RNA-TR-Scout catalog prepared from those resources.
+
+Users who intentionally want to rebuild or modify the catalog should see:
 
 [`catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md`](catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md)
 
-Such catalogs are treated as custom-compatible resources rather than exact golden-validated replacements.
-
-## 10. Getting help from the command line
+## 12. Command-line help
 
 ```bash
 rnatr-scout --help
@@ -223,4 +277,10 @@ rnatr-scout map --help
 rnatr-scout resources-status --help
 ```
 
-The ordinary user workflow should use these public commands rather than directly invoking Stage-numbered development scripts.
+For ordinary use, these commands should be preferred over the internal development scripts stored elsewhere in the repository.
+
+## 13. Development and validation records
+
+Detailed reproducibility, software-validation, and release-engineering records are retained in `docs/release/` and related internal documentation directories.
+
+They are useful for developers, auditors, and future release work, but they are not required reading for researchers who simply want to install and use RNA-TR-Scout.
