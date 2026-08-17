@@ -31,9 +31,10 @@ The current installation method uses a Git source checkout and an isolated mamba
 From the repository root:
 
 ```bash
-python scripts/rnatr_setup_source_checkout_v0.1.1.py \
-  --catalog-bundle /path/to/rnatr_catalog_bundle.tar.gz
+python scripts/rnatr_setup_source_checkout_v0.1.1.py
 ```
+
+The setup downloads and verifies the standard GENCODE resources and the compact RNA-TR-Scout repeat catalog automatically when they are not already available locally.
 
 The setup creates the default environment at:
 
@@ -55,6 +56,12 @@ Check that the required reference and repeat-catalog resources are ready:
 rnatr-scout resources-status
 ```
 
+You can also inspect the detected CPU, RAM, temporary-directory, and free-space state:
+
+```bash
+rnatr-scout system-info
+```
+
 ### Start from FASTQ
 
 ```bash
@@ -64,7 +71,7 @@ rnatr-scout run \
   --output-dir rnatr_SAMPLE01
 ```
 
-RNA-TR-Scout will map the reads with the tested ONT-cDNA splice-aware mapping workflow and then perform repeat analysis.
+RNA-TR-Scout will map the reads with the tested ONT-cDNA splice-aware mapping workflow and then perform repeat analysis. Core shard/concurrency values are selected automatically from the input scale and detected resources unless you provide explicit advanced overrides.
 
 ### Start from an existing BAM
 
@@ -89,15 +96,21 @@ rnatr-scout map \
   --sample-id SAMPLE01
 ```
 
-## Disk space and memory planning
+## Disk space, CPU, and memory planning
 
-The standard reference setup downloads approximately **0.9 GB of compressed GENCODE data** (GRCh38 primary-assembly FASTA plus GENCODE v50 primary-assembly GTF), in addition to the RNA-TR-Scout repeat-catalog bundle. The installer expands the reference and builds a minimap2 index, so reference setup requires substantially more space than the compressed download alone. Plan for **tens of GB of free disk space** during initial setup.
+The standard reference setup downloads approximately **0.9 GB of compressed GENCODE data** (GRCh38 primary-assembly FASTA plus GENCODE v50 primary-assembly GTF), in addition to the compact RNA-TR-Scout repeat-catalog bundle. The installer expands the reference and builds a minimap2 index, so reference setup requires substantially more space than the compressed download alone. Plan for **tens of GB of free disk space** during initial setup.
 
 Analysis working space depends strongly on the number and length of reads. RNA-TR-Scout currently retains restartable intermediate files and detailed read-level evidence, so large runs can use substantial disk space.
 
 In a **5.31-million-read development run**, approximately **140 GB of checkpoint/work files** were present at one audited restart stage. This is an observed working-data volume, **not a measured peak-disk requirement**. Peak disk usage has not yet been formally benchmarked, so no fixed minimum free-space requirement is claimed for a five-million-read run at this stage.
 
-For the current ONT-cDNA mapping workflow, **32 GB RAM is a sensible practical target**; 16 GB may be tight during human-genome mapping.
+The current release-engineering workflow has been tested on Linux x86-64 hosts with **24 and 36 logical CPUs and approximately 128 GB RAM**. For approximately five-million-read datasets, the current practical **recommended** profile is about **24 or more logical CPU threads, approximately 128 GB RAM, and fast local SSD/NVMe working storage**.
+
+This is a tested/recommended profile, not an empirical minimum. A lower CPU/RAM minimum for the five-million-read workflow has not yet been established.
+
+For human-genome ONT-cDNA mapping and smaller runs, **32 GB RAM remains a sensible practical target**; 16 GB may be tight, especially while other processes are active. This should not be interpreted as evidence that 32 GB is sufficient for the current five-million-read release-scale workflow.
+
+RNA-TR-Scout detects CPU, available RAM, temporary-directory free space, and working-filesystem free space before Core execution. When worker values are omitted, conservative Core scheduling is selected automatically and recorded in the run provenance. Mapping threads remain controlled by the separately validated ONT-cDNA mapping profile in the current release.
 
 See the [user guide](docs/USER_GUIDE.md) for more detail on resource planning.
 
@@ -145,7 +158,7 @@ These cases are retained in the output rather than silently being interpreted as
 
 ## Currently tested scope
 
-RNA-TR-Scout has been tested end-to-end with ONT cDNA data on more than one Linux x86-64 computer, with reproducible scientific output for the test datasets used during development.
+RNA-TR-Scout has been tested end-to-end with ONT cDNA data on more than one Linux x86-64 computer, with reproducible scientific output for the test datasets used during development. Fresh source checkout, isolated environment creation, network resource installation, automatic Core resource selection, and resume behavior have also been exercised on an independent second Linux x86-64 computer.
 
 The current standard setup uses:
 
@@ -162,7 +175,6 @@ The following are planned or still under development:
 - PacBio Iso-Seq and Kinnex
 - non-x86-64 systems
 - simplified public package installation
-- automatic public download of the compact repeat catalog
 
 ## Documentation
 
