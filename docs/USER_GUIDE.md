@@ -50,14 +50,12 @@ Requirements for the currently tested setup:
 - Linux x86-64
 - Git
 - mamba or conda
-- network access for reference installation unless the required files are already available locally
-- the RNA-TR-Scout repeat-catalog bundle
+- network access for reference and compact-catalog installation unless the exact required files are already available locally
 
 From the repository root:
 
 ```bash
-python scripts/rnatr_setup_source_checkout_v0.1.1.py \
-  --catalog-bundle /path/to/rnatr_catalog_bundle.tar.gz
+python scripts/rnatr_setup_source_checkout_v0.1.1.py
 ```
 
 By default, the environment is created at:
@@ -78,9 +76,7 @@ or:
 conda activate ~/.local/share/rnatr-scout/envs/source-checkout-v0.1
 ```
 
-The setup checks the required software and installs or verifies the standard reference resources.
-
-At the present pre-release stage, the compact repeat catalog does not yet have a finalized public download location, so the catalog bundle must be supplied explicitly during setup.
+The setup checks the required software and installs or verifies the standard reference resources. The compact RNA-TR-Scout catalog is downloaded from its public release asset and verified by SHA-256 when it is not already available locally.
 
 To verify an existing installation:
 
@@ -88,13 +84,19 @@ To verify an existing installation:
 python scripts/rnatr_setup_source_checkout_v0.1.1.py --verify-only
 ```
 
-After activating the environment, you can also check resource readiness with:
+After activating the environment, you can check resource readiness with:
 
 ```bash
 rnatr-scout resources-status
 ```
 
-## 3. Disk space and memory planning
+You can also inspect the host resources that RNA-TR-Scout sees:
+
+```bash
+rnatr-scout system-info
+```
+
+## 3. Disk space, CPU, and memory planning
 
 The standard reference installer obtains two GENCODE source files for the tested setup:
 
@@ -107,9 +109,21 @@ Run-time storage depends strongly on the number and length of reads because RNA-
 
 In a **5.31-million-read development run**, approximately **140 GB of checkpoint/work files** were present at one audited restart stage. This is an observed working-data volume, **not a measured peak-disk requirement**. Peak disk usage has not yet been formally benchmarked, so a fixed minimum free-space requirement for a five-million-read run is not stated yet.
 
-For the current ONT-cDNA mapping workflow, human-genome mapping has been observed around the mid-teens of GB of peak RAM during development. **32 GB RAM is a comfortable practical target**. Systems with 16 GB may be tight, especially if other processes are active.
+The current release-engineering workflow has been tested on Linux x86-64 hosts with **24 and 36 logical CPUs and approximately 128 GB RAM**. For approximately five-million-read ONT-cDNA datasets, the current practical recommended profile is:
 
-These values are practical observations rather than hard scientific thresholds. Actual requirements vary with read count, read length, worker settings, filesystem behavior, and retained intermediate state. A formal peak-disk benchmark is planned before public release so that user-facing storage guidance can be based on measured peak usage rather than a speculative safety margin.
+- about 24 or more logical CPU threads;
+- approximately 128 GB RAM; and
+- fast local SSD/NVMe working storage.
+
+This is a tested/recommended profile rather than an empirical minimum. A lower CPU/RAM minimum for the five-million-read workflow has not yet been established.
+
+For human-genome ONT-cDNA mapping and smaller runs, **32 GB RAM is a comfortable practical target** based on development observations; 16 GB may be tight, especially if other processes are active. This should not be interpreted as evidence that 32 GB is sufficient for the current five-million-read release-scale workflow.
+
+RNA-TR-Scout detects logical CPU count, currently available RAM, selected temporary directory, and free space before Core execution. If `--shards`, `--max-unit-workers`, and `--caller-workers` are omitted, a conservative Core scheduling profile is selected automatically from the input scale and detected resources and written to the run provenance.
+
+Advanced users can provide `--threads`, `--memory-gb`, `--tmp-dir`, or explicit worker-count overrides. Supplied overrides are recorded. In the current release, `--threads` is a Core scheduling budget; the validated ONT-cDNA mapper retains its separately versioned mapping-thread profile.
+
+These values are practical observations rather than hard scientific thresholds. Actual requirements vary with read count, read length, worker settings, filesystem behavior, and retained intermediate state. A formal peak-disk benchmark remains planned so that fixed large-run storage guidance can be based on measured peak usage rather than a speculative safety margin.
 
 ## 4. Mapping only
 
@@ -257,7 +271,7 @@ rnatr-scout run \
   --resume
 ```
 
-RNA-TR-Scout checks completed work before reusing it. Re-running `--resume` on an already completed tested run is expected to leave the scientific outputs unchanged.
+RNA-TR-Scout checks completed work before reusing it. Re-running `--resume` on an already completed tested run is expected to leave the scientific outputs unchanged. The recorded Core resource plan is reused on resume so that a completed run is not silently repartitioned under different worker settings.
 
 ## 11. Current tested scope
 
@@ -270,9 +284,10 @@ The current standard setup has been tested end-to-end for:
 - the RNA-TR-Scout compact repeat catalog derived from TRExplorer and STRchive resources
 - FASTQ-to-final analysis
 - mapped-BAM plus source-FASTQ analysis
+- automatic Core CPU/RAM-aware scheduling
 - interrupted-run resume
 
-The workflow has also been reproduced on more than one Linux x86-64 computer with reproducible scientific outputs for the test data used during development.
+The workflow has been reproduced on more than one Linux x86-64 computer with reproducible scientific outputs for the test data used during development. An independent second computer has also completed a fresh source checkout, fresh isolated environment creation, network reference/catalog installation, automatic Core resource selection, exact scientific-output validation, and second-resume no-op.
 
 This does not imply that every operating system, processor architecture, sequencing platform, reference build, mapping workflow, or custom catalog has been tested.
 
@@ -286,7 +301,6 @@ The following are not yet part of the standard tested user workflow:
 - PacBio Kinnex
 - non-x86-64 systems
 - simplified public package installation
-- automatic public download of the compact repeat catalog
 
 Custom references and custom repeat catalogs are possible areas for advanced use, but they have received less testing than the standard setup.
 
@@ -294,7 +308,7 @@ Custom references and custom repeat catalogs are possible areas for advanced use
 
 Ordinary users do not need to download or manage the complete upstream TRExplorer and STRchive source repositories.
 
-The standard workflow uses a compact RNA-TR-Scout catalog prepared from those resources.
+The standard workflow uses a compact RNA-TR-Scout catalog prepared from those resources. The standard installer can retrieve the validated compact catalog automatically and verifies its archive identity before installation.
 
 Users who intentionally want to rebuild or modify the catalog should see:
 
@@ -307,6 +321,7 @@ rnatr-scout --help
 rnatr-scout run --help
 rnatr-scout map --help
 rnatr-scout resources-status --help
+rnatr-scout system-info --help
 ```
 
 For ordinary use, these commands should be preferred over the internal development scripts stored elsewhere in the repository.
