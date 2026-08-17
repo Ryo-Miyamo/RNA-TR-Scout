@@ -5,7 +5,8 @@ type: software
 authors:
   - family-names: Miyamoto
     given-names: Ryosuke
-version: 0.5.0-rc1
+version: 0.5.0
+date-released: 2026-08-17
 repository-code: "https://github.com/Ryo-Miyamo/RNA-TR-Scout"
 keywords:
   - tandem repeats

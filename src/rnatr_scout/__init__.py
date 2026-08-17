@@ -8,4 +8,4 @@ __all__ = [
     "classify_p3",
 ]
 
-__version__ = "0.5.0rc1"
+__version__ = "0.5.0"

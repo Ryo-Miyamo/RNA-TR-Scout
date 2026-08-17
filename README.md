@@ -10,7 +10,7 @@ The currently tested setup is:
 - GRCh38 / GENCODE v50
 - Linux x86-64
 
-> **Development status:** this repository is currently a private pre-release version and is not yet the public RNA-TR-Scout v0.5.0 release.
+> **Release:** this source tree is RNA-TR-Scout v0.5.0. See `CHANGELOG.md` and `docs/release/RELEASE_NOTES_v0.5.0.md` for release scope and limitations.
 
 ## What RNA-TR-Scout does
 

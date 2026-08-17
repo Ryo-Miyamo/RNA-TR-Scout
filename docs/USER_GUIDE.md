@@ -43,7 +43,7 @@ If `--run-id` is omitted, `--sample-id` is used as the run identifier.
 
 ## 2. Installation
 
-The current pre-release installation method uses a Git source checkout and an isolated mamba/conda environment.
+The current installation method uses a Git source checkout and an isolated mamba/conda environment.
 
 Requirements for the currently tested setup:
 

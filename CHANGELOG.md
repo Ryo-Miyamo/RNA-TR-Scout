@@ -2,7 +2,7 @@
 
 This changelog summarizes the public RNA-TR-Scout release line. Detailed validation scope, exact evidence identities, and release-engineering records are retained under `docs/release/`, `metadata/ssot/`, and the linked Freeze/golden records.
 
-## [0.5.0] - Unreleased
+## [0.5.0] - 2026-08-17
 
 ### Added
 
@@ -28,4 +28,4 @@ This changelog summarizes the public RNA-TR-Scout release line. Detailed validat
 - The current automatic caller does not completely measure every complex or sequence-variable repeat architecture.
 - ONT direct RNA, PacBio Iso-Seq, PacBio Kinnex, and non-x86-64 systems are not yet standard validated profiles.
 - Full-scale peak disk usage and a lower empirical full-scale CPU/RAM minimum remain unmeasured.
-- Final public release date, immutable tag, release archive, and citation binding will be filled during the final release-binding stage.
+- Immutable Git tag/GitHub Release/source-checksum/citation binding is verified separately in the final release record.
