@@ -1,6 +1,6 @@
 # RNA-TR-Scout Single Source of Truth
 
-- Generated: 2026-08-17T05:34:43+00:00
+- Generated: 2026-08-17T06:03:49+00:00
 - Tool: rnatr_ssot_v0.1.2
 - Database: `/mnt/intelssd/rnatr_project/metadata/ssot/rnatr_ssot.sqlite`
 - Existing legacy build-tracker database: read-only source; not modified.
@@ -28,13 +28,13 @@
 | active_paths_have_no_shell_variables | PASS | 0 |
 | active_implementation_files_exist | PASS | 0 |
 | view_rows::current_pipeline | PASS | 1 |
-| view_rows::current_decisions | PASS | 53 |
+| view_rows::current_decisions | PASS | 57 |
 | view_rows::current_interpretations | PASS | 26 |
 | view_rows::current_algorithm_contract | PASS | 35 |
 | view_rows::current_reference_hierarchy | PASS | 8 |
 | view_rows::current_known_limitations | PASS | 21 |
 | view_rows::current_open_questions | PASS | 9 |
-| view_rows::current_results | PASS | 178 |
+| view_rows::current_results | PASS | 185 |
 | current_target_artifacts | PASS | 4 |
 | legacy_tracker_import | PASS | 63 |
 | current_validator_exists | PASS | /mnt/intelssd/rnatr_project/config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py |
@@ -94,9 +94,13 @@
 - **primary_population_reference** — AoU PacBio HiFi validation cohort (2,102 individuals) is the primary genome-wide DNA repeat-length and LPS context.
 - **tr_atlas_role** — TR-Atlas is supplementary short-read population context only; no further genome-wide live crawl is planned.
 - **public_rc_single_pro_crosscut_audit_required_v0_1_0** — Before declaring the public v0.5.0 release candidate, perform one Pro-level cross-cut audit of Freeze exact state, current main, active production path, reference/catalog/mapping/CLI/install, golden and validation evidence, cross-hardware results, documentation, unresolved scope, and SSOT/Git/docs state consistency.
+- **software_license_bsd3_v0_1_0** — The RNA-TR-Scout software source is licensed under BSD-3-Clause with Copyright (c) 2026, Ryosuke Miyamoto. Third-party catalog/data terms remain separately attributed and are not relicensed by the software LICENSE.
 - **g25_g29_release_readiness_closure_v0_1_0** — G25 reference bootstrap, G26 resource detection, G27 memory-aware Core scheduling, G28 scoped cross-hardware reproducibility and G29 clean-machine clone-to-test reproducibility are accepted for the currently tested Linux x86-64 ONT-cDNA release scope.
 - **g30_hardware_profile_pass_with_scope_v0_1_0** — G30 is PASS_WITH_SCOPE: tested hardware profiles and a release-scale recommended profile are documented; a lower empirical CPU/RAM minimum is not established and is intentionally not invented. The minimum remains a nonblocking limitation while user-facing documentation preserves this distinction.
+- **release_candidate_ready_for_final_pro_audit_v0_1_0** — All planned High-mode release-packaging work required before the final Pro audit is complete for v0.5.0-rc1. PUBLIC_RC_PRO_CROSSCUT_AUDIT remains OPEN and is the blocking next step before final-version conversion/tag/release binding.
 - **stage16_release_engineering_progress_checkpoint_v0_1_0** — Current release engineering now includes public catalog/network-install closure plus Stage16Z resource-aware Core scheduling and Stage16AA independent-machine fresh validation. G25-G29 are accepted. G30 has tested and recommended hardware profiles documented while the empirical minimum remains explicitly unmeasured and nonblocking. CLEAN_INSTALL_INTERNAL_BETA is closed for the current Linux x86-64 ONT-cDNA scope. The immutable Core Freeze root remains 4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb.
+- **stage16ae_public_release_packaging_acceptance_v0_1_0** — Accept v0.5.0-rc1 mechanical packaging as complete with BSD-3-Clause, citation metadata, explicit Linux x86-64 conda lock, release notes and third-party notice separation. This does not create or authorize the final public v0.5.0 release before the final Pro audit.
+- **stage16af_rc_preflight_acceptance_v0_1_0** — Accept candidate c7c0d985068c4d01f7669521e6fefd146fbb1718 / tree 568974b45cf06fd76a03e70e57a643184ecac528 as mechanically ready for the final Pro cross-cut audit. Public v0.5.0 remains unreleased.
 - **stage16z_resource_aware_public_cli_acceptance_v0_1_0** — Accept resource detection and automatic Core scheduling for the current Linux x86-64 release scope. Tier2 and Tier3 automatic profiles retain exact scientific parity; resume reuses the recorded plan. Mapping-thread tuning and full-scale peak disk remain separate scopes.
 - **stage16w_public_catalog_distribution_acceptance_v0_1_0** — Accept the public `Ryo-Miyamo/RNA-TR-Scout-resources` release `catalog-grch38-v0.1.0` as the standard catalog distribution for this validated profile. The outer archive SHA-256 is 54a24e4b60d920c8fec16b2df37b47e40407de42b949b18dc6233e97d85f2fef; unauthenticated download is exact; the five scientific runtime member bytes remain unchanged.
 - **evidence_schema_v0_4_2_fullscale_validated_candidate_v0_1_0** — Adopt schema v0.4.2 and materializer v0.1.2 as the frozen Core evidence contract for the validated Stage15 candidate. Evidence spans isolated 100k correctness, deterministic 250k/500k scaling, empirical 5,312,696-read execution, and Stage15E scoped reconstruction/restart. This decision does not itself promote current_pipeline or close G25-G34.
@@ -249,6 +253,13 @@
 | 16AB_G25_G30_RELEASE_READINESS | g28_status | PASS_WITH_SCOPE | . |
 | 16AB_G25_G30_RELEASE_READINESS | g29_status | PASS | . |
 | 16AB_G25_G30_RELEASE_READINESS | g30_status | PASS_WITH_SCOPE_AMENDMENT | . |
+| 16AE_PUBLIC_RELEASE_PACKAGING | candidate_package_version | 0.5.0rc1 | . |
+| 16AE_PUBLIC_RELEASE_PACKAGING | explicit_lock_sha256 | 79004c8253021a6d30b35aecf91a244a1ae1460ccfcd8d77a135716b6235955c | . |
+| 16AE_PUBLIC_RELEASE_PACKAGING | software_license | BSD-3-Clause | . |
+| 16AF_RELEASE_CANDIDATE_PREFLIGHT | candidate_head | c7c0d985068c4d01f7669521e6fefd146fbb1718 | . |
+| 16AF_RELEASE_CANDIDATE_PREFLIGHT | candidate_tree | 568974b45cf06fd76a03e70e57a643184ecac528 | . |
+| 16AF_RELEASE_CANDIDATE_PREFLIGHT | git_archive_sha256 | b6b6b332560f4dca0b7450c5f27230ca6dffcc1791ce760a7714e54a975ed3ce | . |
+| 16AF_RELEASE_CANDIDATE_PREFLIGHT | rc_preflight_status | PASS | . |
 | 16R_FRESH_END_TO_END | stage16r_final_exact_plain_table_parity | PASS_5_OF_5 | . |
 | 16R_FRESH_END_TO_END | stage16r_post_resume_final_parity | PASS_5_OF_5 | . |
 | 16R_FRESH_END_TO_END | stage16r_public_fastq_to_final_seconds | 289.0072668030043 | . |
@@ -302,13 +313,13 @@
 
 - `current_algorithm_contract.tsv`: 35 rows
 - `current_artifacts.tsv`: 4 rows
-- `current_decisions.tsv`: 53 rows
+- `current_decisions.tsv`: 57 rows
 - `current_interpretations.tsv`: 26 rows
 - `current_known_limitations.tsv`: 21 rows
 - `current_open_questions.tsv`: 9 rows
 - `current_pipeline.tsv`: 1 rows
 - `current_reference_hierarchy.tsv`: 8 rows
-- `current_results.tsv`: 178 rows
+- `current_results.tsv`: 185 rows
 - `current_runs.tsv`: 32 rows
-- `latest_stage_status.tsv`: 229 rows
+- `latest_stage_status.tsv`: 231 rows
 - `project_dashboard.tsv`: 12 rows
