@@ -1,0 +1,15 @@
+STRchive upstream repository:
+https://github.com/dashnowlab/STRchive
+
+RNA-TR-Scout frozen source commit:
+88502a64bd47ae464b908757122cc7e4bbeed8c8
+
+Repository version metadata at that source commit: 2.24.2
+
+STRchive is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Please cite:
+Hiatt L, Weisburd B, Dolzhenko E, Rubinetti V, Avvaru AK, VanNoy GE, Kurtas NE, Rehm HL, Quinlan A, Dashnow H. STRchive: a dynamic resource detailing population-level and locus-specific insights at tandem repeat disease loci. Genome Medicine. 2025. doi:10.1186/s13073-025-01454-4
+
+RNA-TR-Scout distributes a selected and transformed derivative of STRchive disease-locus information as part of its validated runtime catalog. It is not a complete copy of the upstream STRchive resource. RNA-TR-Scout-specific transformations, runtime identifiers, combined mapping targets, and validation semantics are downstream modifications and should not be attributed to the STRchive authors.
