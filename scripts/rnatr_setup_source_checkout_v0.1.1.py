@@ -14,7 +14,7 @@ import sys
 import tempfile
 
 VERSION = "rnatr_setup_source_checkout_v0.1.1"
-EXPECTED_PACKAGE_VERSION = "0.3.2"
+EXPECTED_PACKAGE_VERSION = "0.5.0rc1"
 EXPECTED_NATIVE_SHA256 = (
     "9745a4e33e9a899ec78417b499ccc35f770b7fd7adfffe1ab533fa14ead3ae69"
 )
