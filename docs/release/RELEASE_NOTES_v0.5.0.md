@@ -4,12 +4,12 @@ Date: 2026-08-17
 
 ## Status
 
-**FINAL v0.5.0 SOURCE — PUBLIC GIT/TAG/RELEASE BINDING VERIFIED SEPARATELY**
+**FINAL v0.5.0 SOURCE — PUBLIC GIT/TAG/RELEASE BINDING PENDING**
 
 RNA-TR-Scout v0.5.0 is the first public release line derived from the accepted
 `LOCAL_CORE_FREEZE_V0.1.0` scientific Core. This document describes the final
 source release. Repository visibility, immutable tag, GitHub Release, source
-checksums, and citation binding are verified as a separate publication step.
+checksums, and citation binding will be verified in a separate publication step.
 
 ## Validated standard scope
 
