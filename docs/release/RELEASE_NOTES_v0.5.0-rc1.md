@@ -4,7 +4,7 @@ Date: 2026-08-17
 
 ## Status
 
-**RELEASE CANDIDATE PACKAGING — FINAL PRO CROSS-CUT AUDIT PENDING**
+**RELEASE CANDIDATE PASSED FINAL PRO CROSS-CUT AUDIT — FINAL PUBLIC BINDING PENDING**
 
 This document summarizes the candidate public v0.5.0 release state. It does not by itself create a public release or tag.
 
@@ -69,7 +69,5 @@ Third-party catalog/data resources and external dependencies remain governed by 
 
 ## Remaining work before public v0.5.0
 
-- run the final Pro-level cross-cut audit;
-- resolve any audit-blocking findings;
 - change candidate version metadata from `0.5.0rc1` / `0.5.0-rc1` to final `0.5.0`;
 - create and verify the immutable public Git tag/release/citation binding.

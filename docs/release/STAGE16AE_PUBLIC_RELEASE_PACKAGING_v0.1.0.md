@@ -4,7 +4,7 @@ Date: 2026-08-17
 
 ## Status
 
-**MECHANICAL PACKAGING / RC PREFLIGHT / SSOT RECONCILIATION COMPLETE — FINAL PRO AUDIT PENDING**
+**MECHANICAL PACKAGING / RC PREFLIGHT / SSOT RECONCILIATION / FINAL PRO AUDIT COMPLETE — FINAL PUBLIC BINDING PENDING**
 
 Stage16AE prepares a coherent v0.5.0 release-candidate package without changing the frozen scientific Core.
 
@@ -53,7 +53,7 @@ The final public tag is not created at this stage.
 - [x] record third-party software/data/catalog license boundary at repository root;
 - [x] run release-candidate packaging preflight and build/source-tree smoke tests after license finalization;
 - [x] reconcile SSOT current release-packaging state;
-- [ ] run the final Pro-level cross-cut audit.
+- [x] run the final Pro-level cross-cut audit.
 
 ## Environment lock policy
 
@@ -73,4 +73,4 @@ This software license does not relicense third-party catalog/data material, refe
 
 ## Acceptance
 
-The post-license RC preflight and SSOT packaging-state reconciliation are complete. Stage16AE/AF/AG are therefore ready for the final Pro cross-cut audit. Public v0.5.0 is not declared merely by completing these mechanical steps.
+The release candidate has passed the final Pro cross-cut audit. Stage16AE/AF/AG and the subsequent repository/SSOT remediation are accepted for the audited RC scope. Public v0.5.0 is still not declared until final-version conversion, main/public-source verification, and immutable tag/release/citation binding complete.
