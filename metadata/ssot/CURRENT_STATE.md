@@ -1,6 +1,6 @@
 # RNA-TR-Scout Single Source of Truth
 
-- Generated: 2026-08-17T08:35:10+00:00
+- Generated: 2026-08-17T09:32:21+00:00
 - Tool: rnatr_ssot_v0.1.2
 - Database: `/mnt/intelssd/rnatr_project/metadata/ssot/rnatr_ssot.sqlite`
 - Existing legacy build-tracker database: read-only source; not modified.
@@ -28,13 +28,13 @@
 | active_paths_have_no_shell_variables | PASS | 0 |
 | active_implementation_files_exist | PASS | 0 |
 | view_rows::current_pipeline | PASS | 1 |
-| view_rows::current_decisions | PASS | 60 |
+| view_rows::current_decisions | PASS | 62 |
 | view_rows::current_interpretations | PASS | 26 |
 | view_rows::current_algorithm_contract | PASS | 35 |
 | view_rows::current_reference_hierarchy | PASS | 8 |
-| view_rows::current_known_limitations | PASS | 21 |
-| view_rows::current_open_questions | PASS | 8 |
-| view_rows::current_results | PASS | 200 |
+| view_rows::current_known_limitations | PASS | 20 |
+| view_rows::current_open_questions | PASS | 7 |
+| view_rows::current_results | PASS | 225 |
 | current_target_artifacts | PASS | 4 |
 | legacy_tracker_import | PASS | 63 |
 | current_validator_exists | PASS | /mnt/intelssd/rnatr_project/config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py |
@@ -97,6 +97,8 @@
 - **public_rc_pro_audit_pre_remediation_v0_1_0** — The first final Pro adjudication found no scientific/runtime failure but required four metadata/governance packaging remediations before final PASS.
 - **public_rc_pro_crosscut_audit_pass_v0_1_0** — The exact post-remediation RNA-TR-Scout v0.5.0 RC passes the final Pro audit for Freeze integrity, scientific/runtime identity, release packaging, standard resources, scoped portability, documentation, repository hygiene and SSOT/Git/docs consistency. Proceed only to guarded final-version and public-release binding.
 - **public_rc_single_pro_crosscut_audit_required_v0_1_0** — Before declaring the public v0.5.0 release candidate, perform one Pro-level cross-cut audit of Freeze exact state, current main, active production path, reference/catalog/mapping/CLI/install, golden and validation evidence, cross-hardware results, documentation, unresolved scope, and SSOT/Git/docs state consistency.
+- **public_v050_release_binding_v0_1_0** — Accept public RNA-TR-Scout v0.5.0 as bound to annotated tag object b6387580..., exact commit 9205049e..., tree feeca99e..., checksummed source/binding assets, public clone/setup evidence, BSD-3-Clause license detection, and tag-bound CITATION metadata.
+- **v050_release_integrity_model_v0_1_0** — v0.5.0 uses an unsigned annotated tag plus exact tag-object, commit, tree and public asset SHA-256 binding. GitHub's immutable-release feature is not enabled; the project treats the tag as non-moving and detects drift through registered hashes.
 - **software_license_bsd3_v0_1_0** — The RNA-TR-Scout software source is licensed under BSD-3-Clause with Copyright (c) 2026, Ryosuke Miyamoto. Third-party catalog/data terms remain separately attributed and are not relicensed by the software LICENSE.
 - **g25_g29_release_readiness_closure_v0_1_0** — G25 reference bootstrap, G26 resource detection, G27 memory-aware Core scheduling, G28 scoped cross-hardware reproducibility and G29 clean-machine clone-to-test reproducibility are accepted for the currently tested Linux x86-64 ONT-cDNA release scope.
 - **g30_hardware_profile_pass_with_scope_v0_1_0** — G30 is PASS_WITH_SCOPE: tested hardware profiles and a release-scale recommended profile are documented; a lower empirical CPU/RAM minimum is not established and is intentionally not invented. The minimum remains a nonblocking limitation while user-facing documentation preserves this distinction.
@@ -280,6 +282,31 @@
 | 16AN_FINAL_PRO_CROSSCUT_AUDIT | blocking_findings | 0 | . |
 | 16AN_FINAL_PRO_CROSSCUT_AUDIT | public_release_created | false | . |
 | 16AN_FINAL_PRO_CROSSCUT_AUDIT | release_authorization | FINAL_VERSION_AND_PUBLIC_BINDING_ONLY | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | binding_asset_sha256 | 03351293b0c04d6959c21e14108d859f3980291ea4a2a47cb6dce45018e02d7f | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | citation_date_released | 2026-08-17 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | citation_version | 0.5.0 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | default_branch_release_commit | 9205049ed1fc343499416fa684dbc71f423754ef | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | freeze_root | 4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | github_license_detection | BSD-3-Clause | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | github_release_asset_count | 3 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | github_release_id | 371631603 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | github_release_immutable_flag | false | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | github_release_published_at | 2026-08-17T08:59:59Z | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | integrity_model | ANNOTATED_TAG_PLUS_EXACT_OBJECT_COMMIT_TREE_AND_SHA256_ASSETS | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | public_unauthenticated_clone_setup | PASS | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_binding_gate | CLOSED | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_status | PUBLIC_RELEASE_COMPLETE | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_tag | v0.5.0 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_tag_kind | annotated | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_tag_object_sha | b6387580fb99d701ec34d9fb6349b40a4e277ca9 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_tag_target_commit | 9205049ed1fc343499416fa684dbc71f423754ef | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_tree_sha | feeca99eb1f22ba350b8e6276e513116b41340e1 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | release_version | 0.5.0 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | repository_visibility | public | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | sha256sums_asset_sha256 | 66f461d7f0e04952c0c164a4fcca775121191951fe30a5117de6c800cfbaaae4 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | source_asset_sha256 | b1b3c37f358a3a6851172b4e01eb82f41e74a5281452a12b2c8c4f3bdeac87e9 | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | standard_catalog_outer_sha256 | 54a24e4b60d920c8fec16b2df37b47e40407de42b949b18dc6233e97d85f2fef | . |
+| 16AR_PUBLIC_V050_RELEASE_BINDING | tag_signature | UNSIGNED_ACCEPTED | . |
 | 16R_FRESH_END_TO_END | stage16r_final_exact_plain_table_parity | PASS_5_OF_5 | . |
 | 16R_FRESH_END_TO_END | stage16r_post_resume_final_parity | PASS_5_OF_5 | . |
 | 16R_FRESH_END_TO_END | stage16r_public_fastq_to_final_seconds | 289.0072668030043 | . |
@@ -318,7 +345,6 @@
 ## Blocking and open questions
 
 - **CRITICAL / blocking=False / BIOLOGY_READY_INTERPRETATION_OUTPUT_AUDIT** — Can the final output support same-haplotype molecule-level repeat heterogeneity, repeat-to-isoform/splicing association, observability-aware inference, molecule-independence-aware support, purpose-specific triage, and fully traceable researcher dossiers without losing core read-level repeat information?
-- **HIGH / blocking=False / CORE_FREEZE_GIT_TAG_AND_PUBLIC_RELEASE_BINDING** — Has the local Core Freeze been converted into a clean-install, cross-hardware, full-commit/tag-bound, thesis-citable public v0.5.0 release?
 - **HIGH / blocking=False / RNA_TECHNICAL_FLOOR** — What locus-, motif-, support-, and platform-specific difference should define the technical floor for longer/shorter RNA observations?
 - **HIGH / blocking=False / TRANSCRIPT_OBSERVABILITY** — Which genomic TR loci are actually reached and represented in complete RNA molecules, and how does this vary across CDS, UTR, intron, isoform, and platform?
 - **MODERATE / blocking=False / DOWNLOADS_ARTIFACT_CLEANUP** — Which accumulated Downloads artifacts must be preserved, moved, retained temporarily, or deleted?
@@ -330,13 +356,13 @@
 
 - `current_algorithm_contract.tsv`: 35 rows
 - `current_artifacts.tsv`: 4 rows
-- `current_decisions.tsv`: 60 rows
+- `current_decisions.tsv`: 62 rows
 - `current_interpretations.tsv`: 26 rows
-- `current_known_limitations.tsv`: 21 rows
-- `current_open_questions.tsv`: 8 rows
+- `current_known_limitations.tsv`: 20 rows
+- `current_open_questions.tsv`: 7 rows
 - `current_pipeline.tsv`: 1 rows
 - `current_reference_hierarchy.tsv`: 8 rows
-- `current_results.tsv`: 200 rows
+- `current_results.tsv`: 225 rows
 - `current_runs.tsv`: 32 rows
-- `latest_stage_status.tsv`: 237 rows
+- `latest_stage_status.tsv`: 242 rows
 - `project_dashboard.tsv`: 12 rows

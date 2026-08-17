@@ -28,4 +28,4 @@ This changelog summarizes the public RNA-TR-Scout release line. Detailed validat
 - The current automatic caller does not completely measure every complex or sequence-variable repeat architecture.
 - ONT direct RNA, PacBio Iso-Seq, PacBio Kinnex, and non-x86-64 systems are not yet standard validated profiles.
 - Full-scale peak disk usage and a lower empirical full-scale CPU/RAM minimum remain unmeasured.
-- Immutable Git tag/GitHub Release/source-checksum/citation binding will be verified separately in the final release record.
+- Annotated Git tag, GitHub Release, public source assets, SHA-256 checksums, license, and citation binding were verified in the Stage16AR final release record.

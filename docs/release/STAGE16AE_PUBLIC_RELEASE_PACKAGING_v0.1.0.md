@@ -4,7 +4,7 @@ Date: 2026-08-17
 
 ## Status
 
-**MECHANICAL PACKAGING / RC PREFLIGHT / SSOT RECONCILIATION / FINAL PRO AUDIT COMPLETE — FINAL PUBLIC BINDING PENDING**
+**PUBLIC v0.5.0 PACKAGING, FINAL PRO AUDIT, AND RELEASE BINDING COMPLETE**
 
 Stage16AE prepares a coherent v0.5.0 release-candidate package without changing the frozen scientific Core.
 
@@ -73,4 +73,4 @@ This software license does not relicense third-party catalog/data material, refe
 
 ## Acceptance
 
-The release candidate has passed the final Pro cross-cut audit. Stage16AE/AF/AG and the subsequent repository/SSOT remediation are accepted for the audited RC scope. Public v0.5.0 is still not declared until final-version conversion, main/public-source verification, and immutable tag/release/citation binding complete.
+RNA-TR-Scout v0.5.0 is publicly released and checksum-bound to the exact annotated tag, commit, tree, release assets, license, and citation metadata recorded by Stage16AR.
