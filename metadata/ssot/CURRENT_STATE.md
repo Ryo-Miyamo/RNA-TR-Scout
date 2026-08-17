@@ -1,6 +1,6 @@
 # RNA-TR-Scout Single Source of Truth
 
-- Generated: 2026-08-17T01:57:19+00:00
+- Generated: 2026-08-17T03:02:53+00:00
 - Tool: rnatr_ssot_v0.1.2
 - Database: `/mnt/intelssd/rnatr_project/metadata/ssot/rnatr_ssot.sqlite`
 - Existing legacy build-tracker database: read-only source; not modified.
@@ -28,13 +28,13 @@
 | active_paths_have_no_shell_variables | PASS | 0 |
 | active_implementation_files_exist | PASS | 0 |
 | view_rows::current_pipeline | PASS | 1 |
-| view_rows::current_decisions | PASS | 47 |
+| view_rows::current_decisions | PASS | 49 |
 | view_rows::current_interpretations | PASS | 26 |
 | view_rows::current_algorithm_contract | PASS | 35 |
 | view_rows::current_reference_hierarchy | PASS | 8 |
-| view_rows::current_known_limitations | PASS | 22 |
-| view_rows::current_open_questions | PASS | 12 |
-| view_rows::current_results | PASS | 156 |
+| view_rows::current_known_limitations | PASS | 20 |
+| view_rows::current_open_questions | PASS | 10 |
+| view_rows::current_results | PASS | 167 |
 | current_target_artifacts | PASS | 4 |
 | legacy_tracker_import | PASS | 63 |
 | current_validator_exists | PASS | /mnt/intelssd/rnatr_project/config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py |
@@ -84,6 +84,7 @@
 - **stage15e_determinism_restart_acceptance_v0_1_0** — Accept exact checkpoint-based full-package reconstruction and selective caller-to-final restart/resume with corrupt-manifest rejection, atomic publication, and second-resume no-op. Preserve the explicit exclusion of upstream BAM partition/11b/11d3/11e full rerun and cross-hardware claims.
 - **stage16r_fresh_public_fastq_e2e_acceptance_v0_1_0** — Accept Stage16R v0.1.0 as PASS for a fresh private-GitHub clone, fresh isolated environment, validated standard resources from exact local official/reference bundles, public `rnatr-scout run` FASTQ auto-mapping, exact five-table parity, and second-resume no-op. This is fresh-machine-equivalent validation, not final proof of full large-reference/catalog network acquisition.
 - **stage16s_cross_hardware_parity_acceptance_v0_1_0** — Accept Stage16S v0.1.1 as exact five-table scientific parity for the tested Tier2 input on the tested second Linux x86-64 machine, including native kernel execution and second-resume no-op. Do not generalize this to arbitrary platforms or hardware.
+- **stage16x_full_network_fresh_install_acceptance_v0_1_0** — Accept Stage16X v0.1.2 as PASS for fresh isolated source/environment/cache setup on the validated Linux x86-64 host, official GENCODE network acquisition, public catalog release-asset acquisition, public `rnatr-scout run` FASTQ auto-mapping, exact 5/5 final-table parity and second-resume no-op. This closes the intended full-network acquisition gate but is not a universal portability claim or a formal full-scale peak-disk benchmark.
 - **final_ranking_gate** — Final candidate ranking remains intentionally unexecuted until versioned biology sidecars, observability and molecule-independence state, truth-bearing validation, sample-by-locus summaries, and purpose-specific ranking lanes are implemented. RNA LPS and the Core caller technical gates are no longer the blocking reason.
 - **six_sample_replay_complete** — Stage 6AM v0.1.5 completed all six equalized 100k-read fetal-brain PromethION comparison datasets with the SSOT-verified frozen pipeline and validator_v0.3.1.
 - **step11_status** — Step 11 is not complete despite completed P0/P1 and P3 subbranches.
@@ -92,7 +93,8 @@
 - **primary_population_reference** — AoU PacBio HiFi validation cohort (2,102 individuals) is the primary genome-wide DNA repeat-length and LPS context.
 - **tr_atlas_role** — TR-Atlas is supplementary short-read population context only; no further genome-wide live crawl is planned.
 - **public_rc_single_pro_crosscut_audit_required_v0_1_0** — Before declaring the public v0.5.0 release candidate, perform one Pro-level cross-cut audit of Freeze exact state, current main, active production path, reference/catalog/mapping/CLI/install, golden and validation evidence, cross-hardware results, documentation, unresolved scope, and SSOT/Git/docs state consistency.
-- **stage16_release_engineering_progress_checkpoint_v0_1_0** — Current release-engineering state now includes Stage16Q public CLI PASS, Stage16R fresh-machine-equivalent public FASTQ-to-final PASS with exact local reference/catalog resources, Stage16S scoped cross-hardware scientific parity PASS, and Stage16T owner-reviewed user documentation PASS. Full large-network resource acquisition remains a separate public-RC gate. The immutable Core Freeze root remains 4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb.
+- **stage16_release_engineering_progress_checkpoint_v0_1_0** — Current release engineering includes Stage16Q public CLI PASS, Stage16R fresh-machine-equivalent FASTQ-to-final PASS, Stage16S scoped second-machine parity PASS, Stage16T owner-reviewed documentation PASS, Stage16W public catalog hosting PASS and Stage16X full-network fresh-install/public FASTQ-to-final PASS. The immutable Core Freeze root remains 4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb. Remaining work includes unresolved public-release packaging/claims, any still-required operational benchmark, and the single Pro cross-cut audit immediately before public RC.
+- **stage16w_public_catalog_distribution_acceptance_v0_1_0** — Accept the public `Ryo-Miyamo/RNA-TR-Scout-resources` release `catalog-grch38-v0.1.0` as the standard catalog distribution for this validated profile. The outer archive SHA-256 is 54a24e4b60d920c8fec16b2df37b47e40407de42b949b18dc6233e97d85f2fef; unauthenticated download is exact; the five scientific runtime member bytes remain unchanged.
 - **evidence_schema_v0_4_2_fullscale_validated_candidate_v0_1_0** — Adopt schema v0.4.2 and materializer v0.1.2 as the frozen Core evidence contract for the validated Stage15 candidate. Evidence spans isolated 100k correctness, deterministic 250k/500k scaling, empirical 5,312,696-read execution, and Stage15E scoped reconstruction/restart. This decision does not itself promote current_pipeline or close G25-G34.
 - **stage15a_checkpoint_reproducibility_amendment_v0_1_0** — The original v0.1.2 QC field checkpoint_manifest_reproducibility=true was not supported by its implementation because the checker validated each replicate separately without A/B comparison. The historical QC is preserved and superseded by a 157-row role×shard logical comparison with zero differences.
 - **g31_scope_split_technical_vs_biology_v0_1_0** — Preserve the original G31 v0.1.0 machine FAIL. Adopt G31-T PASS_WITH_SCOPE_AMENDMENT because row conservation, primary-ID uniqueness, cross-scale stability, low read-locus excess, and low target concentration show no scale-dependent technical runaway. Defer G31-B candidate-rate and multiplicity meaning to the biology layer as nonblocking for current technical freeze.
@@ -246,6 +248,17 @@
 | 16U_SSOT_PROGRESS_CHECKPOINT | stage16r_evidence_binding_status | PENDING | . |
 | 16U_SSOT_PROGRESS_CHECKPOINT | stage16s_cross_hardware_status | PASS_WITH_TESTED_SCOPE | . |
 | 16U_SSOT_PROGRESS_CHECKPOINT | stage16t_documentation_status | PASS_OWNER_REVIEW_ACCEPTED | . |
+| 16W_PUBLIC_CATALOG_DISTRIBUTION | stage16w_catalog_outer_sha256 | 54a24e4b60d920c8fec16b2df37b47e40407de42b949b18dc6233e97d85f2fef | . |
+| 16W_PUBLIC_CATALOG_DISTRIBUTION | stage16w_release_tag | catalog-grch38-v0.1.0 | . |
+| 16W_PUBLIC_CATALOG_DISTRIBUTION | stage16w_resource_repository | Ryo-Miyamo/RNA-TR-Scout-resources | . |
+| 16W_PUBLIC_CATALOG_DISTRIBUTION | stage16w_status | PASS_PUBLIC_RELEASE_ASSET_UNAUTHENTICATED_EXACT_SHA | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_final_exact_plain_table_parity | PASS_5_OF_5 | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_network_catalog_download | PASS_PUBLIC_RELEASE_ASSET_EXACT | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_network_reference_downloads | PASS_2_OF_2_EXACT | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_public_fastq_to_final_seconds | 281 | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_public_resume | PASS_SECOND_RESUME_NOOP | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_source_commit | 24ccb15e01921f05465f8bddb59f743d1ef4cc6f | . |
+| 16X_FULL_NETWORK_FRESH_INSTALL | stage16x_status | PASS_FULL_NETWORK_FRESH_INSTALL_PUBLIC_FASTQ_TO_FINAL | . |
 | ARCHITECTURE_CONSISTENCY_AUDIT | architecture_audit_status | REVIEW | . |
 | ARCHITECTURE_CONSISTENCY_AUDIT | blocking_conflicts | 0 | . |
 | ARCHITECTURE_CONSISTENCY_AUDIT | open_items | 2 | . |
@@ -262,8 +275,6 @@
 
 - **CRITICAL / blocking=True / PUBLIC_RC_PRO_CROSSCUT_AUDIT** — Does the complete post-Freeze release-engineering state pass a final Pro-level cross-cut audit without Freeze drift, obsolete active paths, implementation-state inflation, release-claim overreach, or SSOT/Git/docs state drift?
 - **HIGH / blocking=True / CLEAN_INSTALL_INTERNAL_BETA** — Can an independent clean machine install software/references and reproduce a test run without developer-local paths?
-- **HIGH / blocking=True / FULL_NETWORK_FRESH_INSTALL_RC** — Can a fresh clone on a clean supported machine acquire the intended public resources over the network and run the public FASTQ-to-final workflow successfully?
-- **HIGH / blocking=True / PUBLIC_CATALOG_BUNDLE_HOSTING** — What stable public location will distribute the compact validated catalog bundle with exact SHA binding?
 - **CRITICAL / blocking=False / BIOLOGY_READY_INTERPRETATION_OUTPUT_AUDIT** — Can the final output support same-haplotype molecule-level repeat heterogeneity, repeat-to-isoform/splicing association, observability-aware inference, molecule-independence-aware support, purpose-specific triage, and fully traceable researcher dossiers without losing core read-level repeat information?
 - **HIGH / blocking=False / CORE_FREEZE_GIT_TAG_AND_PUBLIC_RELEASE_BINDING** — Has the local Core Freeze been converted into a clean-install, cross-hardware, full-commit/tag-bound, thesis-citable public v0.5.0 release?
 - **HIGH / blocking=False / RNA_TECHNICAL_FLOOR** — What locus-, motif-, support-, and platform-specific difference should define the technical floor for longer/shorter RNA observations?
@@ -277,13 +288,13 @@
 
 - `current_algorithm_contract.tsv`: 35 rows
 - `current_artifacts.tsv`: 4 rows
-- `current_decisions.tsv`: 47 rows
+- `current_decisions.tsv`: 49 rows
 - `current_interpretations.tsv`: 26 rows
-- `current_known_limitations.tsv`: 22 rows
-- `current_open_questions.tsv`: 12 rows
+- `current_known_limitations.tsv`: 20 rows
+- `current_open_questions.tsv`: 10 rows
 - `current_pipeline.tsv`: 1 rows
 - `current_reference_hierarchy.tsv`: 8 rows
-- `current_results.tsv`: 156 rows
+- `current_results.tsv`: 167 rows
 - `current_runs.tsv`: 32 rows
-- `latest_stage_status.tsv`: 224 rows
+- `latest_stage_status.tsv`: 226 rows
 - `project_dashboard.tsv`: 12 rows
