@@ -1,12 +1,12 @@
 item	value
 active_pipeline_stages	1
-active_decisions	49
+active_decisions	53
 active_interpretations	26
 active_algorithm_contracts	35
 active_references	8
-active_limitations	20
-open_questions	10
-current_metrics	167
+active_limitations	21
+open_questions	9
+current_metrics	178
 runs	32
 artifacts	11838
 legacy_records	63
