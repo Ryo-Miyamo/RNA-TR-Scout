@@ -15,11 +15,11 @@
   },
   "catalog_bundle": {
     "bundle_root": "rnatr-validated-catalog-grch38-local-core-freeze-v0.1.0",
-    "distribution_note": "Final public hosting URL is not yet fixed.",
+    "distribution_note": "Public release asset validated by unauthenticated exact-SHA download in Stage16W.",
     "filename": "rnatr-validated-catalog-grch38-local-core-freeze-v0.1.0.tar.gz",
-    "public_url": "",
+    "public_url": "https://github.com/Ryo-Miyamo/RNA-TR-Scout-resources/releases/download/catalog-grch38-v0.1.0/rnatr-validated-catalog-grch38-local-core-freeze-v0.1.0.tar.gz",
     "runtime_subdir": "catalogs",
-    "sha256": "1aa0a9a6ef294514572e4343323a2f65a5469d63ea0400c6f1998043db97e8fa"
+    "sha256": "54a24e4b60d920c8fec16b2df37b47e40407de42b949b18dc6233e97d85f2fef"
   },
   "catalog_outputs": {
     "analysis_regions": {
