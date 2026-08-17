@@ -4,28 +4,32 @@ Date: 2026-08-17
 
 ## Status
 
-**OWNER_SELECTION_PENDING — PUBLIC RELEASE BLOCKING**
+**OWNER_SELECTED — BSD-3-CLAUSE**
 
-RNA-TR-Scout does not yet have a selected top-level software license. The current `pyproject.toml` therefore continues to state that the software license has not yet been selected, and no final root `LICENSE` file is created by this checkpoint.
+The repository owner selected the BSD 3-Clause License for the RNA-TR-Scout software source code.
+
+- SPDX identifier: `BSD-3-Clause`
+- copyright year: 2026
+- copyright holder: Ryosuke Miyamoto
+- root license file: `LICENSE`
+
+The repository-level software license is now bound consistently in `LICENSE`, `pyproject.toml`, and `CITATION.cff`.
 
 ## Boundary
 
-This decision concerns the RNA-TR-Scout software source code. Third-party data/catalog notices remain separately governed by their upstream terms and the attribution files already carried with the validated catalog distribution.
+This decision concerns the RNA-TR-Scout software source code. It does **not** relicense third-party reference data, catalog source material, external software dependencies, or other upstream resources.
 
-## Candidate choices
+The validated compact repeat catalog includes separately governed upstream material. Existing third-party records are retained under `docs/catalog_resources/third_party/`, including the STRchive attribution record and the TRExplorer license record. A root `THIRD_PARTY_NOTICES.md` points users to those boundaries.
 
-Two common permissive choices are suitable candidates for owner review:
+## Owner decision
 
-- MIT License — short and permissive; requires preservation of copyright/license notice.
-- Apache License 2.0 — permissive with additional explicit patent-license and notice provisions.
-
-No license is selected merely by listing these options.
+On 2026-08-17, Ryosuke Miyamoto selected `BSD-3-Clause` as the top-level RNA-TR-Scout software license and confirmed Ryosuke Miyamoto as the copyright holder.
 
 ## Release requirement
 
-Before public v0.5.0 release:
+Before public v0.5.0 release, the final Pro cross-cut audit must still verify that:
 
-1. the repository owner must select the software license;
-2. the exact license text must be committed at repository root as `LICENSE`;
-3. `pyproject.toml` and `CITATION.cff` must use the same selected license identifier;
-4. the final Pro cross-cut audit must verify that software-license claims and third-party catalog/data notices are not conflated.
+1. the root `LICENSE` text is consistent with `BSD-3-Clause`;
+2. `pyproject.toml` and `CITATION.cff` use the same identifier;
+3. third-party catalog/data notices remain clearly separate from the software license;
+4. no release metadata overstates rights over externally governed resources.
