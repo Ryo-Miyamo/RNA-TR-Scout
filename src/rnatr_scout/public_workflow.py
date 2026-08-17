@@ -4,12 +4,22 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import shlex
 import subprocess
 import sys
 
-PUBLIC_WORKFLOW_VERSION = "rnatr_public_workflow_v0.1.0"
+from .resource_planner import (
+    ResourcePlanError,
+    count_fastq_reads,
+    detect_system_resources,
+    load_plan_json,
+    plan_resources,
+    write_plan_json,
+)
+
+PUBLIC_WORKFLOW_VERSION = "rnatr_public_workflow_v0.2.0"
 
 RESOURCE_INSTALLER_REL = Path(
     "scripts/rnatr_install_standard_resources_v0.1.1.py"
@@ -75,6 +85,13 @@ def add_public_subparsers(
         help="Print the resource inspection JSON returned by the installer",
     )
 
+    system = subparsers.add_parser(
+        "system-info",
+        help="Report detected CPU, RAM, temporary-directory and free-space resources",
+    )
+    system.add_argument("--tmp-dir", type=Path)
+    system.add_argument("--json", action="store_true")
+
     mapping = subparsers.add_parser(
         "map",
         help="Map ONT-cDNA FASTQ with the validated/custom-compatible mapper",
@@ -85,6 +102,7 @@ def add_public_subparsers(
     mapping.add_argument("--run-id")
     mapping.add_argument("--expected-fastq-sha256", default="")
     mapping.add_argument("--work-dir", type=Path)
+    mapping.add_argument("--tmp-dir", type=Path)
     mapping.add_argument(
         "--dry-run",
         action="store_true",
@@ -104,16 +122,45 @@ def add_public_subparsers(
     workflow.add_argument("--run-id")
     workflow.add_argument("--output-dir", required=True, type=Path)
     workflow.add_argument("--resume", action="store_true")
-    workflow.add_argument("--shards", type=int, default=12)
-    workflow.add_argument("--max-unit-workers", type=int, default=3)
-    workflow.add_argument("--caller-workers", type=int, default=2)
+    workflow.add_argument(
+        "--shards", type=int,
+        help="Manual Core shard-count override; otherwise resource policy selects it",
+    )
+    workflow.add_argument(
+        "--max-unit-workers", type=int,
+        help="Manual concurrent-Core-unit override; otherwise selected from CPU/RAM/input scale",
+    )
+    workflow.add_argument(
+        "--caller-workers", type=int,
+        help="Manual caller-workers-per-unit override; otherwise selected conservatively",
+    )
+    workflow.add_argument(
+        "--threads", type=int,
+        help=(
+            "Core scheduling CPU budget. The validated ONT-cDNA mapper retains its "
+            "separately versioned fixed mapping thread profile in this release."
+        ),
+    )
+    workflow.add_argument(
+        "--memory-gb", type=float,
+        help="Optional RAM budget for automatic Core scheduling; detected available RAM is default",
+    )
+    workflow.add_argument(
+        "--tmp-dir", type=Path,
+        help="Temporary-directory override; recorded in the resource plan and exported as TMPDIR",
+    )
+    workflow.add_argument(
+        "--force-resource-overrides",
+        action="store_true",
+        help="Allow manual scheduling budgets to exceed conservative detected-resource guards",
+    )
     workflow.add_argument("--pythonhashseed", default="0")
     workflow.add_argument("--expected-bam-sha256", default="")
     workflow.add_argument("--expected-fastq-sha256", default="")
     workflow.add_argument(
         "--dry-run",
         action="store_true",
-        help="Print mapping/Core commands without executing them",
+        help="Print mapping/Core commands and resource plan without executing them",
     )
 
 
@@ -148,18 +195,33 @@ def resources_status(arguments: argparse.Namespace) -> int:
             return 1
         print("RNATR_RESOURCES\tPASS")
         print(f"status\t{obj.get('status', '')}")
-        print(
-            "reference\t"
-            + str(obj.get("reference", {}).get("status", ""))
-        )
-        print(
-            "catalog\t"
-            + str(obj.get("catalog", {}).get("status", ""))
-        )
+        print("reference\t" + str(obj.get("reference", {}).get("status", "")))
+        print("catalog\t" + str(obj.get("catalog", {}).get("status", "")))
     else:
         print(proc.stdout, end="", file=sys.stderr)
-
     return proc.returncode
+
+
+def system_info(arguments: argparse.Namespace) -> int:
+    try:
+        state = detect_system_resources(
+            tmp_dir=arguments.tmp_dir,
+            cwd=project_root(),
+        )
+    except ResourcePlanError as exc:
+        raise PublicWorkflowError(str(exc)) from exc
+    obj = state.to_dict()
+    if arguments.json:
+        print(json.dumps(obj, indent=2, sort_keys=True))
+    else:
+        print("RNATR_SYSTEM_INFO\tPASS")
+        for key in (
+            "hostname", "logical_cpus", "memory_total_bytes",
+            "memory_available_bytes", "tmp_dir", "tmp_free_bytes",
+            "cwd_free_bytes",
+        ):
+            print(f"{key}\t{obj[key]}")
+    return 0
 
 
 def mapping_command(
@@ -189,10 +251,7 @@ def mapping_command(
         sample_id,
     ]
     if expected_fastq_sha256:
-        cmd += [
-            "--expected-fastq-sha256",
-            expected_fastq_sha256,
-        ]
+        cmd += ["--expected-fastq-sha256", expected_fastq_sha256]
     if work_dir is not None:
         cmd += ["--work-dir", str(work_dir)]
     return cmd
@@ -203,11 +262,13 @@ def map_fastq(arguments: argparse.Namespace) -> int:
     fastq = ensure_regular(arguments.fastq, "FASTQ")
     output_bam = arguments.output_bam.expanduser().resolve()
     run_id = arguments.run_id or arguments.sample_id
-    work_dir = (
-        arguments.work_dir.expanduser().resolve()
-        if arguments.work_dir
-        else None
-    )
+    work_dir = arguments.work_dir.expanduser().resolve() if arguments.work_dir else None
+    if arguments.tmp_dir is not None:
+        try:
+            state = detect_system_resources(tmp_dir=arguments.tmp_dir, cwd=root)
+        except ResourcePlanError as exc:
+            raise PublicWorkflowError(str(exc)) from exc
+        os.environ["TMPDIR"] = state.tmp_dir
 
     cmd = mapping_command(
         root=root,
@@ -281,20 +342,98 @@ def core_command(
     return cmd
 
 
-def run_workflow(arguments: argparse.Namespace) -> int:
-    if (
-        arguments.shards < 1
-        or arguments.max_unit_workers < 1
-        or arguments.caller_workers < 1
-    ):
-        raise PublicWorkflowError(
-            "shards/max-unit-workers/caller-workers must be >= 1"
-        )
+def _manual_positive(arguments: argparse.Namespace) -> None:
+    for label in ("shards", "max_unit_workers", "caller_workers", "threads"):
+        value = getattr(arguments, label)
+        if value is not None and value < 1:
+            raise PublicWorkflowError(label.replace("_", "-") + " must be >= 1")
+    if arguments.memory_gb is not None and arguments.memory_gb <= 0:
+        raise PublicWorkflowError("memory-gb must be > 0")
 
+
+def _resume_plan_values(plan: dict, arguments: argparse.Namespace) -> tuple[int, int, int, str]:
+    selected = {
+        "shards": int(plan["shards"]),
+        "max_unit_workers": int(plan["max_unit_workers"]),
+        "caller_workers": int(plan["caller_workers"]),
+    }
+    for arg_name, key in (
+        ("shards", "shards"),
+        ("max_unit_workers", "max_unit_workers"),
+        ("caller_workers", "caller_workers"),
+    ):
+        requested = getattr(arguments, arg_name)
+        if requested is not None and requested != selected[key]:
+            raise PublicWorkflowError(
+                f"resume override conflicts with recorded resource plan: {arg_name}={requested} != {selected[key]}"
+            )
+    tmp_dir = str(plan["tmp_dir"])
+    if arguments.tmp_dir is not None:
+        requested_tmp = str(arguments.tmp_dir.expanduser().resolve())
+        if requested_tmp != tmp_dir:
+            raise PublicWorkflowError(
+                f"resume tmp-dir conflicts with recorded resource plan: {requested_tmp} != {tmp_dir}"
+            )
+    return selected["shards"], selected["max_unit_workers"], selected["caller_workers"], tmp_dir
+
+
+def run_workflow(arguments: argparse.Namespace) -> int:
+    _manual_positive(arguments)
     root = project_root()
     fastq = ensure_regular(arguments.fastq, "source FASTQ")
     run_id = arguments.run_id or arguments.sample_id
     output_dir = arguments.output_dir.expanduser().resolve()
+    plan_path = output_dir / "work" / "resource_plan.json"
+
+    if not arguments.resume and output_dir.exists():
+        mode_name = "BAM" if arguments.bam is not None else "FASTQ"
+        raise PublicWorkflowError(
+            f"new {mode_name}-mode run requires an unused --output-dir"
+        )
+
+    if arguments.resume and plan_path.is_file():
+        try:
+            prior = load_plan_json(plan_path)
+        except ResourcePlanError as exc:
+            raise PublicWorkflowError(str(exc)) from exc
+        shards, max_unit_workers, caller_workers, tmp_dir = _resume_plan_values(prior, arguments)
+        resource_plan = prior
+        count_method = str(prior.get("read_count_method", "RECORDED_PRIOR_PLAN"))
+    else:
+        try:
+            system = detect_system_resources(
+                tmp_dir=arguments.tmp_dir,
+                cwd=output_dir.parent if output_dir.parent.exists() else root,
+            )
+            read_count, count_method = count_fastq_reads(
+                fastq,
+                threads=arguments.threads or system.logical_cpus,
+            )
+            planned = plan_resources(
+                read_count=read_count,
+                system=system,
+                shards=arguments.shards,
+                max_unit_workers=arguments.max_unit_workers,
+                caller_workers=arguments.caller_workers,
+                threads=arguments.threads,
+                memory_gb=arguments.memory_gb,
+                force_resource_overrides=arguments.force_resource_overrides,
+            )
+        except ResourcePlanError as exc:
+            raise PublicWorkflowError(str(exc)) from exc
+        resource_plan = planned.to_dict()
+        resource_plan["read_count_method"] = count_method
+        shards = planned.shards
+        max_unit_workers = planned.max_unit_workers
+        caller_workers = planned.caller_workers
+        tmp_dir = planned.tmp_dir
+        if not arguments.dry_run:
+            write_plan_json(plan_path, planned, count_method=count_method)
+
+    tmp_path = Path(tmp_dir)
+    if not tmp_path.is_dir():
+        raise PublicWorkflowError(f"planned tmp directory is unavailable: {tmp_path}")
+    os.environ["TMPDIR"] = str(tmp_path)
 
     final_root = output_dir / "final"
     work_root = output_dir / "work" / "core"
@@ -308,42 +447,25 @@ def run_workflow(arguments: argparse.Namespace) -> int:
     else:
         input_mode = "FASTQ_AUTO_MAPPING"
         bam = output_dir / "mapping" / f"{run_id}.sorted.bam"
-
         if arguments.resume:
             bam = ensure_regular(
                 bam,
                 "resume mapped BAM created by the prior FASTQ-mode run",
             )
         else:
-            if output_dir.exists():
-                raise PublicWorkflowError(
-                    "new FASTQ-mode run requires an unused --output-dir"
-                )
             map_cmd = mapping_command(
                 root=root,
                 fastq=fastq,
                 output_bam=bam,
                 sample_id=arguments.sample_id,
                 run_id=run_id,
-                expected_fastq_sha256=(
-                    arguments.expected_fastq_sha256
-                ),
+                expected_fastq_sha256=arguments.expected_fastq_sha256,
                 work_dir=output_dir / "work" / "mapping",
             )
-            rc = run_command(
-                map_cmd,
-                cwd=root,
-                dry_run=arguments.dry_run,
-            )
+            rc = run_command(map_cmd, cwd=root, dry_run=arguments.dry_run)
             if rc != 0:
                 return rc
             mapping_performed = True
-
-    if not arguments.resume and arguments.bam is not None:
-        if output_dir.exists():
-            raise PublicWorkflowError(
-                "new BAM-mode run requires an unused --output-dir"
-            )
 
     mode = "--resume" if arguments.resume else "--start"
     core_cmd = core_command(
@@ -356,36 +478,40 @@ def run_workflow(arguments: argparse.Namespace) -> int:
         work_root=work_root,
         output_root=final_root,
         control_root=control_root,
-        shards=arguments.shards,
-        max_unit_workers=arguments.max_unit_workers,
-        caller_workers=arguments.caller_workers,
+        shards=shards,
+        max_unit_workers=max_unit_workers,
+        caller_workers=caller_workers,
         pythonhashseed=arguments.pythonhashseed,
         expected_bam_sha256=arguments.expected_bam_sha256,
         expected_fastq_sha256=arguments.expected_fastq_sha256,
     )
-    rc = run_command(
-        core_cmd,
-        cwd=root,
-        dry_run=arguments.dry_run,
-    )
+    rc = run_command(core_cmd, cwd=root, dry_run=arguments.dry_run)
     if rc != 0:
         return rc
 
-    if arguments.dry_run:
-        print("RNATR_PUBLIC_RUN_DRY_RUN\tPASS")
-        print(f"input_mode\t{input_mode}")
-        print(f"run_id\t{run_id}")
-        return 0
-
-    print("RNATR_PUBLIC_RUN\tPASS")
+    prefix = "RNATR_PUBLIC_RUN_DRY_RUN" if arguments.dry_run else "RNATR_PUBLIC_RUN"
+    print(prefix + "\tPASS")
     print(f"public_workflow_version\t{PUBLIC_WORKFLOW_VERSION}")
     print(f"input_mode\t{input_mode}")
     print(f"mode\t{'RESUME' if arguments.resume else 'START'}")
     print(f"mapping_performed\t{str(mapping_performed).lower()}")
     print(f"run_id\t{run_id}")
     print(f"sample_id\t{arguments.sample_id}")
+    print(f"resource_plan_mode\t{resource_plan['mode']}")
+    print(f"resource_policy_version\t{resource_plan['policy_version']}")
+    print(f"input_reads\t{resource_plan['input_reads']}")
+    print(f"read_count_method\t{count_method}")
+    print(f"threads_budget\t{resource_plan['threads_budget']}")
+    print(f"memory_budget_bytes\t{resource_plan['memory_budget_bytes']}")
+    print(f"shards\t{shards}")
+    print(f"max_unit_workers\t{max_unit_workers}")
+    print(f"caller_workers\t{caller_workers}")
+    print(f"tmp_dir\t{tmp_dir}")
+    print("mapping_thread_policy\tSEPARATELY_VERSIONED_VALIDATED_FIXED_PROFILE")
     print(f"bam\t{bam}")
     print(f"final\t{final_root}")
+    if not arguments.dry_run:
+        print(f"resource_plan\t{plan_path}")
     return 0
 
 
@@ -394,6 +520,8 @@ def dispatch_public_command(
 ) -> int | None:
     if arguments.command == "resources-status":
         return resources_status(arguments)
+    if arguments.command == "system-info":
+        return system_info(arguments)
     if arguments.command == "map":
         return map_fastq(arguments)
     if arguments.command == "run":
