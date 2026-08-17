@@ -29,7 +29,9 @@ to:
 
 `f2a19e219d8aae94df167db2157fe03f7870c300c458397942b302dfdb3162db`
 
-before the durable-evidence path finalization step.
+after the initial Stage16U registration. The durable-evidence finalizer then rebound the Stage16U run-stage evidence path from the temporary updater script to the exact result JSON above and regenerated the current views. The final canonical SQLite SHA-256 after that evidence-path finalization is:
+
+`e1045a06dfa36a387cda2a2682e7653deb7604a1412e7850979d2f3408747859`
 
 ## SSOT validation after update
 
@@ -56,6 +58,8 @@ The following stale limitations were confirmed absent from the regenerated `curr
 - `GENERIC_ACTIVE_PATH_NOT_CLEAN_INSTALL_OR_CROSS_HARDWARE`
 - `STAGE15E_SAME_MACHINE_NOT_CROSS_HARDWARE`
 - `LOCAL_CORE_FREEZE_NOT_PUBLIC_GIT_RELEASE`
+
+Stage16U is intentionally a **post-Freeze release-engineering progress reconciliation**, not a wholesale rewrite of every historical SSOT row or legacy mitigation sentence. Broader legacy-current wording, obsolete-path contamination, implementation-state inflation, and any remaining cross-domain state drift remain explicit targets of the required final Pro cross-cut audit before public RC.
 
 ## Current release-engineering limitations registered
 
@@ -92,4 +96,4 @@ The required next action is to locate the original Stage16R result, verify its i
 
 ## Durable evidence note
 
-The initial Stage16U `run_stages` row pointed to the temporary updater script used during execution. A follow-up finalizer was added to bind that row to the durable Stage16U result JSON by the exact SHA-256 above, then regenerate the SSOT current views. This is evidence-path hygiene only and does not change the scientific or release-readiness conclusions above.
+The initial Stage16U `run_stages` row pointed to the temporary updater script used during execution. The follow-up finalizer bound that row to the durable Stage16U result JSON by the exact SHA-256 above, regenerated the SSOT current views, and passed validation. This is evidence-path hygiene only and does not change the scientific or release-readiness conclusions above.
