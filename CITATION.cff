@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use RNA-TR-Scout in research, please cite the software using this metadata and the associated release record."
+title: "RNA-TR-Scout: long-read RNA tandem-repeat evidence caller"
+type: software
+authors:
+  - family-names: Miyamoto
+    given-names: Ryosuke
+version: 0.5.0-rc1
+repository-code: "https://github.com/Ryo-Miyamo/RNA-TR-Scout"
+keywords:
+  - tandem repeats
+  - long-read RNA sequencing
+  - Oxford Nanopore
+  - repeat expansion
+  - bioinformatics
+license: "NOASSERTION"
