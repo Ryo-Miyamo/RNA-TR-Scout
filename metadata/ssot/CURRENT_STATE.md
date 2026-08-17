@@ -1,6 +1,6 @@
 # RNA-TR-Scout Single Source of Truth
 
-- Generated: 2026-08-17T06:57:08+00:00
+- Generated: 2026-08-17T08:00:15+00:00
 - Tool: rnatr_ssot_v0.1.2
 - Database: `/mnt/intelssd/rnatr_project/metadata/ssot/rnatr_ssot.sqlite`
 - Existing legacy build-tracker database: read-only source; not modified.
@@ -28,13 +28,13 @@
 | active_paths_have_no_shell_variables | PASS | 0 |
 | active_implementation_files_exist | PASS | 0 |
 | view_rows::current_pipeline | PASS | 1 |
-| view_rows::current_decisions | PASS | 57 |
+| view_rows::current_decisions | PASS | 59 |
 | view_rows::current_interpretations | PASS | 26 |
 | view_rows::current_algorithm_contract | PASS | 35 |
 | view_rows::current_reference_hierarchy | PASS | 8 |
 | view_rows::current_known_limitations | PASS | 21 |
 | view_rows::current_open_questions | PASS | 9 |
-| view_rows::current_results | PASS | 183 |
+| view_rows::current_results | PASS | 193 |
 | current_target_artifacts | PASS | 4 |
 | legacy_tracker_import | PASS | 63 |
 | current_validator_exists | PASS | /mnt/intelssd/rnatr_project/config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py |
@@ -68,7 +68,7 @@
 - **core_freeze_v0_1_0_acceptance_v0_1_0** — The validated generic Core is accepted as LOCAL_CORE_FREEZE_V0.1.0_ACCEPTED_WITH_SCOPE, permitting biology-sidecar work while public release gates remain open.
 - **core_freeze_preservation_artifacts_required_v0_1_0** — Core Freeze requires a versioned checksummed Core Freeze Packet plus a machine-executable golden regression suite. SSOT alone is not sufficient to preserve the long-term scientific contract.
 - **six_sample_scope_engineering_validation** — The six 100k-read fetal-brain comparison datasets close the replay/robustness gate but will not be used to estimate a precise RNA technical floor.
-- **stage16t_user_facing_documentation_acceptance_v0_1_0** — Accept the Stage16T README and user guide as the current internal pre-release user-facing documentation, with internal Freeze/Stage/golden terminology kept in release records rather than ordinary-user prose.
+- **stage16t_user_facing_documentation_acceptance_v0_1_0** — Accept the current README and USER_GUIDE as the ordinary-user surface, DEVELOPMENT.md as navigation to current contracts/SSOT and post-Freeze lanes, and DEVELOPMENT_HISTORY_v0.5.0.md as non-authoritative historical navigation. Stage-numbered files remain validation/reproducibility history rather than ordinary user entry points.
 - **large_file_storage** — New raw FASTQ and other large public datasets are downloaded directly to /media/tokushimaneuro02/T9; Intel SSD retains active indexes, catalogs, QC, manifests, scripts, and compact results.
 - **stage15a_reference_correctness_pass_v0_1_3** — The isolated Stage 15A v0.1.3 path from the target 100k mapping-complete BAM and associated raw-read sequence store through schema v0.4.2 is accepted as the correctness and regression reference. It is not the active production pipeline and it has not passed the production performance gate.
 - **general_locus_interpretation** — General loci are reported as population-relative longer, shorter, central, or non-comparable RNA observations; pathogenicity is not assigned.
@@ -93,11 +93,13 @@
 - **primary_locus_catalog** — TRExplorer v2 is the primary GRCh38 locus, boundary, and motif-prior catalog.
 - **primary_population_reference** — AoU PacBio HiFi validation cohort (2,102 individuals) is the primary genome-wide DNA repeat-length and LPS context.
 - **tr_atlas_role** — TR-Atlas is supplementary short-read population context only; no further genome-wide live crawl is planned.
+- **canonical_release_gate_table_v0_3_5** — Use validation/release_gates_v0.3.5.tsv as the current release-gate table. It preserves prior gates and records the formal G25-G30 Stage16AB adjudication; v0.3.4 remains historical/Freeze-era evidence.
+- **public_rc_pro_audit_pre_remediation_v0_1_0** — The first final Pro adjudication found no scientific/runtime failure but required four metadata/governance packaging remediations before final PASS.
 - **public_rc_single_pro_crosscut_audit_required_v0_1_0** — Before declaring the public v0.5.0 release candidate, perform one Pro-level cross-cut audit of Freeze exact state, current main, active production path, reference/catalog/mapping/CLI/install, golden and validation evidence, cross-hardware results, documentation, unresolved scope, and SSOT/Git/docs state consistency.
 - **software_license_bsd3_v0_1_0** — The RNA-TR-Scout software source is licensed under BSD-3-Clause with Copyright (c) 2026, Ryosuke Miyamoto. Third-party catalog/data terms remain separately attributed and are not relicensed by the software LICENSE.
 - **g25_g29_release_readiness_closure_v0_1_0** — G25 reference bootstrap, G26 resource detection, G27 memory-aware Core scheduling, G28 scoped cross-hardware reproducibility and G29 clean-machine clone-to-test reproducibility are accepted for the currently tested Linux x86-64 ONT-cDNA release scope.
 - **g30_hardware_profile_pass_with_scope_v0_1_0** — G30 is PASS_WITH_SCOPE: tested hardware profiles and a release-scale recommended profile are documented; a lower empirical CPU/RAM minimum is not established and is intentionally not invented. The minimum remains a nonblocking limitation while user-facing documentation preserves this distinction.
-- **release_candidate_ready_for_final_pro_audit_v0_1_0** — All planned High-mode release-packaging work required before the final Pro audit is complete for v0.5.0-rc1. PUBLIC_RC_PRO_CROSSCUT_AUDIT remains OPEN and is the blocking next step before final-version conversion/tag/release binding.
+- **release_candidate_ready_for_final_pro_audit_v0_1_0** — The exact post-remediation RC remains scientifically identical to the Stage16AF-tested candidate. Canonical gate/SSOT/CHANGELOG drift is repaired; PUBLIC_RC_PRO_CROSSCUT_AUDIT remains OPEN until an independent final re-audit passes.
 - **stage16_release_engineering_progress_checkpoint_v0_1_0** — Current release engineering now includes public catalog/network-install closure plus Stage16Z resource-aware Core scheduling and Stage16AA independent-machine fresh validation. G25-G29 are accepted. G30 has tested and recommended hardware profiles documented while the empirical minimum remains explicitly unmeasured and nonblocking. CLEAN_INSTALL_INTERNAL_BETA is closed for the current Linux x86-64 ONT-cDNA scope. The immutable Core Freeze root remains 4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb.
 - **stage16ae_public_release_packaging_acceptance_v0_1_0** — Accept v0.5.0-rc1 mechanical packaging as complete with BSD-3-Clause, citation metadata, explicit Linux x86-64 conda lock, release notes and third-party notice separation. This does not create or authorize the final public v0.5.0 release before the final Pro audit.
 - **stage16af_rc_preflight_acceptance_v0_1_0** — Accept candidate c7c0d985068c4d01f7669521e6fefd146fbb1718 / tree 568974b45cf06fd76a03e70e57a643184ecac528 as mechanically ready for the final Pro cross-cut audit. Public v0.5.0 remains unreleased.
@@ -260,6 +262,16 @@
 | 16AF_RELEASE_CANDIDATE_PREFLIGHT | candidate_tree | 568974b45cf06fd76a03e70e57a643184ecac528 | . |
 | 16AF_RELEASE_CANDIDATE_PREFLIGHT | git_archive_sha256 | b6b6b332560f4dca0b7450c5f27230ca6dffcc1791ce760a7714e54a975ed3ce | . |
 | 16AF_RELEASE_CANDIDATE_PREFLIGHT | rc_preflight_status | PASS | . |
+| 16AK_RC_PREFLIGHT_REBIND | archive_source_sha256 | f35bd177294270f48b5880bc62eef2af7cbb40f338eeb23d37212cb504920660 | . |
+| 16AK_RC_PREFLIGHT_REBIND | candidate_head | fb76836852dd7e9f65a385b3ede72353b2a350c9 | . |
+| 16AK_RC_PREFLIGHT_REBIND | candidate_tree | f705ed3b8594c0121ba26d69287e72c28aa0cb33 | . |
+| 16AK_RC_PREFLIGHT_REBIND | rc_preflight_status | PASS | . |
+| 16AL_FINAL_PRO_CROSSCUT_AUDIT | blocking_metadata_findings | 4 | . |
+| 16AL_FINAL_PRO_CROSSCUT_AUDIT | pre_remediation_audit_status | REMEDIATION_REQUIRED_BEFORE_FINAL_PRO_PASS | . |
+| 16AM_FINAL_PRO_METADATA_REMEDIATION | current_release_gate_table | validation/release_gates_v0.3.5.tsv | . |
+| 16AM_FINAL_PRO_METADATA_REMEDIATION | g25_g30_contract_status | PASS_G25_G29_G30_WITH_SCOPE_AMENDMENT | . |
+| 16AM_FINAL_PRO_METADATA_REMEDIATION | root_changelog_status | PRESENT | . |
+| 16AM_FINAL_PRO_METADATA_REMEDIATION | runtime_scientific_change | false | . |
 | 16R_FRESH_END_TO_END | stage16r_final_exact_plain_table_parity | PASS_5_OF_5 | . |
 | 16R_FRESH_END_TO_END | stage16r_post_resume_final_parity | PASS_5_OF_5 | . |
 | 16R_FRESH_END_TO_END | stage16r_public_fastq_to_final_seconds | 289.0072668030043 | . |
@@ -311,13 +323,13 @@
 
 - `current_algorithm_contract.tsv`: 35 rows
 - `current_artifacts.tsv`: 4 rows
-- `current_decisions.tsv`: 57 rows
+- `current_decisions.tsv`: 59 rows
 - `current_interpretations.tsv`: 26 rows
 - `current_known_limitations.tsv`: 21 rows
 - `current_open_questions.tsv`: 9 rows
 - `current_pipeline.tsv`: 1 rows
 - `current_reference_hierarchy.tsv`: 8 rows
-- `current_results.tsv`: 183 rows
+- `current_results.tsv`: 193 rows
 - `current_runs.tsv`: 32 rows
-- `latest_stage_status.tsv`: 231 rows
+- `latest_stage_status.tsv`: 236 rows
 - `project_dashboard.tsv`: 12 rows

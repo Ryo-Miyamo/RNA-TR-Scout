@@ -180,6 +180,7 @@ For most users:
 - [Catalog resources](docs/catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md) — for users who need to rebuild or modify repeat catalogs
 - [Development guide](DEVELOPMENT.md) — entry points for biology, platform-extension, and performance development
 - [Development history](docs/history/DEVELOPMENT_HISTORY_v0.5.0.md) — narrative map of how the project reached the v0.5.0 release line
+- [Changelog](CHANGELOG.md) — concise public release-line summary
 
 Ordinary users should use the documented `rnatr-scout` commands. Stage-numbered scripts under `scripts/` are primarily development, validation, and reproducibility history and are **not part of the ordinary user workflow**.
 

@@ -43,6 +43,7 @@ The final public tag is not created at this stage.
 
 - [x] create `CITATION.cff` release-candidate metadata;
 - [x] create v0.5.0-rc1 release-notes draft;
+- [x] add root `CHANGELOG.md` for the public release line;
 - [x] change source package version metadata to `0.5.0rc1`;
 - [x] update setup/version guards consistently;
 - [x] generate an explicit Linux x86-64 conda environment lock from the validated release environment;

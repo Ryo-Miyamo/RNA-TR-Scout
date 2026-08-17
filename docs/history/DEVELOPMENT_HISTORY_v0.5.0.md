@@ -211,7 +211,7 @@ Authoritative Freeze material:
 - [`RNA_TR_Scout_Core_Freeze_Packet_v0.1.1.md`](../core_freeze/v0.1.1/RNA_TR_Scout_Core_Freeze_Packet_v0.1.1.md)
 - [`docs/contracts/CURRENT_CONTRACTS_v0.1.0.tsv`](../contracts/CURRENT_CONTRACTS_v0.1.0.tsv)
 
-## 10. Stage16: turning a frozen scientific Core into releaseable software
+## 10. Stage16: turning a frozen scientific Core into releasable software
 
 After Local Core Freeze, development shifted from scientific-core stabilization to public release engineering.
 
