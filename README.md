@@ -176,6 +176,12 @@ The following are planned or still under development:
 - non-x86-64 systems
 - simplified public package installation
 
+## License
+
+RNA-TR-Scout software source code is licensed under the **BSD 3-Clause License (`BSD-3-Clause`)**. Copyright (c) 2026 Ryosuke Miyamoto. See [`LICENSE`](LICENSE).
+
+Third-party data, catalog source material, reference resources, and external software dependencies remain subject to their own upstream terms and are not relicensed by the RNA-TR-Scout software license. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and the records under `docs/catalog_resources/third_party/`.
+
 ## Documentation
 
 For most users:
