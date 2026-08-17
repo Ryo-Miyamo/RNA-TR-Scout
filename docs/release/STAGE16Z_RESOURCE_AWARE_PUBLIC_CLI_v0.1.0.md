@@ -4,13 +4,13 @@ Date: 2026-08-17
 
 ## Status
 
-**IMPLEMENTATION_CANDIDATE — VALIDATION PENDING**
+**PASS_WITH_SCOPE — RESOURCE-AWARE CORE SCHEDULING VALIDATED**
 
-Stage16Z addresses the release-readiness resource-detection and adaptive Core scheduling gaps without changing the frozen scientific Core.
+Stage16Z closes the release-readiness CPU/RAM/tmp detection and adaptive Core-scheduling implementation gap without changing the frozen scientific Core.
 
 ## Scope
 
-The public CLI now detects and records:
+The public CLI detects and records:
 
 - hostname;
 - logical CPU count;
@@ -26,7 +26,7 @@ For `rnatr-scout run`, omitted Core scheduling values are selected by the versio
 
 ## Scheduling policy
 
-The automatic policy is conservative and is anchored to the already validated execution shapes rather than claiming a new peak-memory measurement.
+The automatic policy is conservative and is anchored to already validated execution shapes rather than claiming a new peak-memory measurement.
 
 Expected profiles on a 24-logical-CPU host with ample RAM are:
 
@@ -60,7 +60,7 @@ All supplied overrides are recorded in the resource-plan JSON.
 
 `--threads` in Stage16Z is a **Core scheduling CPU budget**. The current validated ONT-cDNA mapper remains separately versioned and retains its existing fixed minimap2/samtools thread profile. Stage16Z does not silently change validated mapping semantics or performance settings.
 
-Mapping-thread optimization therefore remains a separate post-Freeze performance concern, not part of the Stage16Z G26/G27 Core scheduling closure.
+Mapping-thread optimization therefore remains a separate post-Freeze performance concern, not part of the Stage16Z G26/G27 Core-scheduling closure.
 
 ## Disk-space boundary
 
@@ -70,13 +70,24 @@ Stage16Z detects and records free space but does not invent a new full-scale dis
 
 A new run records `work/resource_plan.json`. Resume reuses the recorded shard/concurrency plan. Conflicting scheduling or temporary-directory overrides are rejected rather than silently repartitioning a completed run.
 
-## Required validation before acceptance
+## Validation evidence
 
-1. syntax and unit tests;
-2. Tier2 automatic scheduling must select the expected small profile and retain exact five-table parity;
-3. Tier3 automatic scheduling on the primary validated host must retain exact five-table parity or be explicitly validated by an equivalent fixed test;
-4. lower-RAM synthetic planner tests must reduce concurrency rather than exceed the conservative memory fraction;
-5. independent second-machine fresh clone/environment/network-resource installation must run an exact Tier2 public workflow and resume successfully;
-6. frozen Core root and scientific five-table identities must remain unchanged.
+All acceptance items were satisfied:
 
-Stage16Z does not itself close the separate full-scale peak-disk benchmark or public-RC Pro cross-cut audit.
+1. syntax and unit-policy tests PASS on the primary validated host;
+2. Tier2 automatic scheduling selected `1 shard / 1 concurrent Core unit / 2 caller workers` and retained exact five-table parity on the independent second machine;
+3. Tier3 100k automatic scheduling selected `12 / 3 / 2` on the primary host and retained exact 5/5 scientific-table parity;
+4. synthetic lower-RAM planner tests reduce concurrency rather than exceeding the conservative memory fraction;
+5. independent second-machine fresh clone/environment/network-resource installation completed and reproduced exact Tier2 output plus `SECOND_RESUME_NOOP`;
+6. the immutable Core Freeze root remained `4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb` and all tested scientific table identities remained exact.
+
+Authoritative external evidence:
+
+- Stage16AA independent-machine result SHA-256: `38ba94527d42bb08e13e600ea7c41ef4768c1571a70b6d1c7e50ab9f82a544f1`
+- Stage16Z Tier3 auto-parity result SHA-256: `b1c166f60ed5ae9266d5cccc5dac573e09865d67ea50b0b0c52af411981ce02a`
+
+## Acceptance boundary
+
+Stage16Z supports closure of the Core-scheduling portions of G26/G27. It does **not** claim automatic tuning of mapping threads, a universal hardware minimum, a measured full-scale peak-disk requirement, or arbitrary-platform portability.
+
+The separate full-scale peak-disk benchmark and public-RC Pro cross-cut audit remain open.
