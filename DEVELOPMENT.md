@@ -11,6 +11,8 @@ Before changing the software, first identify the current contract and active imp
 - [`metadata/ssot/CURRENT_STATE.md`](metadata/ssot/CURRENT_STATE.md) — generated current project state and registered decisions/limitations.
 - [`docs/governance/RNA_TR_Scout_post_freeze_governance_lanes_v0.1.0.md`](docs/governance/RNA_TR_Scout_post_freeze_governance_lanes_v0.1.0.md) — how to classify post-Freeze changes and what validation is required.
 
+The operational SSOT is maintained as a local SQLite database. Version-controlled exports under `metadata/ssot/` capture the Git-tracked SSOT state for the corresponding repository commit and should be used by repository-only readers. During active release engineering, these exports are regenerated from and reconciled with the operational SSOT before the corresponding state is committed.
+
 The Stage15/Stage16 development scripts and stage-specific documents retained in this repository are primarily **historical development, validation, reproducibility, and release evidence**. They are not the default entry point for the current implementation.
 
 ## Biology development
@@ -55,6 +57,10 @@ Start with:
 Before adopting an optimization, use the validation level required by the governance lane: relevant golden scientific parity, determinism, restart/resume, validators, and targeted performance/resource benchmarks. Mapping optimization additionally requires mapping/locus-assignment/final-output checks appropriate to the change.
 
 The current SSOT records the accepted approximately 5.31-million-read BAM-to-final empirical result (about 60.04 minutes, accepted with documented tolerance) and the continuing 30-minute optimization target. Treat the SSOT and linked evidence—not this summary sentence—as authoritative.
+
+## Development history
+
+For the research and engineering path that led to the v0.5.0 release line, see [`docs/history/DEVELOPMENT_HISTORY_v0.5.0.md`](docs/history/DEVELOPMENT_HISTORY_v0.5.0.md). That document is historical navigation only; current contracts and SSOT remain authoritative.
 
 ## Repository history and cleanup
 
