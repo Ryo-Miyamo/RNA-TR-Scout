@@ -4,7 +4,7 @@ Date: 2026-08-17
 
 ## Status
 
-**MECHANICAL PACKAGING COMPLETE — RC PREFLIGHT / SSOT RECONCILIATION / FINAL PRO AUDIT PENDING**
+**MECHANICAL PACKAGING / RC PREFLIGHT / SSOT RECONCILIATION COMPLETE — FINAL PRO AUDIT PENDING**
 
 Stage16AE prepares a coherent v0.5.0 release-candidate package without changing the frozen scientific Core.
 
@@ -50,8 +50,8 @@ The final public tag is not created at this stage.
 - [x] select the top-level RNA-TR-Scout software license;
 - [x] add root `LICENSE` and align `pyproject.toml` / `CITATION.cff` license metadata;
 - [x] record third-party software/data/catalog license boundary at repository root;
-- [ ] run release-candidate packaging preflight and build/source-tree smoke tests after license finalization;
-- [ ] reconcile SSOT current release-packaging state;
+- [x] run release-candidate packaging preflight and build/source-tree smoke tests after license finalization;
+- [x] reconcile SSOT current release-packaging state;
 - [ ] run the final Pro-level cross-cut audit.
 
 ## Environment lock policy
@@ -72,4 +72,4 @@ This software license does not relicense third-party catalog/data material, refe
 
 ## Acceptance
 
-Stage16AE is ready for the final Pro audit only after the post-license RC preflight passes and the SSOT packaging state is reconciled. Public v0.5.0 is not declared merely by completing this stage.
+The post-license RC preflight and SSOT packaging-state reconciliation are complete. Stage16AE/AF/AG are therefore ready for the final Pro cross-cut audit. Public v0.5.0 is not declared merely by completing these mechanical steps.

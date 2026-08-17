@@ -98,21 +98,11 @@ rnatr-scout map \
 
 ## Disk space, CPU, and memory planning
 
-The standard reference setup downloads approximately **0.9 GB of compressed GENCODE data** (GRCh38 primary-assembly FASTA plus GENCODE v50 primary-assembly GTF), in addition to the compact RNA-TR-Scout repeat-catalog bundle. The installer expands the reference and builds a minimap2 index, so reference setup requires substantially more space than the compressed download alone. Plan for **tens of GB of free disk space** during initial setup.
+RNA-TR-Scout has been tested on Linux x86-64. For large datasets of roughly five million long reads, the current practical recommended profile is a multi-core system with approximately **128 GB RAM** and **fast local SSD/NVMe storage**.
 
-Analysis working space depends strongly on the number and length of reads. RNA-TR-Scout currently retains restartable intermediate files and detailed read-level evidence, so large runs can use substantial disk space.
+Large runs can require substantial working disk space because restartable intermediate files and detailed read-level evidence are retained. Exact needs vary with dataset and run settings.
 
-In a **5.31-million-read development run**, approximately **140 GB of checkpoint/work files** were present at one audited restart stage. This is an observed working-data volume, **not a measured peak-disk requirement**. Peak disk usage has not yet been formally benchmarked, so no fixed minimum free-space requirement is claimed for a five-million-read run at this stage.
-
-The current release-engineering workflow has been tested on Linux x86-64 hosts with **24 and 36 logical CPUs and approximately 128 GB RAM**. For approximately five-million-read datasets, the current practical **recommended** profile is about **24 or more logical CPU threads, approximately 128 GB RAM, and fast local SSD/NVMe working storage**.
-
-This is a tested/recommended profile, not an empirical minimum. A lower CPU/RAM minimum for the five-million-read workflow has not yet been established.
-
-For human-genome ONT-cDNA mapping and smaller runs, **32 GB RAM remains a sensible practical target**; 16 GB may be tight, especially while other processes are active. This should not be interpreted as evidence that 32 GB is sufficient for the current five-million-read release-scale workflow.
-
-RNA-TR-Scout detects CPU, available RAM, temporary-directory free space, and working-filesystem free space before Core execution. When worker values are omitted, conservative Core scheduling is selected automatically and recorded in the run provenance. Mapping threads remain controlled by the separately validated ONT-cDNA mapping profile in the current release.
-
-See the [user guide](docs/USER_GUIDE.md) for more detail on resource planning.
+See the [user guide](docs/USER_GUIDE.md) for detailed resource-planning observations, caveats, and current benchmark scope.
 
 ## Main outputs
 
@@ -188,5 +178,8 @@ For most users:
 
 - [User guide](docs/USER_GUIDE.md) — installation, input requirements, running the software, outputs, interpretation, resource planning, resume, and troubleshooting
 - [Catalog resources](docs/catalog_resources/BUILDING_AND_UPDATING_CATALOGS.md) — for users who need to rebuild or modify repeat catalogs
+- [Development guide](DEVELOPMENT.md) — entry points for biology, platform-extension, and performance development
+
+Ordinary users should use the documented `rnatr-scout` commands. Stage-numbered scripts under `scripts/` are primarily development, validation, and reproducibility history and are **not part of the ordinary user workflow**.
 
 Detailed development, reproducibility, and validation records are kept separately under `docs/release/` and related internal documentation directories. They are not required for ordinary use of RNA-TR-Scout.

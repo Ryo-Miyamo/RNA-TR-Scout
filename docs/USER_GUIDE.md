@@ -326,6 +326,8 @@ rnatr-scout system-info --help
 
 For ordinary use, these commands should be preferred over the internal development scripts stored elsewhere in the repository.
 
+Stage-numbered scripts are **not part of the ordinary supported user workflow**. They are retained primarily for development history, validation, reproducibility, and release traceability. Developers starting new biology, platform, or performance work should begin with [`../DEVELOPMENT.md`](../DEVELOPMENT.md) and the current contracts linked from it rather than selecting a Stage script by filename.
+
 ## 15. Development and validation records
 
 Detailed reproducibility, software-validation, and release-engineering records are retained in `docs/release/` and related internal documentation directories.

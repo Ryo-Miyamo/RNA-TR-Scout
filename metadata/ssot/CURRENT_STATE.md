@@ -1,6 +1,6 @@
 # RNA-TR-Scout Single Source of Truth
 
-- Generated: 2026-08-17T06:03:49+00:00
+- Generated: 2026-08-17T06:57:08+00:00
 - Tool: rnatr_ssot_v0.1.2
 - Database: `/mnt/intelssd/rnatr_project/metadata/ssot/rnatr_ssot.sqlite`
 - Existing legacy build-tracker database: read-only source; not modified.
@@ -34,7 +34,7 @@
 | view_rows::current_reference_hierarchy | PASS | 8 |
 | view_rows::current_known_limitations | PASS | 21 |
 | view_rows::current_open_questions | PASS | 9 |
-| view_rows::current_results | PASS | 185 |
+| view_rows::current_results | PASS | 183 |
 | current_target_artifacts | PASS | 4 |
 | legacy_tracker_import | PASS | 63 |
 | current_validator_exists | PASS | /mnt/intelssd/rnatr_project/config/evidence_schema/v0.4.2/rnatr_v042_validate_package.py |
@@ -267,9 +267,7 @@
 | 16R_FRESH_END_TO_END | stage16r_resource_scope | LOCAL_EXACT_OFFICIAL_GENCODE_CACHE_PLUS_LOCAL_EXACT_STAGE16L_BUNDLE;FULL_LARGE_NETWORK_DEFERRED_TO_RC | . |
 | 16R_FRESH_END_TO_END | stage16r_source_head | 2191352170afe284c88cccd92c192efda2465b09 | . |
 | 16R_FRESH_END_TO_END | stage16r_status | PASS_FRESH_MACHINE_EQUIVALENT_PUBLIC_FASTQ_TO_FINAL | . |
-| 16U_SSOT_PROGRESS_CHECKPOINT | current_main_commit | be1de2ecdcaa681e3a3424486d340280001b0bf0 | . |
 | 16U_SSOT_PROGRESS_CHECKPOINT | immutable_core_freeze_root | 4b1981db955a8aa92a2a01e19bbb1cfc2aa0ebfb | . |
-| 16U_SSOT_PROGRESS_CHECKPOINT | stage16r_evidence_binding_status | PENDING | . |
 | 16U_SSOT_PROGRESS_CHECKPOINT | stage16s_cross_hardware_status | PASS_WITH_TESTED_SCOPE | . |
 | 16U_SSOT_PROGRESS_CHECKPOINT | stage16t_documentation_status | PASS_OWNER_REVIEW_ACCEPTED | . |
 | 16W_PUBLIC_CATALOG_DISTRIBUTION | stage16w_catalog_outer_sha256 | 54a24e4b60d920c8fec16b2df37b47e40407de42b949b18dc6233e97d85f2fef | . |
@@ -319,7 +317,7 @@
 - `current_open_questions.tsv`: 9 rows
 - `current_pipeline.tsv`: 1 rows
 - `current_reference_hierarchy.tsv`: 8 rows
-- `current_results.tsv`: 185 rows
+- `current_results.tsv`: 183 rows
 - `current_runs.tsv`: 32 rows
 - `latest_stage_status.tsv`: 231 rows
 - `project_dashboard.tsv`: 12 rows

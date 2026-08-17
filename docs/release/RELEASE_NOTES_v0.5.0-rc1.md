@@ -69,8 +69,6 @@ Third-party catalog/data resources and external dependencies remain governed by 
 
 ## Remaining work before public v0.5.0
 
-- run the release-candidate packaging preflight and source-tree/build smoke checks after license finalization;
-- reconcile the SSOT release-packaging state;
 - run the final Pro-level cross-cut audit;
 - resolve any audit-blocking findings;
 - change candidate version metadata from `0.5.0rc1` / `0.5.0-rc1` to final `0.5.0`;
