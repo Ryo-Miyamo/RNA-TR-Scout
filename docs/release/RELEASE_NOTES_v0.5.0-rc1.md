@@ -4,7 +4,7 @@ Date: 2026-08-17
 
 ## Status
 
-**RELEASE CANDIDATE PACKAGING DRAFT — FINAL PRO CROSS-CUT AUDIT PENDING**
+**RELEASE CANDIDATE PACKAGING — FINAL PRO CROSS-CUT AUDIT PENDING**
 
 This document summarizes the candidate public v0.5.0 release state. It does not by itself create a public release or tag.
 
@@ -34,7 +34,10 @@ The frozen scientific Core remains rooted at:
 - manual resource overrides with provenance and resume-plan consistency checks;
 - independent second-machine fresh clone/environment/network-resource validation;
 - exact Tier2 and Tier3 scientific-table parity under the release-engineering workflows;
-- documented tested/recommended hardware profile with empirical minimum explicitly unresolved.
+- documented tested/recommended hardware profile with empirical minimum explicitly unresolved;
+- platform-specific explicit Linux x86-64 conda lock derived from the validated release environment;
+- BSD 3-Clause software license with separate third-party resource/license boundary documentation;
+- release-candidate citation metadata.
 
 ## Scientific-output contract
 
@@ -48,6 +51,14 @@ The five main scientific output tables remain:
 
 The release candidate does not redefine the frozen repeat-calling scientific semantics.
 
+## License
+
+RNA-TR-Scout software source code is licensed under `BSD-3-Clause`.
+
+Copyright (c) 2026 Ryosuke Miyamoto.
+
+Third-party catalog/data resources and external dependencies remain governed by their own upstream terms; the RNA-TR-Scout software license does not relicense those materials. See `THIRD_PARTY_NOTICES.md` and `docs/catalog_resources/third_party/`.
+
 ## Known scope limitations
 
 - RNA non-observation must not be interpreted as genomic absence.
@@ -58,8 +69,8 @@ The release candidate does not redefine the frozen repeat-calling scientific sem
 
 ## Remaining work before public v0.5.0
 
-- select and bind the software license;
-- generate and verify the platform-specific explicit environment lock;
+- run the release-candidate packaging preflight and source-tree/build smoke checks after license finalization;
+- reconcile the SSOT release-packaging state;
 - run the final Pro-level cross-cut audit;
 - resolve any audit-blocking findings;
 - change candidate version metadata from `0.5.0rc1` / `0.5.0-rc1` to final `0.5.0`;
