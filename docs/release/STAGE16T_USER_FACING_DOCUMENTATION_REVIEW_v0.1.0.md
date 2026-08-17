@@ -1,10 +1,10 @@
 # Stage16T user-facing documentation review record v0.1.0
 
-Date: 2026-08-16
+Date: 2026-08-17
 
 ## Status
 
-**READY_FOR_OWNER_REVIEW — REVISED USER-FACING DRAFT**
+**PASS — OWNER REVIEW ACCEPTED**
 
 Stage16T prepares the user-facing documentation for the current internal release-engineering candidate. This checkpoint is documentation-only and does not modify the frozen scientific Core.
 
@@ -30,7 +30,7 @@ The README and user guide were therefore revised with an explicit audience split
 
 Internal validation terminology is retained in the audit trail rather than removed from the repository.
 
-## User-facing documents prepared
+## User-facing documents accepted
 
 1. `README.md`
    - explains RNA-TR-Scout in ordinary research language;
@@ -85,7 +85,7 @@ A formal full-scale peak-disk benchmark should be completed before public releas
 
 ## Current intentional release limitations stated in user-facing documentation
 
-User-facing wording now states these limitations without internal release vocabulary:
+User-facing wording states these limitations without internal release vocabulary:
 
 - compact repeat-catalog public download location is not finalized;
 - current installation uses a Git source checkout rather than a simplified public package;
@@ -96,19 +96,21 @@ User-facing wording now states these limitations without internal release vocabu
 - peak disk usage for full-scale runs has not yet been formally benchmarked;
 - the repository remains a private pre-release rather than the public v0.5.0 release.
 
-## Owner visual-review points
+## Owner review acceptance
 
-Before Stage16T is marked formally complete, confirm that:
+The owner reviewed the researcher-facing documentation iteratively and requested corrections to:
 
-1. the README now reads like software documentation for a research user rather than an internal validation report;
-2. the opening explanation of what RNA-TR-Scout does is understandable;
-3. the Quick Start is sufficiently straightforward;
-4. BAM input requirements are clear without becoming overly technical;
-5. the five-table descriptions are biologically/intuitively understandable enough for intended users;
-6. the repeat-calling limitations are stated clearly and without overclaiming;
-7. the RNA-evidence interpretation cautions are clear without becoming patronizing;
-8. disk-space wording distinguishes measured observations from unmeasured peak requirements;
-9. the current tested scope is neither understated nor overclaimed; and
-10. internal stage/Freeze/golden-validation language is appropriately confined to development/validation records.
+- internal development terminology exposed in README;
+- unnecessary DNA-genotype wording;
+- reference/resource sizing information;
+- BAM mapping assumptions;
+- complex sequence-variable repeat limitations; and
+- speculative disk-space guidance.
 
-No Stage16T formal PASS is asserted until this owner-facing visual review is accepted.
+Those points were incorporated. The owner then explicitly approved proceeding with the current draft state, with final resource sizing to be refined later before public release.
+
+## Decision
+
+**Stage16T PASS.**
+
+The researcher-facing README and user guide are accepted for the current private pre-release repository state. This acceptance does not assert public v0.5.0 readiness and does not close the remaining release-engineering items listed above.
