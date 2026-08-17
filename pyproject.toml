@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 authors = [
   {name = "RNA-TR-Scout developers"}
 ]
-license = {text = "Research software; license not yet selected"}
+license = {text = "BSD-3-Clause"}
 dependencies = []
 
 [project.scripts]
